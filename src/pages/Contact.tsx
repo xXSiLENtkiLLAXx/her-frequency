@@ -5,27 +5,30 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Layout } from "@/components/layout/Layout";
 import { useToast } from "@/hooks/use-toast";
-
 const Contact = () => {
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     subject: "",
-    message: "",
+    message: ""
   });
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast({
       title: "Message Sent!",
-      description: "Thank you for reaching out. We'll get back to you within 24-48 hours.",
+      description: "Thank you for reaching out. We'll get back to you within 24-48 hours."
     });
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    setFormData({
+      name: "",
+      email: "",
+      subject: "",
+      message: ""
+    });
   };
-
-  return (
-    <Layout>
+  return <Layout>
       {/* Hero Section */}
       <section className="relative py-24 overflow-hidden bg-gradient-soft">
         <div className="container-custom mx-auto px-4 md:px-8">
@@ -59,55 +62,38 @@ const Contact = () => {
                     <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
                       Your Name
                     </label>
-                    <Input
-                      id="name"
-                      type="text"
-                      placeholder="Jane Doe"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      required
-                    />
+                    <Input id="name" type="text" placeholder="Jane Doe" value={formData.name} onChange={e => setFormData({
+                    ...formData,
+                    name: e.target.value
+                  })} required />
                   </div>
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
                       Email Address
                     </label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="jane@example.com"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      required
-                    />
+                    <Input id="email" type="email" placeholder="jane@example.com" value={formData.email} onChange={e => setFormData({
+                    ...formData,
+                    email: e.target.value
+                  })} required />
                   </div>
                 </div>
                 <div>
                   <label htmlFor="subject" className="block text-sm font-medium text-foreground mb-2">
                     Subject
                   </label>
-                  <Input
-                    id="subject"
-                    type="text"
-                    placeholder="How can we help?"
-                    value={formData.subject}
-                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                    required
-                  />
+                  <Input id="subject" type="text" placeholder="How can we help?" value={formData.subject} onChange={e => setFormData({
+                  ...formData,
+                  subject: e.target.value
+                })} required />
                 </div>
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
                     Message
                   </label>
-                  <textarea
-                    id="message"
-                    rows={6}
-                    placeholder="Tell us more..."
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    required
-                    className="flex w-full rounded-xl border border-border bg-background px-4 py-3 text-base font-body ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:border-primary transition-all duration-300 resize-none"
-                  />
+                  <textarea id="message" rows={6} placeholder="Tell us more..." value={formData.message} onChange={e => setFormData({
+                  ...formData,
+                  message: e.target.value
+                })} required className="flex w-full rounded-xl border border-border bg-background px-4 py-3 text-base font-body ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:border-primary transition-all duration-300 resize-none" />
                 </div>
                 <Button type="submit" variant="hero" size="lg" className="w-full md:w-auto">
                   Send Message <Send className="ml-2 h-4 w-4" />
@@ -143,7 +129,7 @@ const Contact = () => {
                     <div>
                       <h3 className="font-display font-semibold text-foreground mb-1">Location</h3>
                       <p className="text-muted-foreground">
-                        Johannesburg, South Africa<br />
+                        Cape Town, South Africa<br />
                         <span className="text-sm">(Events held nationwide)</span>
                       </p>
                     </div>
@@ -168,20 +154,10 @@ const Contact = () => {
                 <div className="pt-6 border-t border-border">
                   <h3 className="font-display font-semibold text-foreground mb-4">Follow Us</h3>
                   <div className="flex items-center gap-4">
-                    <a
-                      href="https://instagram.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-12 h-12 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all"
-                    >
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all">
                       <Instagram className="h-5 w-5" />
                     </a>
-                    <a
-                      href="https://facebook.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-12 h-12 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all"
-                    >
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all">
                       <Facebook className="h-5 w-5" />
                     </a>
                   </div>
@@ -208,8 +184,6 @@ const Contact = () => {
           </div>
         </div>
       </section>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default Contact;
