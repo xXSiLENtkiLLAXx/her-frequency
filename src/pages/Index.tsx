@@ -32,7 +32,7 @@ const upcomingEvents = [
     title: "Galentine's Brunch",
     date: "February 15, 2026",
     location: "Johannesburg",
-    price: "R450",
+    price: "R350",
     image: eventImage,
     category: "Networking/Creative Workshop",
   },
