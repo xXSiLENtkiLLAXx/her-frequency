@@ -29,7 +29,7 @@ const values = [
 const upcomingEvents = [
   {
     id: 1,
-    title: "Women's Wellness Brunch",
+    title: "Galentine's Brunch",
     date: "February 15, 2026",
     location: "Johannesburg",
     price: "R450",
