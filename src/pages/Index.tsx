@@ -41,7 +41,7 @@ const upcomingEvents = [{
   title: "Weekend Wellness Retreat",
   date: "April 20-22, 2026",
   location: "Drakensberg",
-  price: "R3,500",
+  price: "R350.00",
   image: retreatImage,
   category: "Retreat"
 }];
