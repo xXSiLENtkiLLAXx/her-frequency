@@ -22,7 +22,7 @@ const values = [{
 }];
 const upcomingEvents = [{
   id: 1,
-  title: "Galentine's Brunch",
+  title: "LoveHer: Galentine's Brunch",
   date: "February 28, 2026",
   location: "Johannesburg",
   price: "R350",
