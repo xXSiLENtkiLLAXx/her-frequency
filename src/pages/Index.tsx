@@ -7,85 +7,64 @@ import heroImage from "@/assets/hero-sisterhood.jpg";
 import eventImage from "@/assets/event-wellness.jpg";
 import coachingImage from "@/assets/coaching-session.jpg";
 import retreatImage from "@/assets/retreat-setting.jpg";
-
-const values = [
-  {
-    icon: Heart,
-    title: "Empowerment",
-    description: "Lifting each other to reach our highest potential",
-  },
-  {
-    icon: Sparkles,
-    title: "Authenticity",
-    description: "Embracing our true selves without apology",
-  },
-  {
-    icon: Users,
-    title: "Sisterhood",
-    description: "Building a community of support and love",
-  },
-];
-
-const upcomingEvents = [
-  {
-    id: 1,
-    title: "Galentine's Brunch",
-    date: "February 28, 2026",
-    location: "Johannesburg",
-    price: "R350",
-    image: eventImage,
-    category: "Networking/Creative Workshop",
-  },
-  {
-    id: 2,
-    title: "Transform & Thrive Workshop",
-    date: "March 8, 2026",
-    location: "Cape Town",
-    price: "R650",
-    image: coachingImage,
-    category: "Workshop",
-  },
-  {
-    id: 3,
-    title: "Weekend Wellness Retreat",
-    date: "April 20-22, 2026",
-    location: "Drakensberg",
-    price: "R3,500",
-    image: retreatImage,
-    category: "Retreat",
-  },
-];
-
-const testimonials = [
-  {
-    quote: "Her Frequency gave me the courage to step into my power. The sisterhood I found here is unmatched.",
-    author: "Nomvula M.",
-    role: "Entrepreneur",
-  },
-  {
-    quote: "Every event leaves me feeling renewed, inspired, and more connected to myself and other incredible women.",
-    author: "Sarah K.",
-    role: "Creative Director",
-  },
-  {
-    quote: "The coaching sessions transformed not just my mindset, but my entire life trajectory. Forever grateful.",
-    author: "Thembi N.",
-    role: "Corporate Executive",
-  },
-];
-
+const values = [{
+  icon: Heart,
+  title: "Empowerment",
+  description: "Lifting each other to reach our highest potential"
+}, {
+  icon: Sparkles,
+  title: "Authenticity",
+  description: "Embracing our true selves without apology"
+}, {
+  icon: Users,
+  title: "Sisterhood",
+  description: "Building a community of support and love"
+}];
+const upcomingEvents = [{
+  id: 1,
+  title: "Galentine's Brunch",
+  date: "February 28, 2026",
+  location: "Johannesburg",
+  price: "R350",
+  image: eventImage,
+  category: "Networking/Creative Workshop"
+}, {
+  id: 2,
+  title: "Transform & Thrive Workshop",
+  date: "March 8, 2026",
+  location: "Cape Town",
+  price: "R650",
+  image: coachingImage,
+  category: "Workshop"
+}, {
+  id: 3,
+  title: "Weekend Wellness Retreat",
+  date: "April 20-22, 2026",
+  location: "Drakensberg",
+  price: "R3,500",
+  image: retreatImage,
+  category: "Retreat"
+}];
+const testimonials = [{
+  quote: "Her Frequency gave me the courage to step into my power. The sisterhood I found here is unmatched.",
+  author: "Nomvula M.",
+  role: "Entrepreneur"
+}, {
+  quote: "Every event leaves me feeling renewed, inspired, and more connected to myself and other incredible women.",
+  author: "Sarah K.",
+  role: "Creative Director"
+}, {
+  quote: "The coaching sessions transformed not just my mindset, but my entire life trajectory. Forever grateful.",
+  author: "Thembi N.",
+  role: "Corporate Executive"
+}];
 const Index = () => {
-  return (
-    <Layout>
+  return <Layout>
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
-          <img
-            src={heroImage}
-            alt="Women supporting each other"
-            className="w-full h-full object-cover"
-          />
+          <img src={heroImage} alt="Women supporting each other" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/70 to-background/50" />
         </div>
 
@@ -132,8 +111,7 @@ const Index = () => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {values.map((value, index) => (
-              <Card key={value.title} className="text-center p-8 bg-card/80 backdrop-blur-sm border-none">
+            {values.map((value, index) => <Card key={value.title} className="text-center p-8 bg-card/80 backdrop-blur-sm border-none">
                 <CardContent className="pt-6">
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blush mb-6">
                     <value.icon className="h-8 w-8 text-primary" />
@@ -143,8 +121,7 @@ const Index = () => {
                   </h3>
                   <p className="text-muted-foreground">{value.description}</p>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </div>
       </section>
@@ -165,14 +142,9 @@ const Index = () => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {upcomingEvents.map((event) => (
-              <Card key={event.id} className="overflow-hidden group">
+            {upcomingEvents.map(event => <Card key={event.id} className="overflow-hidden group">
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src={event.image}
-                    alt={event.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
+                  <img src={event.image} alt={event.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 </div>
                 <CardContent className="p-6">
                   <span className="inline-block px-3 py-1 bg-blush text-primary text-xs font-medium rounded-full mb-4">
@@ -196,8 +168,7 @@ const Index = () => {
                     </Button>
                   </div>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </div>
       </section>
@@ -212,29 +183,7 @@ const Index = () => {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="p-8 bg-background border-none relative">
-                <Quote className="absolute top-6 right-6 h-8 w-8 text-primary/20" />
-                <CardContent className="pt-4">
-                  <p className="text-foreground mb-6 italic leading-relaxed">
-                    "{testimonial.quote}"
-                  </p>
-                  <div className="flex items-center gap-1 mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 text-primary fill-primary" />
-                    ))}
-                  </div>
-                  <div>
-                    <p className="font-display font-semibold text-foreground">
-                      {testimonial.author}
-                    </p>
-                    <p className="text-sm text-muted-foreground">{testimonial.role}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          
 
           <div className="text-center mt-12">
             <Button variant="outline" asChild>
@@ -269,8 +218,6 @@ const Index = () => {
           </div>
         </div>
       </section>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default Index;
