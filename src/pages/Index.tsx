@@ -34,7 +34,7 @@ const upcomingEvents = [
     location: "Johannesburg",
     price: "R450",
     image: eventImage,
-    category: "Networking",
+    category: "Networking/Creative Workshop",
   },
   {
     id: 2,
