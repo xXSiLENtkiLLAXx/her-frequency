@@ -25,7 +25,7 @@ const upcomingEvents = [{
   title: "LoveHer: Galentine's Brunch",
   date: "February 28, 2026",
   location: "Johannesburg",
-  price: "R350",
+  price: "R350.00",
   image: eventImage,
   category: "Networking/Creative Workshop"
 }, {
