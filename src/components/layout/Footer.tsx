@@ -75,7 +75,7 @@ export function Footer() {
               Creating safe, uplifting spaces for women to transform, connect, and thrive.
             </p>
             <div className="flex items-center gap-4">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="https://www.instagram.com/h.e.r_frequency/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
                 <Instagram className="h-5 w-5" />
               </a>
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
