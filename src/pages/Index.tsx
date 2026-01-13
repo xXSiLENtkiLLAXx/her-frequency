@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Sparkles, Heart, Users, Star, Calendar, Quote } from "lucide-react";
+import { ArrowRight, Sparkles, Heart, Users, Star, Calendar, Quote, Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Layout } from "@/components/layout/Layout";
@@ -91,6 +91,20 @@ const Index = () => {
               </Button>
               <Button variant="outline" size="xl" asChild>
                 <Link to="/about">Our Story</Link>
+              </Button>
+              <Button 
+                variant="soft" 
+                size="xl" 
+                className="bg-blush hover:bg-blush/80 text-primary border border-primary/20 rounded-full" 
+                asChild
+              >
+                <a 
+                  href="https://www.instagram.com/h.e.r_frequency/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  <Instagram className="mr-2 h-5 w-5" /> Follow Us on Instagram
+                </a>
               </Button>
             </div>
           </div>
