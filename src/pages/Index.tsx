@@ -43,7 +43,7 @@ const upcomingEvents = [{
   location: "Drakensberg",
   price: "R350.00",
   image: retreatImage,
-  category: "Retreat"
+  category: "Networking/Creative Workshop"
 }];
 const testimonials = [{
   quote: "Her Frequency gave me the courage to step into my power. The sisterhood I found here is unmatched.",
