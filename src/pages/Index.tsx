@@ -39,7 +39,7 @@ const upcomingEvents = [{
 }, {
   id: 3,
   title: "AwakenHer: Journey To Self Discovery",
-  date: "April 20-22, 2026",
+  date: "April 25, 2026",
   location: "Drakensberg",
   price: "R350.00",
   image: retreatImage,
