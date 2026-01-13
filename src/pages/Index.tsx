@@ -31,7 +31,7 @@ const upcomingEvents = [{
 }, {
   id: 2,
   title: "HealHer: Transform & Thrive Workshop",
-  date: "March 8, 2026",
+  date: "March 28, 2026",
   location: "Cape Town",
   price: "R350.00",
   image: coachingImage,
