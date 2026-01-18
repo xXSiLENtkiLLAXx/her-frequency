@@ -14,8 +14,8 @@ const events = [
   {
     id: 1,
     title: "LoveHer: Galentine's Brunch",
-    date: "February 15, 2026",
-    time: "10:00 AM - 2:00 PM",
+    date: "February 28, 2026",
+    time: "12:00PM - 16:00PM",
     location: "The Venue, Sandton, Johannesburg",
     price: "R350.00",
     spots: 40,
