@@ -45,7 +45,7 @@ const events = [
     date: "April 20-22, 2026",
     time: "Full Weekend",
     location: "Mountain Sanctuary, Drakensberg",
-    price: "R3,500",
+    price: "To Be Confirmed...",
     spots: 25,
     spotsLeft: 8,
     image: retreatImage,
