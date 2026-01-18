@@ -16,7 +16,7 @@ const events = [
     title: "LoveHer: Galentine's Brunch",
     date: "February 28, 2026",
     time: "12:00PM - 16:00PM",
-    location: "The Venue, Sandton, Johannesburg",
+    location: "The Venue at 21 Bill Peters Drive, Greenpoint, Cape Town",
     price: "R350.00",
     spots: 40,
     spotsLeft: 12,
