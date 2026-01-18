@@ -22,7 +22,7 @@ const events = [
     spotsLeft: 50,
     image: eventImage,
     category: "Networking/Creative Workshop",
-    description: "An intimate gathering celebrating sisterhood over gourmet brunch, featuring a guest speaker on holistic wellness and networking opportunities with like-minded women.",
+    description: "LoveHer is a welcoming space designed to help women reconnect with themselves. This experience encourages self-awareness, confidence, and compassion through guided reflection, meaningful conversation, and intentional connection. Participants leave feeling grounded, valued, and supported as they begin their journey with Her Frequency.",
     paymentLink: "https://pay.zapper.com/example",
   },
   {
