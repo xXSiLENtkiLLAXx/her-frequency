@@ -13,7 +13,7 @@ const categories = ["All", "Networking", "Workshop", "Retreat", "Coaching"];
 const events = [
   {
     id: 1,
-    title: "Women's Wellness Brunch",
+    title: "LoveHer: Galentine's Brunch",
     date: "February 15, 2026",
     time: "10:00 AM - 2:00 PM",
     location: "The Venue, Sandton, Johannesburg",
