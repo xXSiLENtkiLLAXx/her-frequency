@@ -31,7 +31,7 @@ const events = [
     date: "March 8, 2026",
     time: "9:00 AM - 4:00 PM",
     location: "Cape Town Convention Centre",
-    price: "R650",
+    price: "To Be Confirmed...",
     spots: 80,
     spotsLeft: 35,
     image: coachingImage,
