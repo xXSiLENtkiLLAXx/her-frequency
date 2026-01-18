@@ -21,7 +21,7 @@ const events = [
     spots: 40,
     spotsLeft: 12,
     image: eventImage,
-    category: "Networking",
+    category: "Networking/Creative Workshop",
     description: "An intimate gathering celebrating sisterhood over gourmet brunch, featuring a guest speaker on holistic wellness and networking opportunities with like-minded women.",
     paymentLink: "https://pay.zapper.com/example",
   },
