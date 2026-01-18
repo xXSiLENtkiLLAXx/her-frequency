@@ -17,7 +17,7 @@ const events = [
     date: "February 15, 2026",
     time: "10:00 AM - 2:00 PM",
     location: "The Venue, Sandton, Johannesburg",
-    price: "R450",
+    price: "R350.00",
     spots: 40,
     spotsLeft: 12,
     image: eventImage,
