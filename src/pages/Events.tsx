@@ -19,7 +19,7 @@ const events = [
     location: "The Venue at 21 Bill Peters Drive, Greenpoint, Cape Town",
     price: "R350.00",
     spots: 40,
-    spotsLeft: 12,
+    spotsLeft: 50,
     image: eventImage,
     category: "Networking/Creative Workshop",
     description: "An intimate gathering celebrating sisterhood over gourmet brunch, featuring a guest speaker on holistic wellness and networking opportunities with like-minded women.",
