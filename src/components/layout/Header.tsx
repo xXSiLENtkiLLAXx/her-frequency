@@ -8,9 +8,9 @@ const navigation = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
   { name: "Events", href: "/events" },
-  { name: "Services", href: "/services" },
-  { name: "Shop", href: "/shop" },
-  { name: "Blog", href: "/blog" },
+  // { name: "Services", href: "/services" },  // Hidden for now
+  // { name: "Shop", href: "/shop" },          // Hidden for now
+  // { name: "Blog", href: "/blog" },          // Hidden for now
   { name: "Contact", href: "/contact" },
 ];
 
