@@ -51,7 +51,7 @@ export function Header() {
           <div className="hidden lg:flex items-center gap-4">
             <div className="flex items-center gap-3 mr-4">
               <a
-                href="https://www.instagram.com/h.e.r_frequency/"
+                href="https://www.instagram.com/herfrequencyza/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors"
