@@ -9,39 +9,26 @@ const footerLinks = {
   }, {
     name: "Our Mission",
     href: "/about#mission"
-  }, {
-    name: "Testimonials",
-    href: "/testimonials"
-  }, {
+  }, 
+  // { name: "Testimonials", href: "/testimonials" },  // Hidden for now
+  {
     name: "FAQ",
     href: "/faq"
   }],
   services: [{
     name: "Events",
     href: "/events"
-  }, {
-    name: "Coaching",
-    href: "/services#coaching"
-  }, {
-    name: "Workshops",
-    href: "/services#workshops"
-  }, {
-    name: "Retreats",
-    href: "/services#retreats"
-  }],
-  shop: [{
-    name: "All Products",
-    href: "/shop"
-  }, {
-    name: "Journals",
-    href: "/shop#journals"
-  }, {
-    name: "Candles",
-    href: "/shop#candles"
-  }, {
-    name: "Apparel",
-    href: "/shop#apparel"
-  }]
+  }, 
+  // { name: "Coaching", href: "/services#coaching" },    // Hidden for now
+  // { name: "Workshops", href: "/services#workshops" },  // Hidden for now
+  // { name: "Retreats", href: "/services#retreats" },    // Hidden for now
+  ],
+  shop: [
+  // { name: "All Products", href: "/shop" },       // Hidden for now
+  // { name: "Journals", href: "/shop#journals" },  // Hidden for now
+  // { name: "Candles", href: "/shop#candles" },    // Hidden for now
+  // { name: "Apparel", href: "/shop#apparel" },    // Hidden for now
+  ]
 };
 export function Footer() {
   return <footer className="bg-muted/50 border-t border-border">
@@ -99,29 +86,33 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Services Links */}
-          <div>
-            <h4 className="font-display font-semibold text-foreground mb-4">Services</h4>
-            <ul className="space-y-3">
-              {footerLinks.services.map(link => <li key={link.name}>
-                  <Link to={link.href} className="text-muted-foreground hover:text-primary text-sm transition-colors">
-                    {link.name}
-                  </Link>
-                </li>)}
-            </ul>
-          </div>
+          {/* Services Links - Hidden for now */}
+          {footerLinks.services.length > 0 && (
+            <div>
+              <h4 className="font-display font-semibold text-foreground mb-4">Services</h4>
+              <ul className="space-y-3">
+                {footerLinks.services.map(link => <li key={link.name}>
+                    <Link to={link.href} className="text-muted-foreground hover:text-primary text-sm transition-colors">
+                      {link.name}
+                    </Link>
+                  </li>)}
+              </ul>
+            </div>
+          )}
 
-          {/* Shop Links */}
-          <div>
-            <h4 className="font-display font-semibold text-foreground mb-4">Shop</h4>
-            <ul className="space-y-3">
-              {footerLinks.shop.map(link => <li key={link.name}>
-                  <Link to={link.href} className="text-muted-foreground hover:text-primary text-sm transition-colors">
-                    {link.name}
-                  </Link>
-                </li>)}
-            </ul>
-          </div>
+          {/* Shop Links - Hidden for now */}
+          {footerLinks.shop.length > 0 && (
+            <div>
+              <h4 className="font-display font-semibold text-foreground mb-4">Shop</h4>
+              <ul className="space-y-3">
+                {footerLinks.shop.map(link => <li key={link.name}>
+                    <Link to={link.href} className="text-muted-foreground hover:text-primary text-sm transition-colors">
+                      {link.name}
+                    </Link>
+                  </li>)}
+              </ul>
+            </div>
+          )}
         </div>
 
         {/* Contact Info */}
