@@ -31,57 +31,57 @@ const faqs = [
       },
     ],
   },
-  {
-    category: "Coaching",
-    questions: [
-      {
-        question: "How do coaching sessions work?",
-        answer: "Coaching sessions are 60-minute one-on-one conversations either virtually (via Zoom) or in-person (Johannesburg area). After booking, you'll complete a brief questionnaire so your coach can prepare. Sessions focus on your specific goals, challenges, and next steps.",
-      },
-      {
-        question: "How do I choose the right coach for me?",
-        answer: "We offer a complimentary 15-minute discovery call where you can meet your potential coach and ensure it's the right fit. Our coaches specialize in different areas (career, life transitions, wellness), and we'll match you based on your needs.",
-      },
-      {
-        question: "What's the difference between coaching packages?",
-        answer: "Our packages differ in the number of sessions and additional support included. Starter (4 sessions) is great for addressing a specific challenge. Transform (8 sessions) allows for deeper work. Elevate (12 sessions) provides comprehensive transformation with ongoing support.",
-      },
-    ],
-  },
-  {
-    category: "Retreats",
-    questions: [
-      {
-        question: "What's included in retreat pricing?",
-        answer: "Our retreat prices typically include accommodation, all meals, workshops, yoga/meditation sessions, and materials. Some retreats include spa treatments. Transportation to the venue is usually not included unless specified. Full details are listed on each retreat page.",
-      },
-      {
-        question: "I've never done yoga/meditation. Can I still attend?",
-        answer: "Absolutely! Our retreats welcome all experience levels. Activities are adaptable, and there's never any pressure to participate in anything that doesn't feel right for you. The goal is rest and renewal - however that looks for you.",
-      },
-      {
-        question: "Can I share a room?",
-        answer: "Most retreats offer both private and shared room options at different price points. Shared rooms are perfect for those attending with friends or who want to reduce costs. Details are specified during booking.",
-      },
-    ],
-  },
-  {
-    category: "Shop & Products",
-    questions: [
-      {
-        question: "How do I purchase products?",
-        answer: "Click on any product and select 'Buy Now' to be redirected to our secure Zapper payment page. After payment, we'll send a confirmation email and shipping details.",
-      },
-      {
-        question: "What are the shipping costs and times?",
-        answer: "We offer free shipping on orders over R500. Standard shipping (3-5 business days) is R50. Express shipping (1-2 business days) is R100. Currently shipping within South Africa only.",
-      },
-      {
-        question: "Can I return a product?",
-        answer: "We accept returns within 14 days of delivery for unused items in original packaging. Please email us to initiate a return. Personalized items cannot be returned unless damaged.",
-      },
-    ],
-  },
+  // {
+  //   category: "Coaching",
+  //   questions: [
+  //     {
+  //       question: "How do coaching sessions work?",
+  //       answer: "Coaching sessions are 60-minute one-on-one conversations either virtually (via Zoom) or in-person (Johannesburg area). After booking, you'll complete a brief questionnaire so your coach can prepare. Sessions focus on your specific goals, challenges, and next steps.",
+  //     },
+  //     {
+  //       question: "How do I choose the right coach for me?",
+  //       answer: "We offer a complimentary 15-minute discovery call where you can meet your potential coach and ensure it's the right fit. Our coaches specialize in different areas (career, life transitions, wellness), and we'll match you based on your needs.",
+  //     },
+  //     {
+  //       question: "What's the difference between coaching packages?",
+  //       answer: "Our packages differ in the number of sessions and additional support included. Starter (4 sessions) is great for addressing a specific challenge. Transform (8 sessions) allows for deeper work. Elevate (12 sessions) provides comprehensive transformation with ongoing support.",
+  //     },
+  //   ],
+  // },
+  // {
+  //   category: "Retreats",
+  //   questions: [
+  //     {
+  //       question: "What's included in retreat pricing?",
+  //       answer: "Our retreat prices typically include accommodation, all meals, workshops, yoga/meditation sessions, and materials. Some retreats include spa treatments. Transportation to the venue is usually not included unless specified. Full details are listed on each retreat page.",
+  //     },
+  //     {
+  //       question: "I've never done yoga/meditation. Can I still attend?",
+  //       answer: "Absolutely! Our retreats welcome all experience levels. Activities are adaptable, and there's never any pressure to participate in anything that doesn't feel right for you. The goal is rest and renewal - however that looks for you.",
+  //     },
+  //     {
+  //       question: "Can I share a room?",
+  //       answer: "Most retreats offer both private and shared room options at different price points. Shared rooms are perfect for those attending with friends or who want to reduce costs. Details are specified during booking.",
+  //     },
+  //   ],
+  // },
+  // {
+  //   category: "Shop & Products",
+  //   questions: [
+  //     {
+  //       question: "How do I purchase products?",
+  //       answer: "Click on any product and select 'Buy Now' to be redirected to our secure Zapper payment page. After payment, we'll send a confirmation email and shipping details.",
+  //     },
+  //     {
+  //       question: "What are the shipping costs and times?",
+  //       answer: "We offer free shipping on orders over R500. Standard shipping (3-5 business days) is R50. Express shipping (1-2 business days) is R100. Currently shipping within South Africa only.",
+  //     },
+  //     {
+  //       question: "Can I return a product?",
+  //       answer: "We accept returns within 14 days of delivery for unused items in original packaging. Please email us to initiate a return. Personalized items cannot be returned unless damaged.",
+  //     },
+  //   ],
+  // },
   {
     category: "General",
     questions: [
