@@ -99,7 +99,7 @@ const Index = () => {
                 asChild
               >
                 <a 
-                  href="https://www.instagram.com/h.e.r_frequency/" 
+                  href="https://www.instagram.com/herfrequencyza/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                 >
