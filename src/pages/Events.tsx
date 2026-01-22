@@ -4,56 +4,9 @@ import { Calendar, MapPin, Users, Filter, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Layout } from "@/components/layout/Layout";
-import eventImage from "@/assets/event-wellness.jpg";
-import coachingImage from "@/assets/coaching-session.jpg";
-import retreatImage from "@/assets/retreat-setting.jpg";
+import { events } from "@/data/events";
 
 const categories = ["All", "Networking", "Workshop", "Retreat", "Coaching"];
-
-const events = [
-  {
-    id: 1,
-    title: "LoveHer: Galentine's Brunch",
-    date: "February 28, 2026",
-    time: "12:00PM - 16:00PM",
-    location: "The Venue at 21 Bill Peters Drive, Greenpoint, Cape Town",
-    price: "R350.00",
-    spots: 40,
-    spotsLeft: 50,
-    image: eventImage,
-    category: "Networking/Creative Workshop",
-    description: "LoveHer is a welcoming space designed to help women reconnect with themselves. This experience encourages self-awareness, confidence, and compassion through guided reflection, meaningful conversation, and intentional connection. Participants leave feeling grounded, valued, and supported as they begin their journey with Her Frequency.",
-    paymentLink: "https://pay.zapper.com/example",
-  },
-  {
-    id: 2,
-    title: "HealHer: Transform & Thrive Workshop",
-    date: "March 28, 2026",
-    time: "9:00 AM - 4:00 PM",
-    location: "Cape Town",
-    price: "Coming Soon",
-    spots: 80,
-    spotsLeft: 35,
-    image: coachingImage,
-    category: "Workshop",
-    description: "A full-day intensive workshop focused on personal transformation, goal setting, and creating actionable plans for the life you desire.",
-    paymentLink: "https://pay.zapper.com/example",
-  },
-  {
-    id: 3,
-    title: "AwakenHer: Journey To Self Discovery",
-    date: "April 25, 2026",
-    time: "Full Day",
-    location: "Drakensberg",
-    price: "Coming Soon",
-    spots: 25,
-    spotsLeft: 8,
-    image: retreatImage,
-    category: "Networking/Creative Workshop",
-    description: "Escape to the mountains for a transformative experience of yoga, meditation, journaling, and deep connection with fellow women on a journey of self-discovery.",
-    paymentLink: "https://pay.zapper.com/example",
-  },
-];
 
 const Events = () => {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -150,15 +103,22 @@ const Events = () => {
                         </>
                       )}
                     </div>
-                    <div className="flex items-center justify-between mt-6 pt-4 border-t border-border">
-                      <span className="font-display text-2xl font-semibold text-primary">
+                    <div className="flex items-center justify-between mt-6 pt-4 border-t border-border gap-2">
+                      <span className="font-display text-xl font-semibold text-primary">
                         {event.price}
                       </span>
-                      <Button variant="default" size="sm" asChild>
-                        <a href={event.paymentLink} target="_blank" rel="noopener noreferrer">
-                          Book Now <ExternalLink className="ml-2 h-4 w-4" />
-                        </a>
-                      </Button>
+                      <div className="flex gap-2">
+                        <Button variant="outline" size="sm" asChild>
+                          <Link to={`/events/${event.id}`}>Learn More</Link>
+                        </Button>
+                        {event.id === 1 && (
+                          <Button variant="default" size="sm" asChild>
+                            <a href={event.paymentLink} target="_blank" rel="noopener noreferrer">
+                              Book Now <ExternalLink className="ml-2 h-4 w-4" />
+                            </a>
+                          </Button>
+                        )}
+                      </div>
                     </div>
                   </CardContent>
                 </div>
