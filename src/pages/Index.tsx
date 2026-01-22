@@ -33,7 +33,7 @@ const upcomingEvents = [{
   title: "HealHer: Transform & Thrive Workshop",
   date: "March 28, 2026",
   location: "Cape Town",
-  price: "R350.00",
+  price: "Coming Soon",
   image: coachingImage,
   category: "Workshop"
 }, {
@@ -41,7 +41,7 @@ const upcomingEvents = [{
   title: "AwakenHer: Journey To Self Discovery",
   date: "April 25, 2026",
   location: "Drakensberg",
-  price: "R350.00",
+  price: "Coming Soon",
   image: retreatImage,
   category: "Networking/Creative Workshop"
 }];
