@@ -167,12 +167,14 @@ const Index = () => {
                   <h3 className="font-display text-xl font-semibold text-foreground mb-2">
                     {event.title}
                   </h3>
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
-                    <span className="flex items-center gap-1">
-                      <Calendar className="h-4 w-4" />
-                      {event.date}
-                    </span>
-                  </div>
+                  {event.id === 1 && (
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+                      <span className="flex items-center gap-1">
+                        <Calendar className="h-4 w-4" />
+                        {event.date}
+                      </span>
+                    </div>
+                  )}
                   <div className="flex items-center justify-between">
                     <span className="font-display text-lg font-semibold text-primary">
                       {event.price}
