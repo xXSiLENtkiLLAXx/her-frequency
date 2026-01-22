@@ -126,25 +126,29 @@ const Events = () => {
                       <h3 className="font-display text-xl font-semibold text-foreground mb-3">
                         {event.title}
                       </h3>
-                      <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                        {event.description}
-                      </p>
-                      <div className="space-y-2 text-sm text-muted-foreground">
-                        <div className="flex items-center gap-2">
-                          <Calendar className="h-4 w-4 text-primary" />
-                          <span>{event.date} • {event.time}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <MapPin className="h-4 w-4 text-primary" />
-                          <span>{event.location}</span>
-                        </div>
-                        {event.spots > 0 && (
-                          <div className="flex items-center gap-2">
-                            <Users className="h-4 w-4 text-primary" />
-                            <span>{event.spotsLeft} spots left</span>
+                      {event.id === 1 && (
+                        <>
+                          <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                            {event.description}
+                          </p>
+                          <div className="space-y-2 text-sm text-muted-foreground">
+                            <div className="flex items-center gap-2">
+                              <Calendar className="h-4 w-4 text-primary" />
+                              <span>{event.date} • {event.time}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <MapPin className="h-4 w-4 text-primary" />
+                              <span>{event.location}</span>
+                            </div>
+                            {event.spots > 0 && (
+                              <div className="flex items-center gap-2">
+                                <Users className="h-4 w-4 text-primary" />
+                                <span>{event.spotsLeft} spots left</span>
+                              </div>
+                            )}
                           </div>
-                        )}
-                      </div>
+                        </>
+                      )}
                     </div>
                     <div className="flex items-center justify-between mt-6 pt-4 border-t border-border">
                       <span className="font-display text-2xl font-semibold text-primary">
