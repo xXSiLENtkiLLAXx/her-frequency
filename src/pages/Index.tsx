@@ -4,9 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Layout } from "@/components/layout/Layout";
 import heroImage from "@/assets/hero-sisterhood.jpg";
-import eventImage from "@/assets/event-wellness.jpg";
-import coachingImage from "@/assets/coaching-session.jpg";
-import retreatImage from "@/assets/retreat-setting.jpg";
+import { events as upcomingEvents } from "@/data/events";
+
 const values = [{
   icon: Heart,
   title: "Empowerment",
@@ -19,31 +18,6 @@ const values = [{
   icon: Users,
   title: "Sisterhood",
   description: "Building a community of support and love"
-}];
-const upcomingEvents = [{
-  id: 1,
-  title: "LoveHer: Galentine's Brunch",
-  date: "February 28, 2026",
-  location: "Johannesburg",
-  price: "R350.00",
-  image: eventImage,
-  category: "Networking/Creative Workshop"
-}, {
-  id: 2,
-  title: "HealHer: Transform & Thrive Workshop",
-  date: "March 28, 2026",
-  location: "Cape Town",
-  price: "Coming Soon",
-  image: coachingImage,
-  category: "Workshop"
-}, {
-  id: 3,
-  title: "AwakenHer: Journey To Self Discovery",
-  date: "April 25, 2026",
-  location: "Drakensberg",
-  price: "Coming Soon",
-  image: retreatImage,
-  category: "Networking/Creative Workshop"
 }];
 const testimonials = [{
   quote: "Her Frequency gave me the courage to step into my power. The sisterhood I found here is unmatched.",
