@@ -3,7 +3,7 @@ import { ArrowRight, Sparkles, Heart, Users, Star, Calendar, Quote, Instagram } 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Layout } from "@/components/layout/Layout";
-import heroBokehBackground from "@/assets/hero-bokeh-large.jpg";
+import heroBokehBackground from "@/assets/hero-background-no-ladies.jpg";
 import herFrequencyLogo from "@/assets/herfrequency-logo.jpeg";
 import { events as upcomingEvents } from "@/data/events";
 
