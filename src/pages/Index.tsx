@@ -37,18 +37,15 @@ const Index = () => {
   return <Layout>
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0">
-          <img src={heroImage} alt="Women supporting each other" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/70 to-background/50" />
-        </div>
+        {/* Background Gradient */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-br from-background via-blush/20 to-powder-blue/20" />
 
-        {/* Faded Logo Background */}
-        <div className="absolute inset-0 z-[1] flex items-center justify-center pointer-events-none">
+        {/* Faded Logo Background - positioned in top area */}
+        <div className="absolute top-8 md:top-16 left-1/2 -translate-x-1/2 z-[1] pointer-events-none">
           <img 
             src={herFrequencyLogo} 
             alt="" 
-            className="w-[60%] max-w-2xl opacity-10 object-contain"
+            className="w-[280px] md:w-[400px] lg:w-[500px] opacity-20 object-contain"
           />
         </div>
 
