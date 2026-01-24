@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Layout } from "@/components/layout/Layout";
 import heroBokehBackground from "@/assets/hero-background-no-ladies.jpg";
-import herFrequencyLogo from "@/assets/herfrequency-logo.jpeg";
+import herFrequencyLogo from "@/assets/herfrequency-logo-transparent.jpeg";
 import { events as upcomingEvents } from "@/data/events";
 
 const values = [{
@@ -48,7 +48,7 @@ const Index = () => {
           <img 
             src={herFrequencyLogo} 
             alt="" 
-            className="w-[450px] md:w-[600px] lg:w-[750px] opacity-15 object-contain mix-blend-multiply"
+            className="w-[450px] md:w-[600px] lg:w-[750px] opacity-30 object-contain"
           />
         </div>
 
