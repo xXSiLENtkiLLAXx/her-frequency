@@ -3,7 +3,7 @@ import { ArrowRight, Sparkles, Heart, Users, Star, Calendar, Quote, Instagram } 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Layout } from "@/components/layout/Layout";
-import heroBokehBackground from "@/assets/hero-bokeh-background.jpg";
+import heroBokehBackground from "@/assets/hero-bokeh-large.jpg";
 import herFrequencyLogo from "@/assets/herfrequency-logo.jpeg";
 import { events as upcomingEvents } from "@/data/events";
 
@@ -43,12 +43,12 @@ const Index = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-background/40 to-background/30" />
         </div>
 
-        {/* Faded Logo Background - positioned in top area, enlarged */}
-        <div className="absolute top-4 md:top-8 left-1/2 -translate-x-1/2 z-[1] pointer-events-none">
+        {/* Faded Logo Background - positioned at very top, blending into background */}
+        <div className="absolute -top-8 md:-top-12 left-1/2 -translate-x-1/2 z-[1] pointer-events-none">
           <img 
             src={herFrequencyLogo} 
             alt="" 
-            className="w-[400px] md:w-[550px] lg:w-[700px] opacity-25 object-contain"
+            className="w-[450px] md:w-[600px] lg:w-[750px] opacity-15 object-contain mix-blend-multiply"
           />
         </div>
 
