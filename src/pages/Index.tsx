@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Layout } from "@/components/layout/Layout";
 import heroImage from "@/assets/hero-sisterhood.jpg";
+import herFrequencyLogo from "@/assets/herfrequency-logo.jpeg";
 import { events as upcomingEvents } from "@/data/events";
 
 const values = [{
@@ -40,6 +41,15 @@ const Index = () => {
         <div className="absolute inset-0 z-0">
           <img src={heroImage} alt="Women supporting each other" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/70 to-background/50" />
+        </div>
+
+        {/* Faded Logo Background */}
+        <div className="absolute inset-0 z-[1] flex items-center justify-center pointer-events-none">
+          <img 
+            src={herFrequencyLogo} 
+            alt="" 
+            className="w-[60%] max-w-2xl opacity-10 object-contain"
+          />
         </div>
 
         {/* Content */}
