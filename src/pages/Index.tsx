@@ -3,7 +3,7 @@ import { ArrowRight, Sparkles, Heart, Users, Star, Calendar, Quote, Instagram } 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Layout } from "@/components/layout/Layout";
-import heroImage from "@/assets/hero-sisterhood.jpg";
+import heroBokehBackground from "@/assets/hero-bokeh-background.jpg";
 import herFrequencyLogo from "@/assets/herfrequency-logo.jpeg";
 import { events as upcomingEvents } from "@/data/events";
 
@@ -37,10 +37,10 @@ const Index = () => {
   return <Layout>
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-        {/* Background with gradient overlay (no image) */}
+        {/* Bokeh Background */}
         <div className="absolute inset-0 z-0">
-          <div className="w-full h-full bg-gradient-to-br from-blush/40 via-powder-blue/30 to-background" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/70 to-background/50" />
+          <img src={heroBokehBackground} alt="" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-background/40 to-background/30" />
         </div>
 
         {/* Faded Logo Background - positioned in top area, enlarged */}
