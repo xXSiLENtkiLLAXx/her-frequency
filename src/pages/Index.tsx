@@ -7,6 +7,7 @@ import heroBokehBackground from "@/assets/hero-background-no-ladies.jpg";
 import herFrequencyLogo from "@/assets/herfrequency-logo-transparent.jpeg";
 import { events as upcomingEvents } from "@/data/events";
 import { TestimonialCard } from "@/components/testimonials/TestimonialCard";
+import { LeaveReviewCard } from "@/components/testimonials/LeaveReviewCard";
 import { useTestimonials } from "@/hooks/useTestimonials";
 
 const values = [{
@@ -23,7 +24,7 @@ const values = [{
   description: "Building a community of support and love"
 }];
 const Index = () => {
-  const { data: testimonials = [], isLoading: testimonialsLoading } = useTestimonials(3);
+  const { data: testimonials = [], isLoading: testimonialsLoading } = useTestimonials(2);
   return <Layout>
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
@@ -192,6 +193,8 @@ const Index = () => {
                   compact
                 />
               ))}
+              {/* Leave a Review Card */}
+              <LeaveReviewCard compact />
             </div>
           )}
 
