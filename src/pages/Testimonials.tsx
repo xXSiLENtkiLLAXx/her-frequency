@@ -2,7 +2,7 @@ import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { TestimonialCard } from "@/components/testimonials/TestimonialCard";
-import { TestimonialForm } from "@/components/testimonials/TestimonialForm";
+import { LeaveReviewCard } from "@/components/testimonials/LeaveReviewCard";
 import { useTestimonials } from "@/hooks/useTestimonials";
 
 const Testimonials = () => {
@@ -28,34 +28,21 @@ const Testimonials = () => {
         </div>
       </section>
 
-      {/* Submit Your Story */}
-      <section className="section-padding bg-blush/20">
-        <div className="container-custom mx-auto">
-          <TestimonialForm />
-        </div>
-      </section>
-
-      {/* Testimonials Grid */}
+      {/* Testimonials Grid with Leave Review Card */}
       <section className="section-padding">
         <div className="container-custom mx-auto">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <h2 className="font-display text-3xl md:text-4xl font-semibold text-foreground">
-              Community Stories
-            </h2>
-          </div>
-
           {isLoading ? (
             <div className="grid md:grid-cols-2 gap-8">
               {[1, 2, 3, 4].map((i) => (
                 <div key={i} className="h-64 bg-card/50 rounded-2xl animate-pulse" />
               ))}
             </div>
-          ) : testimonials.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">No testimonials yet. Be the first to share your experience!</p>
-            </div>
           ) : (
             <div className="grid md:grid-cols-2 gap-8">
+              {/* Leave a Review Card - First position */}
+              <LeaveReviewCard />
+              
+              {/* All testimonials */}
               {testimonials.map((testimonial) => (
                 <TestimonialCard
                   key={testimonial.id}
