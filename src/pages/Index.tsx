@@ -14,7 +14,7 @@ const values = [{
 }, {
   icon: Sparkles,
   title: "Authenticity",
-  description: "Embracing our true selves without apology"
+  description: "Embracing our true selves"
 }, {
   icon: Users,
   title: "Sisterhood",
@@ -65,7 +65,7 @@ const Index = () => {
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-xl mb-10 animate-fade-up delay-200">
               Join a community of powerful women transforming their lives through events, 
-              workshops, coaching, and genuine sisterhood.
+              workshops, and genuine sisterhood.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 animate-fade-up delay-300">
               <Button variant="hero" size="xl" asChild>
