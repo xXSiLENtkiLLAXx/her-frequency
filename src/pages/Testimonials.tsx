@@ -1,61 +1,13 @@
-import { Star, Quote } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-
-const testimonials = [
-  {
-    quote: "Her Frequency gave me the courage to step into my power. The sisterhood I found here is unmatched. Every event leaves me feeling renewed and inspired.",
-    author: "Nomvula Mokwena",
-    role: "Entrepreneur",
-    location: "Johannesburg",
-  },
-  {
-    quote: "The Transform & Thrive workshop changed my entire perspective on goal-setting. I left with a clear vision and actionable steps. Six months later, I've achieved more than I did in the previous three years.",
-    author: "Sarah Kruger",
-    role: "Creative Director",
-    location: "Cape Town",
-  },
-  {
-    quote: "The coaching sessions transformed not just my mindset, but my entire life trajectory. My coach helped me see possibilities I didn't know existed. Forever grateful for this community.",
-    author: "Thembi Nkosi",
-    role: "Corporate Executive",
-    location: "Durban",
-  },
-  {
-    quote: "As a mother of three, I rarely prioritize myself. The wellness retreat was a gift I didn't know I needed. I came home a better version of myself, for me and my family.",
-    author: "Priya Naidoo",
-    role: "Full-time Mom",
-    location: "Pretoria",
-  },
-  {
-    quote: "I was skeptical at first - another women's event, right? But this was different. Genuine connections, real conversations, and tools I still use daily. This is the real deal.",
-    author: "Lindiwe Dlamini",
-    role: "Startup Founder",
-    location: "Johannesburg",
-  },
-  {
-    quote: "The networking soirée connected me with my now business partner. Beyond that, I've made lifelong friends. Her Frequency isn't just events - it's a movement.",
-    author: "Michelle Adams",
-    role: "Marketing Consultant",
-    location: "Cape Town",
-  },
-  {
-    quote: "My coach helped me navigate a difficult career transition with grace and confidence. I'm now in my dream role, and I credit this community for helping me believe it was possible.",
-    author: "Zinhle Mthembu",
-    role: "Tech Lead",
-    location: "Sandton",
-  },
-  {
-    quote: "The retreat in the Drakensberg was magical. The combination of nature, sisterhood, and inner work created a transformation I didn't expect. Already booked for the next one!",
-    author: "Fatima Patel",
-    role: "Wellness Coach",
-    location: "Johannesburg",
-  },
-];
+import { TestimonialCard } from "@/components/testimonials/TestimonialCard";
+import { TestimonialForm } from "@/components/testimonials/TestimonialForm";
+import { useTestimonials } from "@/hooks/useTestimonials";
 
 const Testimonials = () => {
+  const { data: testimonials = [], isLoading } = useTestimonials();
+
   return (
     <Layout>
       {/* Hero Section */}
@@ -70,47 +22,52 @@ const Testimonials = () => {
             </h1>
             <p className="text-lg text-muted-foreground">
               Hear from the incredible women who've experienced transformation 
-              through our events, coaching, and community.
+              through our events and community.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* Submit Your Story */}
+      <section className="section-padding bg-blush/20">
+        <div className="container-custom mx-auto">
+          <TestimonialForm />
         </div>
       </section>
 
       {/* Testimonials Grid */}
       <section className="section-padding">
         <div className="container-custom mx-auto">
-          <div className="grid md:grid-cols-2 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="p-8 relative">
-                <Quote className="absolute top-6 right-6 h-10 w-10 text-primary/10" />
-                <CardContent className="pt-0">
-                  <div className="flex items-center gap-1 mb-6">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-5 w-5 text-primary fill-primary" />
-                    ))}
-                  </div>
-                  <p className="text-foreground text-lg leading-relaxed mb-8 italic">
-                    "{testimonial.quote}"
-                  </p>
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-blush flex items-center justify-center">
-                      <span className="font-display text-lg font-semibold text-primary">
-                        {testimonial.author.charAt(0)}
-                      </span>
-                    </div>
-                    <div>
-                      <p className="font-display font-semibold text-foreground">
-                        {testimonial.author}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        {testimonial.role} • {testimonial.location}
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <h2 className="font-display text-3xl md:text-4xl font-semibold text-foreground">
+              Community Stories
+            </h2>
           </div>
+
+          {isLoading ? (
+            <div className="grid md:grid-cols-2 gap-8">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="h-64 bg-card/50 rounded-2xl animate-pulse" />
+              ))}
+            </div>
+          ) : testimonials.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">No testimonials yet. Be the first to share your experience!</p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 gap-8">
+              {testimonials.map((testimonial) => (
+                <TestimonialCard
+                  key={testimonial.id}
+                  quote={testimonial.quote}
+                  author={testimonial.name}
+                  role={testimonial.role || undefined}
+                  location={testimonial.location || undefined}
+                  rating={testimonial.rating}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -128,9 +85,6 @@ const Testimonials = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button variant="hero" size="lg" asChild>
                 <Link to="/events">Join an Event</Link>
-              </Button>
-              <Button variant="outline" size="lg" asChild>
-                <Link to="/services">Explore Services</Link>
               </Button>
             </div>
           </div>

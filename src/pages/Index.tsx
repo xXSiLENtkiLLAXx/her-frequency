@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Sparkles, Heart, Users, Star, Calendar, Quote, Instagram } from "lucide-react";
+import { ArrowRight, Sparkles, Heart, Users, Calendar, Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Layout } from "@/components/layout/Layout";
 import heroBokehBackground from "@/assets/hero-background-no-ladies.jpg";
 import herFrequencyLogo from "@/assets/herfrequency-logo-transparent.jpeg";
 import { events as upcomingEvents } from "@/data/events";
+import { TestimonialCard } from "@/components/testimonials/TestimonialCard";
+import { useTestimonials } from "@/hooks/useTestimonials";
 
 const values = [{
   icon: Heart,
@@ -20,20 +22,8 @@ const values = [{
   title: "Sisterhood",
   description: "Building a community of support and love"
 }];
-const testimonials = [{
-  quote: "Her Frequency gave me the courage to step into my power. The sisterhood I found here is unmatched.",
-  author: "Nomvula M.",
-  role: "Entrepreneur"
-}, {
-  quote: "Every event leaves me feeling renewed, inspired, and more connected to myself and other incredible women.",
-  author: "Sarah K.",
-  role: "Creative Director"
-}, {
-  quote: "The coaching sessions transformed not just my mindset, but my entire life trajectory. Forever grateful.",
-  author: "Thembi N.",
-  role: "Corporate Executive"
-}];
 const Index = () => {
+  const { data: testimonials = [], isLoading: testimonialsLoading } = useTestimonials(3);
   return <Layout>
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
@@ -183,7 +173,27 @@ const Index = () => {
             </h2>
           </div>
 
-          
+          {testimonialsLoading ? (
+            <div className="grid md:grid-cols-3 gap-8">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="h-64 bg-card/50 rounded-2xl animate-pulse" />
+              ))}
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-3 gap-8">
+              {testimonials.map((testimonial) => (
+                <TestimonialCard
+                  key={testimonial.id}
+                  quote={testimonial.quote}
+                  author={testimonial.name}
+                  role={testimonial.role || undefined}
+                  location={testimonial.location || undefined}
+                  rating={testimonial.rating}
+                  compact
+                />
+              ))}
+            </div>
+          )}
 
           <div className="text-center mt-12">
             <Button variant="outline" asChild>
