@@ -5,51 +5,37 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Layout } from "@/components/layout/Layout";
 import heroImage from "@/assets/hero-sisterhood.jpg";
 import coachingImage from "@/assets/coaching-session.jpg";
-
-const values = [
-  {
-    icon: Heart,
-    title: "Empowerment",
-    description: "We believe every woman has the power to create the life she desires.",
-  },
-  {
-    icon: Sparkles,
-    title: "Authenticity",
-    description: "We encourage showing up as your true self, without masks or pretense.",
-  },
-  {
-    icon: Flower2,
-    title: "Wellness",
-    description: "Holistic wellbeing of mind, body, and spirit is at our core.",
-  },
-  {
-    icon: Users,
-    title: "Inclusivity",
-    description: "Every woman is welcome here, regardless of background or journey.",
-  },
-  {
-    icon: Heart,
-    title: "Sisterhood",
-    description: "We lift each other up, celebrate wins, and support through challenges.",
-  },
-  {
-    icon: Target,
-    title: "Growth",
-    description: "Continuous personal development and transformation is our path.",
-  },
-];
-
+const values = [{
+  icon: Heart,
+  title: "Empowerment",
+  description: "We believe every woman has the power to create the life she desires."
+}, {
+  icon: Sparkles,
+  title: "Authenticity",
+  description: "We encourage showing up as your true self, without masks or pretense."
+}, {
+  icon: Flower2,
+  title: "Wellness",
+  description: "Holistic wellbeing of mind, body, and spirit is at our core."
+}, {
+  icon: Users,
+  title: "Inclusivity",
+  description: "Every woman is welcome here, regardless of background or journey."
+}, {
+  icon: Heart,
+  title: "Sisterhood",
+  description: "We lift each other up, celebrate wins, and support through challenges."
+}, {
+  icon: Target,
+  title: "Growth",
+  description: "Continuous personal development and transformation is our path."
+}];
 const About = () => {
-  return (
-    <Layout>
+  return <Layout>
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img
-            src={heroImage}
-            alt="Her Frequency community"
-            className="w-full h-full object-cover opacity-30"
-          />
+          <img src={heroImage} alt="Her Frequency community" className="w-full h-full object-cover opacity-30" />
           <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background" />
         </div>
 
@@ -74,11 +60,7 @@ const About = () => {
         <div className="container-custom mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <img
-                src={coachingImage}
-                alt="Women in conversation"
-                className="rounded-3xl shadow-elevated"
-              />
+              <img src={coachingImage} alt="Women in conversation" className="rounded-3xl shadow-elevated" />
             </div>
             <div>
               <div className="mb-12">
@@ -88,12 +70,7 @@ const About = () => {
                   </div>
                   <h2 className="font-display text-2xl font-semibold text-foreground">Our Mission</h2>
                 </div>
-                <p className="text-muted-foreground leading-relaxed">
-                  To create transformative spaces where women can discover their authentic selves, 
-                  connect with a supportive sisterhood, and access the tools and guidance needed to 
-                  thrive in every area of life. Through events, workshops, coaching, and wellness 
-                  experiences, we empower women to step into their full potential.
-                </p>
+                <p className="text-muted-foreground leading-relaxed">To create transformative spaces where women can discover their authentic selves, connect with a supportive sisterhood, and access the tools and guidance needed to thrive in every area of life. Through events, workshops, and wellness experiences, we empower women to step into their full potential.</p>
               </div>
 
               <div>
@@ -126,8 +103,7 @@ const About = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {values.map((value) => (
-              <Card key={value.title} className="p-8 bg-card/80 backdrop-blur-sm border-none">
+            {values.map(value => <Card key={value.title} className="p-8 bg-card/80 backdrop-blur-sm border-none">
                 <CardContent className="pt-0">
                   <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-blush mb-6">
                     <value.icon className="h-7 w-7 text-primary" />
@@ -137,8 +113,7 @@ const About = () => {
                   </h3>
                   <p className="text-muted-foreground">{value.description}</p>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </div>
       </section>
@@ -155,24 +130,12 @@ const About = () => {
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
-              {[
-                "Professionals seeking work-life balance and personal growth",
-                "Entrepreneurs building their dreams while nurturing themselves",
-                "Creatives looking for inspiration and supportive community",
-                "Mothers navigating the beautiful chaos of parenthood",
-                "Students preparing for their next chapter with confidence",
-                "Women in transition embracing new beginnings",
-              ].map((audience, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-4 p-6 rounded-2xl bg-muted/50 border border-border"
-                >
+              {["Professionals seeking work-life balance and personal growth", "Entrepreneurs building their dreams while nurturing themselves", "Creatives looking for inspiration and supportive community", "Mothers navigating the beautiful chaos of parenthood", "Students preparing for their next chapter with confidence", "Women in transition embracing new beginnings"].map((audience, index) => <div key={index} className="flex items-center gap-4 p-6 rounded-2xl bg-muted/50 border border-border">
                   <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                     <Heart className="h-5 w-5 text-primary" />
                   </div>
                   <p className="text-foreground">{audience}</p>
-                </div>
-              ))}
+                </div>)}
             </div>
 
             <p className="text-center text-muted-foreground mt-12 max-w-2xl mx-auto">
@@ -206,8 +169,6 @@ const About = () => {
           </div>
         </div>
       </section>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default About;
