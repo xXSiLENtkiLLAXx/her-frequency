@@ -9,7 +9,7 @@ const footerLinks = {
   }, {
     name: "Our Mission",
     href: "/about#mission"
-  }, 
+  },
   // { name: "Testimonials", href: "/testimonials" },  // Hidden for now
   {
     name: "FAQ",
@@ -18,16 +18,16 @@ const footerLinks = {
   services: [{
     name: "Events",
     href: "/events"
-  }, 
+  }
   // { name: "Coaching", href: "/services#coaching" },    // Hidden for now
   // { name: "Workshops", href: "/services#workshops" },  // Hidden for now
   // { name: "Retreats", href: "/services#retreats" },    // Hidden for now
   ],
   shop: [
-  // { name: "All Products", href: "/shop" },       // Hidden for now
-  // { name: "Journals", href: "/shop#journals" },  // Hidden for now
-  // { name: "Candles", href: "/shop#candles" },    // Hidden for now
-  // { name: "Apparel", href: "/shop#apparel" },    // Hidden for now
+    // { name: "All Products", href: "/shop" },       // Hidden for now
+    // { name: "Journals", href: "/shop#journals" },  // Hidden for now
+    // { name: "Candles", href: "/shop#candles" },    // Hidden for now
+    // { name: "Apparel", href: "/shop#apparel" },    // Hidden for now
   ]
 };
 export function Footer() {
@@ -87,8 +87,7 @@ export function Footer() {
           </div>
 
           {/* Services Links - Hidden for now */}
-          {footerLinks.services.length > 0 && (
-            <div>
+          {footerLinks.services.length > 0 && <div>
               <h4 className="font-display font-semibold text-foreground mb-4">Services</h4>
               <ul className="space-y-3">
                 {footerLinks.services.map(link => <li key={link.name}>
@@ -97,12 +96,10 @@ export function Footer() {
                     </Link>
                   </li>)}
               </ul>
-            </div>
-          )}
+            </div>}
 
           {/* Shop Links - Hidden for now */}
-          {footerLinks.shop.length > 0 && (
-            <div>
+          {footerLinks.shop.length > 0 && <div>
               <h4 className="font-display font-semibold text-foreground mb-4">Shop</h4>
               <ul className="space-y-3">
                 {footerLinks.shop.map(link => <li key={link.name}>
@@ -111,8 +108,7 @@ export function Footer() {
                     </Link>
                   </li>)}
               </ul>
-            </div>
-          )}
+            </div>}
         </div>
 
         {/* Contact Info */}
@@ -123,9 +119,7 @@ export function Footer() {
           </div>
           <div className="flex items-center gap-2 text-muted-foreground text-sm">
             <Mail className="h-4 w-4 text-primary" />
-            <a href="mailto:hello@herfrequency.co.za" className="hover:text-primary transition-colors">
-              hello@herfrequency.co.za
-            </a>
+            <a href="mailto:hello@herfrequency.co.za" className="hover:text-primary transition-colors">herfrequencyza@.co.za</a>
           </div>
         </div>
 
