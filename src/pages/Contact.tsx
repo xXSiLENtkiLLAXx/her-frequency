@@ -143,7 +143,7 @@ const Contact = () => {
                       <h3 className="font-display font-semibold text-foreground mb-1">WhatsApp</h3>
                       <p className="text-muted-foreground">+27 65 906 9942
 Mon-Fri, 9am-5pm SAST<br />
-                        <span className="text-sm">Mon-Fri, 9am-5pm SAST</span>
+                        
                       </p>
                     </div>
                   </CardContent>
