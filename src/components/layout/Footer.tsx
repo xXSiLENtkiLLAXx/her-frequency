@@ -119,7 +119,7 @@ export function Footer() {
           </div>
           <div className="flex items-center gap-2 text-muted-foreground text-sm">
             <Mail className="h-4 w-4 text-primary" />
-            <a href="mailto:hello@herfrequency.co.za" className="hover:text-primary transition-colors">herfrequencyza@.co.za</a>
+            <a href="mailto:hello@herfrequency.co.za" className="hover:text-primary transition-colors">herfrequencyza@gmail.com</a>
           </div>
         </div>
 
