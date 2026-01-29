@@ -9,15 +9,18 @@ export interface Testimonial {
   quote: string;
   rating: number;
   created_at: string;
+  is_approved?: boolean;
 }
 
 export const useTestimonials = (limit?: number) => {
   return useQuery({
     queryKey: ["testimonials", limit],
     queryFn: async (): Promise<Testimonial[]> => {
+      // Only fetch testimonials that are approved
       let query = supabase
         .from("testimonials")
         .select("*")
+        .eq("is_approved", true) // <-- only approved testimonials
         .order("created_at", { ascending: false });
 
       if (limit) {
