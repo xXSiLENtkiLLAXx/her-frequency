@@ -69,7 +69,7 @@ export function Footer() {
                 <Facebook className="h-5 w-5" />
               </a>
               <a href="mailto:hello@herfrequency.co.za" className="text-muted-foreground hover:text-primary transition-colors">
-                <Mail className="h-5 w-5" />
+                
               </a>
             </div>
           </div>
