@@ -68,7 +68,7 @@ export function Footer() {
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="mailto:hello@herfrequency.co.za" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="mailto:herfrequencyza@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">
                 
               </a>
             </div>
@@ -119,7 +119,7 @@ export function Footer() {
           </div>
           <div className="flex items-center gap-2 text-muted-foreground text-sm">
             <Mail className="h-4 w-4 text-primary" />
-            <a href="mailto:hello@herfrequency.co.za" className="hover:text-primary transition-colors">herfrequencyza@gmail.com</a>
+            <a href="mailto:herfrequencyza@gmail.com" className="hover:text-primary transition-colors">herfrequencyza@gmail.com</a>
           </div>
         </div>
 
