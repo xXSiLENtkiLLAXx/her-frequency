@@ -30,7 +30,7 @@ export const events: Event[] = [
     image: eventImage,
     category: "Networking/Creative Workshop",
     description: "LoveHer is a welcoming space designed to help women reconnect with themselves. This experience encourages self-awareness, confidence, and compassion through guided reflection, meaningful conversation, and intentional connection. Participants leave feeling grounded, valued, and supported as they begin their journey with Her Frequency.",
-    paymentLink: "https://pay.zapper.com/example",
+    paymentLink: "https://pos.snapscan.io/qr/yC2vQvlL",
   },
   {
     id: 2,
@@ -44,7 +44,7 @@ export const events: Event[] = [
     image: coachingImage,
     category: "Workshop",
     description: "A full-day intensive workshop focused on personal transformation, goal setting, and creating actionable plans for the life you desire.",
-    paymentLink: "https://pay.zapper.com/example",
+    paymentLink: "https://pos.snapscan.io/qr/yC2vQvlL",
   },
   {
     id: 3,
@@ -58,7 +58,7 @@ export const events: Event[] = [
     image: retreatImage,
     category: "Networking/Creative Workshop",
     description: "Escape to the mountains for a transformative experience of yoga, meditation, journaling, and deep connection with fellow women on a journey of self-discovery.",
-    paymentLink: "https://pay.zapper.com/example",
+    paymentLink: "https://pos.snapscan.io/qr/yC2vQvlL",
   },
 ];
 
