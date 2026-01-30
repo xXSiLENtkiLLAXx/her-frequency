@@ -12,7 +12,7 @@ const products = [
     price: "R350",
     description: "A guided journal for daily reflection, gratitude, and intention setting.",
     image: "https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=400&h=400&fit=crop",
-    paymentLink: "https://pay.zapper.com/example",
+    paymentLink: "https://pos.snapscan.io/qr/yC2vQvlL",
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ const products = [
     price: "R280",
     description: "Three luxurious soy candles with calming scents: lavender, vanilla, and rose.",
     image: "https://images.unsplash.com/photo-1602607742492-47f7c7e2c2f5?w=400&h=400&fit=crop",
-    paymentLink: "https://pay.zapper.com/example",
+    paymentLink: "https://pos.snapscan.io/qr/yC2vQvlL",
   },
   {
     id: 3,
@@ -30,7 +30,7 @@ const products = [
     price: "R180",
     description: "52 beautifully designed cards with empowering affirmations.",
     image: "https://images.unsplash.com/photo-1609205807107-d9d7e06d5c89?w=400&h=400&fit=crop",
-    paymentLink: "https://pay.zapper.com/example",
+    paymentLink: "https://pos.snapscan.io/qr/yC2vQvlL",
   },
   {
     id: 4,
@@ -39,7 +39,7 @@ const products = [
     price: "R220",
     description: "Organic cotton tote with our signature 'Becoming HER' print.",
     image: "https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?w=400&h=400&fit=crop",
-    paymentLink: "https://pay.zapper.com/example",
+    paymentLink: "https://pos.snapscan.io/qr/yC2vQvlL",
   },
   {
     id: 5,
@@ -48,7 +48,7 @@ const products = [
     price: "R450",
     description: "Comfortable floor cushion in blush pink for your mindfulness practice.",
     image: "https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=400&h=400&fit=crop",
-    paymentLink: "https://pay.zapper.com/example",
+    paymentLink: "https://pos.snapscan.io/qr/yC2vQvlL",
   },
   {
     id: 6,
@@ -57,7 +57,7 @@ const products = [
     price: "R480",
     description: "Cozy oversized hoodie with 'Sisterhood' embroidery in rose gold.",
     image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=400&fit=crop",
-    paymentLink: "https://pay.zapper.com/example",
+    paymentLink: "https://pos.snapscan.io/qr/yC2vQvlL",
   },
 ];
 
