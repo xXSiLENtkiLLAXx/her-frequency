@@ -179,7 +179,7 @@ const EventDetail = () => {
                 )}
 
                 <p className="text-xs text-center text-muted-foreground">
-                  Secure payment via Zapper
+                  Secure Payment via SnapScan
                 </p>
               </div>
             </div>
