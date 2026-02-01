@@ -99,7 +99,7 @@ const Index = () => {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-8 items-stretch">
             {values.map((value, index) => <Card key={value.title} className="text-center p-8 bg-card/80 backdrop-blur-sm border-none">
                 <CardContent className="pt-6">
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blush mb-6">
