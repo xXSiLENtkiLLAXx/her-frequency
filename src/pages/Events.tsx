@@ -62,16 +62,16 @@ const Events = () => {
         <div className="container-custom mx-auto">
           <div className="grid lg:grid-cols-2 gap-8">
             {filteredEvents.map((event) => (
-              <Card key={event.id} className="overflow-hidden group">
-                <div className="grid md:grid-cols-2">
-                  <div className="aspect-square md:aspect-auto overflow-hidden">
+              <Card key={event.id} className="overflow-hidden group h-full">
+                <div className="grid md:grid-cols-2 h-full">
+                  <div className="aspect-square md:aspect-auto overflow-hidden h-full">
                     <img
                       src={event.image}
                       alt={event.title}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
-                  <CardContent className="p-6 flex flex-col justify-between">
+                  <CardContent className="p-6 flex flex-col h-full">
                     <div>
                       <span className="inline-block px-3 py-1 bg-blush text-primary text-xs font-medium rounded-full mb-4">
                         {event.category}
@@ -103,7 +103,7 @@ const Events = () => {
                         </>
                       )}
                     </div>
-                    <div className="flex items-center justify-between mt-6 pt-4 border-t border-border gap-2">
+                    <div className="flex items-center justify-between mt-auto pt-4 border-t border-border gap-2">
                       <span className="font-display text-xl font-semibold text-primary">
                         {event.price}
                       </span>
