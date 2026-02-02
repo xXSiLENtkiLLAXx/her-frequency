@@ -1,13 +1,14 @@
 import { useParams, Link } from "react-router-dom";
-import { Calendar, MapPin, Users, ArrowLeft, ExternalLink, Clock, Tag } from "lucide-react";
+import { Calendar, MapPin, Users, ArrowLeft, Clock, Tag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
 import { getEventById } from "@/data/events";
+import { EventRegistrationForm } from "@/components/events/EventRegistrationForm";
+import { useEventSpots } from "@/hooks/useEventSpots";
 
 const EventDetail = () => {
   const { id } = useParams<{ id: string }>();
   const event = getEventById(Number(id));
-
   if (!event) {
     return (
       <Layout>
@@ -32,6 +33,7 @@ const EventDetail = () => {
   }
 
   const showFullDetails = event.id === 1;
+  const { spotsLeft, refreshSpots } = useEventSpots(event.id, event.spots);
 
   return (
     <Layout>
@@ -140,7 +142,7 @@ const EventDetail = () => {
                       <div className="flex items-center gap-3 text-foreground">
                         <Users className="h-5 w-5 text-primary" />
                         <div>
-                          <p className="font-medium">{event.spotsLeft} spots left</p>
+                          <p className="font-medium">{spotsLeft} spots left</p>
                           <p className="text-sm text-muted-foreground">of {event.spots} total</p>
                         </div>
                       </div>
@@ -153,11 +155,21 @@ const EventDetail = () => {
                       </p>
                     </div>
 
-                    <Button className="w-full" size="lg" asChild>
-                      <a href={event.paymentLink} target="_blank" rel="noopener noreferrer">
-                        Book Now <ExternalLink className="ml-2 h-4 w-4" />
-                      </a>
-                    </Button>
+                    {spotsLeft > 0 ? (
+                      <EventRegistrationForm
+                        eventId={event.id}
+                        eventTitle={event.title}
+                        paymentLink={event.paymentLink}
+                        onRegistrationComplete={refreshSpots}
+                      />
+                    ) : (
+                      <div className="text-center py-4">
+                        <p className="font-medium text-destructive">Sold Out</p>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          This event is fully booked
+                        </p>
+                      </div>
+                    )}
                   </>
                 ) : (
                   <>
