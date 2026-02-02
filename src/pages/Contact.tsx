@@ -15,26 +15,51 @@ const Contact = () => {
     subject: "",
     message: ""
   });
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    const mailtoLink = `mailto:herfrequencyza@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-    )}`;
-    
-    window.open(mailtoLink, '_blank');
-    
-    toast({
-      title: "Opening Email Client",
-      description: "Your email app will open with the message ready to send."
-    });
-    
-    setFormData({
-      name: "",
-      email: "",
-      subject: "",
-      message: ""
-    });
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/herfrequencyza@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          _subject: formData.subject
+        })
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Message Sent Successfully",
+          description: "Thank you for reaching out. We'll get back to you soon!"
+        });
+        setFormData({
+          name: "",
+          email: "",
+          subject: "",
+          message: ""
+        });
+      } else {
+        throw new Error("Failed to send message");
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
   return <Layout>
       {/* Hero Section */}
@@ -103,8 +128,8 @@ const Contact = () => {
                   message: e.target.value
                 })} required className="flex w-full rounded-xl border border-border bg-background px-4 py-3 text-base font-body ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:border-primary transition-all duration-300 resize-none" />
                 </div>
-                <Button type="submit" variant="hero" size="lg" className="w-full md:w-auto">
-                  Send Message <Send className="ml-2 h-4 w-4" />
+                <Button type="submit" variant="hero" size="lg" className="w-full md:w-auto" disabled={isSubmitting}>
+                  {isSubmitting ? "Sending..." : "Send Message"} {!isSubmitting && <Send className="ml-2 h-4 w-4" />}
                 </Button>
               </form>
             </div>
