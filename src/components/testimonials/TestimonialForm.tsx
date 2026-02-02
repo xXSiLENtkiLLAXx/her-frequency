@@ -90,7 +90,7 @@ export const TestimonialForm = () => {
             <Label htmlFor="name">Your Name *</Label>
             <Input
               id="name"
-              placeholder="e.g., Nomvula Mokwena"
+              placeholder="e.g., N M"
               value={formData.name}
               onChange={(e) =>
                 setFormData((prev) => ({ ...prev, name: e.target.value }))
