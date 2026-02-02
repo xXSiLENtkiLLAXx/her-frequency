@@ -163,7 +163,7 @@ const About = () => {
                 <Link to="/events">Explore Events</Link>
               </Button>
               <Button variant="outline" size="lg" asChild>
-                <Link to="/services">View Services</Link>
+                <Link to="/services">View Services</Link>         // Hidden for now
               </Button>
             </div>
           </div>
