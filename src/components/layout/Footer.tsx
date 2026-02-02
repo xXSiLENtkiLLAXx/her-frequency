@@ -34,6 +34,7 @@ export function Footer() {
   return <footer className="bg-muted/50 border-t border-border">
       {/* Newsletter Section */}
       <div className="container-custom mx-auto px-4 md:px-8 py-16">
+        {/* Newsletter Section - Hidden for now
         <div className="max-w-2xl mx-auto text-center mb-16">
           <h3 className="font-display text-3xl md:text-4xl font-semibold text-foreground mb-4">
             Join the Sisterhood
@@ -48,6 +49,7 @@ export function Footer() {
             </Button>
           </form>
         </div>
+        */}
 
         {/* Footer Links */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
