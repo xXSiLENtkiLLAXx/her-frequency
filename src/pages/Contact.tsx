@@ -17,10 +17,18 @@ const Contact = () => {
   });
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    const mailtoLink = `mailto:herfrequencyza@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+    )}`;
+    
+    window.open(mailtoLink, '_blank');
+    
     toast({
-      title: "Message Sent!",
-      description: "Thank you for reaching out. We'll get back to you within 24-48 hours."
+      title: "Opening Email Client",
+      description: "Your email app will open with the message ready to send."
     });
+    
     setFormData({
       name: "",
       email: "",
