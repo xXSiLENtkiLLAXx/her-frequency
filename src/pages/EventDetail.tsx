@@ -91,7 +91,7 @@ const EventDetail = () => {
                   <ul className="space-y-3 text-muted-foreground">
                     <li className="flex items-start gap-3">
                       <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                      <span>Guided reflection and self-awareness exercises</span>
+                      <span>A LoveHer experience in guided reflection, self-awareness, and self-affirmation.</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
