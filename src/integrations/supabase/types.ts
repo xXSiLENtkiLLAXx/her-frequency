@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      event_registrations: {
+        Row: {
+          cellphone: string
+          confirmed_at: string | null
+          created_at: string
+          email: string
+          event_id: number
+          first_name: string
+          id: string
+          last_name: string
+          payment_confirmed: boolean
+        }
+        Insert: {
+          cellphone: string
+          confirmed_at?: string | null
+          created_at?: string
+          email: string
+          event_id: number
+          first_name: string
+          id?: string
+          last_name: string
+          payment_confirmed?: boolean
+        }
+        Update: {
+          cellphone?: string
+          confirmed_at?: string | null
+          created_at?: string
+          email?: string
+          event_id?: number
+          first_name?: string
+          id?: string
+          last_name?: string
+          payment_confirmed?: boolean
+        }
+        Relationships: []
+      }
       testimonials: {
         Row: {
           created_at: string
