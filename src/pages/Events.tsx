@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Calendar, MapPin, Users, Filter, ExternalLink } from "lucide-react";
+import { Calendar, MapPin, Users, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Layout } from "@/components/layout/Layout";
@@ -111,13 +111,9 @@ const Events = () => {
                         <Button variant="outline" size="sm" asChild>
                           <Link to={`/events/${event.id}`}>Learn More</Link>
                         </Button>
-                        {event.id === 1 && (
-                          <Button variant="default" size="sm" asChild>
-                            <a href={event.paymentLink} target="_blank" rel="noopener noreferrer">
-                              Book Now <ExternalLink className="ml-2 h-4 w-4" />
-                            </a>
-                          </Button>
-                        )}
+                        <Button variant="default" size="sm" asChild>
+                          <Link to={`/events/${event.id}`}>Book Now</Link>
+                        </Button>
                       </div>
                     </div>
                   </CardContent>
