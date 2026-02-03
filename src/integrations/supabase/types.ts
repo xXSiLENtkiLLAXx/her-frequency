@@ -17,6 +17,7 @@ export type Database = {
       event_registrations: {
         Row: {
           cellphone: string
+          confirmation_token: string | null
           confirmed_at: string | null
           created_at: string
           email: string
@@ -28,6 +29,7 @@ export type Database = {
         }
         Insert: {
           cellphone: string
+          confirmation_token?: string | null
           confirmed_at?: string | null
           created_at?: string
           email: string
@@ -39,6 +41,7 @@ export type Database = {
         }
         Update: {
           cellphone?: string
+          confirmation_token?: string | null
           confirmed_at?: string | null
           created_at?: string
           email?: string

@@ -25,6 +25,7 @@ export const EventRegistrationForm = ({
   const [step, setStep] = useState<"form" | "payment" | "confirmation">("form");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [registrationId, setRegistrationId] = useState<string | null>(null);
+  const [confirmationToken, setConfirmationToken] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -55,26 +56,32 @@ export const EventRegistrationForm = ({
     setIsSubmitting(true);
 
     try {
-      // Save registration to database
-      const { data, error } = await supabase
-        .from("event_registrations")
-        .insert({
-          event_id: eventId,
-          first_name: formData.firstName.trim(),
-          last_name: formData.lastName.trim(),
-          email: formData.email.trim(),
-          cellphone: formData.cellphone.trim(),
-          payment_confirmed: false,
-        })
-        .select()
-        .single();
+      // Create registration via secure edge function (generates token server-side)
+      const { data, error } = await supabase.functions.invoke(
+        "confirm-payment",
+        {
+          body: {
+            action: "create_registration",
+            registration_data: {
+              event_id: eventId,
+              first_name: formData.firstName.trim(),
+              last_name: formData.lastName.trim(),
+              email: formData.email.trim(),
+              cellphone: formData.cellphone.trim(),
+            },
+          },
+        }
+      );
 
       if (error) throw error;
+      if (!data?.success) throw new Error(data?.error || "Registration failed");
 
       // Record successful submission for rate limiting
       recordAttempt(rateLimiters.eventRegistration.key, rateLimiters.eventRegistration.windowMs);
 
-      setRegistrationId(data.id);
+      // Store registration ID and token securely in state (not localStorage)
+      setRegistrationId(data.registration_id);
+      setConfirmationToken(data.confirmation_token);
       setStep("payment");
       
       toast({
@@ -94,19 +101,24 @@ export const EventRegistrationForm = ({
   };
 
   const handleConfirmPayment = async () => {
-    if (!registrationId) return;
+    if (!registrationId || !confirmationToken) return;
     setIsSubmitting(true);
 
     try {
-      // Call secure edge function to confirm payment (uses service role)
+      // Call secure edge function to confirm payment with token verification
       const { data, error: confirmError } = await supabase.functions.invoke(
         "confirm-payment",
         {
-          body: { registration_id: registrationId },
+          body: {
+            action: "confirm_payment",
+            registration_id: registrationId,
+            confirmation_token: confirmationToken,
+          },
         }
       );
 
       if (confirmError) throw confirmError;
+      if (!data?.success) throw new Error(data?.error || "Confirmation failed");
 
       // Send confirmation email via FormSubmit
       const formSubmitData = new FormData();
@@ -227,6 +239,7 @@ export const EventRegistrationForm = ({
             name="firstName"
             type="text"
             required
+            maxLength={100}
             value={formData.firstName}
             onChange={handleInputChange}
             placeholder="Enter first name"
@@ -239,6 +252,7 @@ export const EventRegistrationForm = ({
             name="lastName"
             type="text"
             required
+            maxLength={100}
             value={formData.lastName}
             onChange={handleInputChange}
             placeholder="Enter last name"
@@ -253,6 +267,7 @@ export const EventRegistrationForm = ({
           name="email"
           type="email"
           required
+          maxLength={255}
           value={formData.email}
           onChange={handleInputChange}
           placeholder="you@example.com"
@@ -266,6 +281,7 @@ export const EventRegistrationForm = ({
           name="cellphone"
           type="tel"
           required
+          maxLength={20}
           value={formData.cellphone}
           onChange={handleInputChange}
           placeholder="+27 XX XXX XXXX"
