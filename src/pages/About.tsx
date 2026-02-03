@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Layout } from "@/components/layout/Layout";
 import heroImage from "@/assets/hero-sisterhood.jpg";
-import coachingImage from "@/assets/coaching-session.jpg";
+import coachingImage from "@/assets/herfrequency-logo-transparent.jpeg";
 const values = [{
   icon: Heart,
   title: "Empowerment",
