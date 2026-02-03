@@ -98,16 +98,15 @@ export const EventRegistrationForm = ({
     setIsSubmitting(true);
 
     try {
-      // Update registration as payment confirmed
-      const { error: updateError } = await supabase
-        .from("event_registrations")
-        .update({
-          payment_confirmed: true,
-          confirmed_at: new Date().toISOString(),
-        })
-        .eq("id", registrationId);
+      // Call secure edge function to confirm payment (uses service role)
+      const { data, error: confirmError } = await supabase.functions.invoke(
+        "confirm-payment",
+        {
+          body: { registration_id: registrationId },
+        }
+      );
 
-      if (updateError) throw updateError;
+      if (confirmError) throw confirmError;
 
       // Send confirmation email via FormSubmit
       const formSubmitData = new FormData();
