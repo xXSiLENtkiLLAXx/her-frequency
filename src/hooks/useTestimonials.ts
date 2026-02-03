@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import logger from "@/lib/logger";
 
 export interface Testimonial {
   id: string;
@@ -30,7 +31,7 @@ export const useTestimonials = (limit?: number) => {
       const { data, error } = await query;
 
       if (error) {
-        console.error("Error fetching testimonials:", error);
+        logger.error("Error fetching testimonials:", error);
         throw error;
       }
 

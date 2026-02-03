@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import logger from "@/lib/logger";
 
 export const useEventSpots = (eventId: number, initialSpots: number) => {
   const [spotsLeft, setSpotsLeft] = useState(initialSpots);
@@ -16,7 +17,7 @@ export const useEventSpots = (eventId: number, initialSpots: number) => {
       const confirmedCount = data || 0;
       setSpotsLeft(Math.max(0, initialSpots - confirmedCount));
     } catch (error) {
-      console.error("Error fetching spots:", error);
+      logger.error("Error fetching spots:", error);
       setSpotsLeft(initialSpots);
     } finally {
       setIsLoading(false);
