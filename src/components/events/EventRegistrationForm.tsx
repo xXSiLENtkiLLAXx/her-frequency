@@ -5,6 +5,8 @@ import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { ExternalLink, CheckCircle, Loader2 } from "lucide-react";
+import logger from "@/lib/logger";
+import { checkRateLimit, recordAttempt, rateLimiters } from "@/lib/rateLimiter";
 
 interface EventRegistrationFormProps {
   eventId: number;
@@ -37,6 +39,19 @@ export const EventRegistrationForm = ({
 
   const handleSubmitRegistration = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Check rate limit before proceeding
+    const { allowed, secondsRemaining } = checkRateLimit(rateLimiters.eventRegistration);
+    if (!allowed) {
+      const minutes = Math.ceil(secondsRemaining / 60);
+      toast({
+        title: "Please Wait",
+        description: `You can submit another registration in ${minutes} minute${minutes > 1 ? 's' : ''}.`,
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -56,6 +71,9 @@ export const EventRegistrationForm = ({
 
       if (error) throw error;
 
+      // Record successful submission for rate limiting
+      recordAttempt(rateLimiters.eventRegistration.key, rateLimiters.eventRegistration.windowMs);
+
       setRegistrationId(data.id);
       setStep("payment");
       
@@ -64,7 +82,7 @@ export const EventRegistrationForm = ({
         description: "Please complete your payment using the link below.",
       });
     } catch (error) {
-      console.error("Registration error:", error);
+      logger.error("Registration error:", error);
       toast({
         title: "Registration Failed",
         description: "Please try again or contact us for assistance.",
@@ -114,7 +132,7 @@ export const EventRegistrationForm = ({
         description: "Thank you! A confirmation email has been sent.",
       });
     } catch (error) {
-      console.error("Confirmation error:", error);
+      logger.error("Confirmation error:", error);
       toast({
         title: "Confirmation Failed",
         description: "Please contact us to confirm your payment.",

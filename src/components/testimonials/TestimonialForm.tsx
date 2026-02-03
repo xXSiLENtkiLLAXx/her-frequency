@@ -7,6 +7,8 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import logger from "@/lib/logger";
+import { checkRateLimit, recordAttempt, rateLimiters } from "@/lib/rateLimiter";
 
 export const TestimonialForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -21,6 +23,14 @@ export const TestimonialForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Check rate limit before proceeding
+    const { allowed, secondsRemaining } = checkRateLimit(rateLimiters.testimonial);
+    if (!allowed) {
+      const minutes = Math.ceil(secondsRemaining / 60);
+      toast.error(`Please wait ${minutes} minute${minutes > 1 ? 's' : ''} before submitting another testimonial.`);
+      return;
+    }
 
     if (!formData.name.trim() || !formData.quote.trim() || rating === 0) {
       toast.error("Please fill in your name, review, and rating");
@@ -40,11 +50,14 @@ export const TestimonialForm = () => {
 
       if (error) throw error;
 
+      // Record successful submission for rate limiting
+      recordAttempt(rateLimiters.testimonial.key, rateLimiters.testimonial.windowMs);
+
       toast.success("Thank you! Your testimonial has been submitted for review.");
       setFormData({ name: "", role: "", location: "", quote: "" });
       setRating(0);
     } catch (error) {
-      console.error("Error submitting testimonial:", error);
+      logger.error("Error submitting testimonial:", error);
       toast.error("Failed to submit testimonial. Please try again.");
     } finally {
       setIsSubmitting(false);

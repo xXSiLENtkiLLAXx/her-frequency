@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Layout } from "@/components/layout/Layout";
 import { useToast } from "@/hooks/use-toast";
+import { checkRateLimit, recordAttempt, rateLimiters } from "@/lib/rateLimiter";
+
 const Contact = () => {
   const {
     toast
@@ -19,6 +21,19 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Check rate limit before proceeding
+    const { allowed, secondsRemaining } = checkRateLimit(rateLimiters.contactForm);
+    if (!allowed) {
+      const minutes = Math.ceil(secondsRemaining / 60);
+      toast({
+        title: "Please Wait",
+        description: `You can send another message in ${minutes} minute${minutes > 1 ? 's' : ''}.`,
+        variant: "destructive"
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -38,6 +53,9 @@ const Contact = () => {
       });
 
       if (response.ok) {
+        // Record successful submission for rate limiting
+        recordAttempt(rateLimiters.contactForm.key, rateLimiters.contactForm.windowMs);
+        
         toast({
           title: "Message Sent Successfully",
           description: "Thank you for reaching out. We'll get back to you soon!"
@@ -51,7 +69,7 @@ const Contact = () => {
       } else {
         throw new Error("Failed to send message");
       }
-    } catch (error) {
+    } catch {
       toast({
         title: "Error",
         description: "Failed to send message. Please try again.",

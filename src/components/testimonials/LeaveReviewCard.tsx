@@ -6,6 +6,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import logger from "@/lib/logger";
+import { checkRateLimit, recordAttempt, rateLimiters } from "@/lib/rateLimiter";
 
 interface LeaveReviewCardProps {
   compact?: boolean;
@@ -25,6 +27,14 @@ export const LeaveReviewCard = ({ compact = false }: LeaveReviewCardProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Check rate limit before proceeding
+    const { allowed, secondsRemaining } = checkRateLimit(rateLimiters.testimonial);
+    if (!allowed) {
+      const minutes = Math.ceil(secondsRemaining / 60);
+      toast.error(`Please wait ${minutes} minute${minutes > 1 ? 's' : ''} before submitting another review.`);
+      return;
+    }
+
     if (!formData.name.trim() || !formData.quote.trim() || rating === 0) {
       toast.error("Please fill in your name, review, and rating");
       return;
@@ -43,11 +53,14 @@ export const LeaveReviewCard = ({ compact = false }: LeaveReviewCardProps) => {
 
       if (error) throw error;
 
+      // Record successful submission for rate limiting
+      recordAttempt(rateLimiters.testimonial.key, rateLimiters.testimonial.windowMs);
+      
       toast.success("Thank you! Your review has been submitted.");
       setFormData({ name: "", role: "", location: "", quote: "" });
       setRating(0);
     } catch (error) {
-      console.error("Error submitting review:", error);
+      logger.error("Error submitting review:", error);
       toast.error("Failed to submit review. Please try again.");
     } finally {
       setIsSubmitting(false);
