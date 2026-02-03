@@ -7,15 +7,13 @@ export const useEventSpots = (eventId: number, initialSpots: number) => {
 
   const fetchSpotsLeft = async () => {
     try {
-      const { count, error } = await supabase
-        .from("event_registrations")
-        .select("*", { count: "exact", head: true })
-        .eq("event_id", eventId)
-        .eq("payment_confirmed", true);
+      // Use secure RPC function to get count without exposing PII
+      const { data, error } = await supabase
+        .rpc('get_event_confirmed_count', { event_id_param: eventId });
 
       if (error) throw error;
 
-      const confirmedCount = count || 0;
+      const confirmedCount = data || 0;
       setSpotsLeft(Math.max(0, initialSpots - confirmedCount));
     } catch (error) {
       console.error("Error fetching spots:", error);
