@@ -88,7 +88,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_event_confirmed_count: {
+        Args: { event_id_param: number }
+        Returns: number
+      }
     }
     Enums: {
       [_ in never]: never
