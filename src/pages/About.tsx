@@ -147,28 +147,29 @@ const About = () => {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="section-padding bg-blush/30">
-        <div className="container-custom mx-auto">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="font-display text-3xl md:text-4xl font-semibold text-foreground mb-6">
-              Ready to Join Our Sisterhood?
-            </h2>
-            <p className="text-muted-foreground mb-10">
-              Take the first step in your transformation journey. Explore our upcoming events 
-              or book a coaching session today.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="hero" size="lg" asChild>
-                <Link to="/events">Explore Events</Link>
-              </Button>
-              <Button variant="outline" size="lg" asChild>
-                <Link to="/services">View Services</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+{/* CTA */}
+<section className="section-padding bg-blush/30">
+  <div className="container-custom mx-auto">
+    <div className="max-w-3xl mx-auto text-center">
+      <h2 className="font-display text-3xl md:text-4xl font-semibold text-foreground mb-6">
+        Ready to Join Our Sisterhood?
+      </h2>
+      <p className="text-muted-foreground mb-10">
+        Take the first step in your transformation journey. Explore our upcoming events 
+        or book a coaching session today.
+      </p>
+      <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <Button variant="hero" size="lg" asChild>
+          <Link to="/events">Explore Events</Link>
+        </Button>
+        {/* We apply 'hidden' here to hide only this button */}
+        <Button variant="outline" size="lg" className="hidden" asChild>
+          <Link to="/services">View Services</Link>
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>
     </Layout>;
 };
 export default About;
