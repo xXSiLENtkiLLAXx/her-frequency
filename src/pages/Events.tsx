@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Layout } from "@/components/layout/Layout";
 import { events } from "@/data/events";
 
-const categories = ["All", "Networking", "Workshop", "Retreat", "Coaching"];
+const categories = ["All", "Networking", "Workshop"];
 
 const Events = () => {
   const [activeCategory, setActiveCategory] = useState("All");
