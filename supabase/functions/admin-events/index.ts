@@ -1,36 +1,101 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
+const ALLOWED_ORIGINS = [
+  'https://her-frequency.lovable.app',
+  'https://id-preview--75508879-0b3f-4010-8e00-d7db1a2bfe1c.lovable.app',
+  'http://localhost:8080',
+  'http://localhost:5173',
+]
+
+const getCorsHeaders = (origin: string | null) => {
+  const allowedOrigin = ALLOWED_ORIGINS.includes(origin || '')
+    ? origin
+    : ALLOWED_ORIGINS[0]
+  return {
+    'Access-Control-Allow-Origin': allowedOrigin || ALLOWED_ORIGINS[0],
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
+  }
 }
 
-// Simple admin key for developer access - in production, use proper auth
-const ADMIN_KEY = 'herfrequency-admin-2026'
-
 Deno.serve(async (req) => {
+  const origin = req.headers.get('origin')
+  const corsHeaders = getCorsHeaders(origin)
+
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
+  }
+
+  // Reject requests from non-allowed origins
+  if (origin && !ALLOWED_ORIGINS.includes(origin)) {
+    console.error('Origin not allowed:', origin)
+    return new Response(
+      JSON.stringify({ error: 'Origin not allowed' }),
+      { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    )
   }
 
   try {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     
-    // Use service role to bypass RLS for admin operations
-    const supabase = createClient(supabaseUrl, supabaseServiceKey)
+    // Create client with service role for admin operations
+    const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey)
 
-    const { action, adminKey, ...params } = await req.json()
-
-    // Validate admin key
-    if (adminKey !== ADMIN_KEY) {
-      console.error('Invalid admin key attempt')
+    // Get authorization header for user authentication
+    const authHeader = req.headers.get('Authorization')
+    if (!authHeader) {
+      console.error('No authorization header')
       return new Response(
-        JSON.stringify({ error: 'Unauthorized' }),
+        JSON.stringify({ error: 'Unauthorized - No auth header' }),
         { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
+
+    // Create client with user's JWT to verify their identity
+    const supabaseUser = createClient(supabaseUrl, Deno.env.get('SUPABASE_ANON_KEY')!, {
+      global: {
+        headers: { Authorization: authHeader }
+      }
+    })
+
+    // Get the user from the JWT
+    const { data: { user }, error: userError } = await supabaseUser.auth.getUser()
+    if (userError || !user) {
+      console.error('Invalid or expired token:', userError)
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized - Invalid token' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
+    console.log(`Authenticated user: ${user.email}`)
+
+    // Check if user has admin role using service role client
+    const { data: isAdmin, error: roleError } = await supabaseAdmin.rpc('has_role', {
+      _user_id: user.id,
+      _role: 'admin'
+    })
+
+    if (roleError) {
+      console.error('Error checking admin role:', roleError)
+      return new Response(
+        JSON.stringify({ error: 'Error verifying permissions' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
+    if (!isAdmin) {
+      console.error('User is not an admin:', user.email)
+      return new Response(
+        JSON.stringify({ error: 'Forbidden - Admin access required' }),
+        { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
+    console.log(`Admin access granted for: ${user.email}`)
+
+    const { action, ...params } = await req.json()
 
     console.log(`Admin action: ${action}`, params)
 
@@ -38,7 +103,7 @@ Deno.serve(async (req) => {
       case 'get_registrations': {
         const { eventId } = params
         
-        let query = supabase
+        let query = supabaseAdmin
           .from('event_registrations')
           .select('*')
           .order('created_at', { ascending: false })
@@ -62,7 +127,7 @@ Deno.serve(async (req) => {
       }
 
       case 'get_event_settings': {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseAdmin
           .from('event_settings')
           .select('*')
           .order('event_id', { ascending: true })
@@ -90,7 +155,7 @@ Deno.serve(async (req) => {
           )
         }
         
-        const { data, error } = await supabase
+        const { data, error } = await supabaseAdmin
           .from('event_settings')
           .update({ total_spots: totalSpots })
           .eq('event_id', eventId)
@@ -102,7 +167,7 @@ Deno.serve(async (req) => {
           throw error
         }
         
-        console.log(`Updated event ${eventId} to ${totalSpots} spots`)
+        console.log(`Updated event ${eventId} to ${totalSpots} spots by ${user.email}`)
         return new Response(
           JSON.stringify({ success: true, setting: data }),
           { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -120,7 +185,7 @@ Deno.serve(async (req) => {
           )
         }
         
-        const { data, error } = await supabase
+        const { data, error } = await supabaseAdmin
           .from('event_settings')
           .insert({
             event_id: eventId,
@@ -135,7 +200,7 @@ Deno.serve(async (req) => {
           throw error
         }
         
-        console.log(`Added new event: ${eventName}`)
+        console.log(`Added new event: ${eventName} by ${user.email}`)
         return new Response(
           JSON.stringify({ success: true, setting: data }),
           { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -153,7 +218,7 @@ Deno.serve(async (req) => {
     console.error('Admin function error:', error)
     return new Response(
       JSON.stringify({ error: errorMessage }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      { status: 500, headers: { ...getCorsHeaders(req.headers.get('origin')), 'Content-Type': 'application/json' } }
     )
   }
 })

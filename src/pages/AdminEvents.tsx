@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSearchParams, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,11 +8,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { RefreshCw, Users, Settings, Download } from "lucide-react";
+import { RefreshCw, Users, Settings, Download, LogOut, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-
-const ADMIN_KEY = "herfrequency-admin-2026";
+import { useAdminAuth } from "@/hooks/useAdminAuth";
+import logger from "@/lib/logger";
 
 interface Registration {
   id: string;
@@ -35,26 +35,22 @@ interface EventSetting {
 }
 
 const AdminEvents = () => {
-  const [searchParams] = useSearchParams();
+  const { user, isAdmin, loading: authLoading, signOut } = useAdminAuth();
   const [registrations, setRegistrations] = useState<Registration[]>([]);
   const [eventSettings, setEventSettings] = useState<EventSetting[]>([]);
   const [selectedEventFilter, setSelectedEventFilter] = useState("all");
   const [loading, setLoading] = useState(true);
   const [spotsInput, setSpotsInput] = useState<Record<number, string>>({});
 
-  // Check for admin access via query param
-  const adminAccess = searchParams.get("key") === ADMIN_KEY;
-
   const fetchData = async () => {
-    if (!adminAccess) return;
+    if (!isAdmin) return;
     
     setLoading(true);
     try {
-      // Fetch registrations
+      // Fetch registrations - no longer needs adminKey, uses JWT auth
       const regResponse = await supabase.functions.invoke("admin-events", {
         body: {
           action: "get_registrations",
-          adminKey: ADMIN_KEY,
           eventId: selectedEventFilter,
         },
       });
@@ -66,7 +62,6 @@ const AdminEvents = () => {
       const settingsResponse = await supabase.functions.invoke("admin-events", {
         body: {
           action: "get_event_settings",
-          adminKey: ADMIN_KEY,
         },
       });
 
@@ -80,7 +75,7 @@ const AdminEvents = () => {
       });
       setSpotsInput(inputValues);
     } catch (error) {
-      console.error("Error fetching admin data:", error);
+      logger.error("Error fetching admin data:", error);
       toast.error("Failed to load admin data");
     } finally {
       setLoading(false);
@@ -88,12 +83,28 @@ const AdminEvents = () => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, [selectedEventFilter, adminAccess]);
+    if (isAdmin) {
+      fetchData();
+    }
+  }, [selectedEventFilter, isAdmin]);
 
-  // Early return AFTER all hooks
-  if (!adminAccess) {
-    return <Navigate to="/events" replace />;
+  // Show loading while checking auth
+  if (authLoading) {
+    return (
+      <Layout>
+        <section className="section-padding bg-gradient-soft min-h-screen flex items-center justify-center">
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <Loader2 className="h-5 w-5 animate-spin" />
+            <span>Checking authentication...</span>
+          </div>
+        </section>
+      </Layout>
+    );
+  }
+
+  // Redirect if not authenticated or not admin
+  if (!user || !isAdmin) {
+    return <Navigate to="/events/admin/login" replace />;
   }
 
   const handleUpdateSpots = async (eventId: number) => {
@@ -107,7 +118,6 @@ const AdminEvents = () => {
       const response = await supabase.functions.invoke("admin-events", {
         body: {
           action: "update_total_spots",
-          adminKey: ADMIN_KEY,
           eventId,
           totalSpots: newSpots,
         },
@@ -117,7 +127,7 @@ const AdminEvents = () => {
       toast.success("Total spots updated!");
       fetchData();
     } catch (error) {
-      console.error("Error updating spots:", error);
+      logger.error("Error updating spots:", error);
       toast.error("Failed to update spots");
     }
   };
@@ -168,13 +178,19 @@ const AdminEvents = () => {
                 Event Administration
               </h1>
               <p className="text-muted-foreground mt-2">
-                Developer access only - Manage registrations and event capacity
+                Logged in as {user?.email}
               </p>
             </div>
-            <Button onClick={fetchData} variant="outline" size="sm">
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Refresh
-            </Button>
+            <div className="flex gap-2">
+              <Button onClick={fetchData} variant="outline" size="sm">
+                <RefreshCw className="h-4 w-4 mr-2" />
+                Refresh
+              </Button>
+              <Button onClick={signOut} variant="ghost" size="sm">
+                <LogOut className="h-4 w-4 mr-2" />
+                Sign Out
+              </Button>
+            </div>
           </div>
 
           <Tabs defaultValue="registrations" className="space-y-6">
