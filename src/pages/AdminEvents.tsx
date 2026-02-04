@@ -255,6 +255,7 @@ const AdminEvents = () => {
                             <TableHead>Event</TableHead>
                             <TableHead>Status</TableHead>
                             <TableHead>Registered</TableHead>
+                            <TableHead>Payment Confirmed</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -280,7 +281,18 @@ const AdminEvents = () => {
                                 )}
                               </TableCell>
                               <TableCell className="text-muted-foreground text-sm">
-                                {new Date(reg.created_at).toLocaleDateString()}
+                                {new Date(reg.created_at).toLocaleDateString()}{" "}
+                                {new Date(reg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                              </TableCell>
+                              <TableCell className="text-muted-foreground text-sm">
+                                {reg.confirmed_at ? (
+                                  <>
+                                    {new Date(reg.confirmed_at).toLocaleDateString()}{" "}
+                                    {new Date(reg.confirmed_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                  </>
+                                ) : (
+                                  <span className="text-muted-foreground/50">—</span>
+                                )}
                               </TableCell>
                             </TableRow>
                           ))}
