@@ -39,7 +39,7 @@ const Index = () => {
           <img 
             src={herFrequencyLogo} 
             alt="" 
-            className="w-[500px] opacity-30 object-contain"
+            className="w-[750px] opacity-30 object-contain"
           />
         </div>
 
