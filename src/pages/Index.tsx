@@ -34,17 +34,18 @@ const Index = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-background/40 to-background/30" />
         </div>
 
+        {/* Faded Logo Background - positioned at very top, blending into background */}
+        <div className="absolute -top-8 md:-top-12 left-1/2 -translate-x-1/2 z-[1] pointer-events-none">
+          <img 
+            src={herFrequencyLogo} 
+            alt="" 
+            className="w-[450px] md:w-[600px] lg:w-[750px] opacity-30 object-contain"
+          />
+        </div>
+
         {/* Content */}
         <div className="relative z-10 container-custom mx-auto px-4 md:px-8 py-20">
           <div className="max-w-3xl">
-            {/* Logo above content */}
-            <div className="mb-8">
-              <img 
-                src={herFrequencyLogo} 
-                alt="Her Frequency" 
-                className="w-[450px] md:w-[600px] lg:w-[750px] opacity-30 object-contain"
-              />
-            </div>
             <span className="inline-block px-4 py-2 bg-blush text-primary rounded-full text-sm font-medium mb-6 animate-fade-up">
               Women's Empowerment & Wellness
             </span>
