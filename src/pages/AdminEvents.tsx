@@ -31,6 +31,7 @@ interface EventSetting {
   event_id: number;
   event_name: string;
   total_spots: number;
+  reserved_spots: number;
   updated_at: string;
 }
 
@@ -41,6 +42,7 @@ const AdminEvents = () => {
   const [selectedEventFilter, setSelectedEventFilter] = useState("all");
   const [loading, setLoading] = useState(true);
   const [spotsInput, setSpotsInput] = useState<Record<number, string>>({});
+  const [reservedInput, setReservedInput] = useState<Record<number, string>>({});
 
   const fetchData = async () => {
     if (!isAdmin) return;
@@ -70,10 +72,13 @@ const AdminEvents = () => {
       
       // Initialize spots input values
       const inputValues: Record<number, string> = {};
+      const reservedValues: Record<number, string> = {};
       settingsResponse.data.settings?.forEach((s: EventSetting) => {
         inputValues[s.event_id] = s.total_spots.toString();
+        reservedValues[s.event_id] = (s.reserved_spots || 0).toString();
       });
       setSpotsInput(inputValues);
+      setReservedInput(reservedValues);
     } catch (error) {
       logger.error("Error fetching admin data:", error);
       toast.error("Failed to load admin data");
@@ -132,6 +137,31 @@ const AdminEvents = () => {
     }
   };
 
+  const handleUpdateReserved = async (eventId: number) => {
+    const newReserved = parseInt(reservedInput[eventId]);
+    if (isNaN(newReserved) || newReserved < 0) {
+      toast.error("Please enter a valid number");
+      return;
+    }
+
+    try {
+      const response = await supabase.functions.invoke("admin-events", {
+        body: {
+          action: "update_reserved_spots",
+          eventId,
+          reservedSpots: newReserved,
+        },
+      });
+
+      if (response.error) throw response.error;
+      toast.success("Reserved spots updated!");
+      fetchData();
+    } catch (error) {
+      logger.error("Error updating reserved spots:", error);
+      toast.error("Failed to update reserved spots");
+    }
+  };
+
   const getConfirmedCount = (eventId: number) => {
     return registrations.filter(
       (r) => r.event_id === eventId && r.payment_confirmed
@@ -141,8 +171,9 @@ const AdminEvents = () => {
   const getSpotsLeft = (eventId: number) => {
     const setting = eventSettings.find((s) => s.event_id === eventId);
     const total = setting?.total_spots || 0;
+    const reserved = setting?.reserved_spots || 0;
     const confirmed = getConfirmedCount(eventId);
-    return total - confirmed;
+    return total - confirmed - reserved;
   };
 
   const exportToCSV = () => {
@@ -318,7 +349,7 @@ const AdminEvents = () => {
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <div className="grid md:grid-cols-4 gap-6">
+                        <div className="grid md:grid-cols-5 gap-6">
                           <div className="bg-muted/50 rounded-lg p-4 text-center">
                             <p className="text-sm text-muted-foreground mb-1">
                               Total Spots
@@ -337,12 +368,21 @@ const AdminEvents = () => {
                           </div>
                           <div className="bg-muted/50 rounded-lg p-4 text-center">
                             <p className="text-sm text-muted-foreground mb-1">
+                              Reserved
+                            </p>
+                            <p className="text-2xl font-semibold text-muted-foreground">
+                              {setting.reserved_spots || 0}
+                            </p>
+                          </div>
+                          <div className="bg-muted/50 rounded-lg p-4 text-center">
+                            <p className="text-sm text-muted-foreground mb-1">
                               Spots Left
                             </p>
                             <p className={`text-2xl font-semibold ${spotsLeft <= 5 ? "text-destructive" : "text-foreground"}`}>
                               {spotsLeft}
                             </p>
                           </div>
+                          <div></div>
                           <div className="flex items-end gap-2">
                             <div className="flex-1">
                               <label className="text-sm text-muted-foreground mb-1 block">
@@ -363,6 +403,31 @@ const AdminEvents = () => {
                             </div>
                             <Button
                               onClick={() => handleUpdateSpots(setting.event_id)}
+                              size="sm"
+                            >
+                              Save
+                            </Button>
+                          </div>
+                          <div className="flex items-end gap-2 md:col-span-2">
+                            <div className="flex-1">
+                              <label className="text-sm text-muted-foreground mb-1 block">
+                                Update Reserved Spots
+                              </label>
+                              <Input
+                                type="number"
+                                value={reservedInput[setting.event_id] || ""}
+                                onChange={(e) =>
+                                  setReservedInput({
+                                    ...reservedInput,
+                                    [setting.event_id]: e.target.value,
+                                  })
+                                }
+                                min="0"
+                                max="1000"
+                              />
+                            </div>
+                            <Button
+                              onClick={() => handleUpdateReserved(setting.event_id)}
                               size="sm"
                             >
                               Save

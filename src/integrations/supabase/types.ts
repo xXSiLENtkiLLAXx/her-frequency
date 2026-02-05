@@ -59,6 +59,7 @@ export type Database = {
           event_id: number
           event_name: string
           id: string
+          reserved_spots: number
           total_spots: number
           updated_at: string
         }
@@ -67,6 +68,7 @@ export type Database = {
           event_id: number
           event_name: string
           id?: string
+          reserved_spots?: number
           total_spots?: number
           updated_at?: string
         }
@@ -75,6 +77,7 @@ export type Database = {
           event_id?: number
           event_name?: string
           id?: string
+          reserved_spots?: number
           total_spots?: number
           updated_at?: string
         }
