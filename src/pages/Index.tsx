@@ -42,7 +42,7 @@ const Index = () => {
               <img 
                 src={herFrequencyLogo} 
                 alt="Her Frequency" 
-                className="w-[750px] opacity-30 object-contain"
+                className="w-[450px] md:w-[600px] lg:w-[750px] opacity-30 object-contain"
               />
             </div>
             <span className="inline-block px-4 py-2 bg-blush text-primary rounded-full text-sm font-medium mb-6 animate-fade-up">
