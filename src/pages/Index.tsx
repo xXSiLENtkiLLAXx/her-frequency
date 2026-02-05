@@ -34,12 +34,12 @@ const Index = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-background/40 to-background/30" />
         </div>
 
-        {/* Faded Logo Background - positioned at very top, blending into background */}
-        <div className="absolute -top-8 md:-top-12 left-1/2 -translate-x-1/2 z-[1] pointer-events-none">
+        {/* Faded Logo Background - positioned at top center, same size on all devices */}
+        <div className="absolute top-8 left-1/2 -translate-x-1/2 z-[1] pointer-events-none">
           <img 
             src={herFrequencyLogo} 
             alt="" 
-            className="w-[450px] md:w-[600px] lg:w-[750px] opacity-30 object-contain"
+            className="w-[280px] opacity-30 object-contain"
           />
         </div>
 
