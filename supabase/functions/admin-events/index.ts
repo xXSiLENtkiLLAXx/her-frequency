@@ -174,6 +174,36 @@ Deno.serve(async (req) => {
         )
       }
 
+      case 'update_reserved_spots': {
+        const { eventId, reservedSpots } = params
+        
+        // Validate inputs
+        if (!eventId || typeof reservedSpots !== 'number' || reservedSpots < 0 || reservedSpots > 1000) {
+          return new Response(
+            JSON.stringify({ error: 'Invalid event ID or reserved spots value' }),
+            { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          )
+        }
+        
+        const { data, error } = await supabaseAdmin
+          .from('event_settings')
+          .update({ reserved_spots: reservedSpots })
+          .eq('event_id', eventId)
+          .select()
+          .single()
+        
+        if (error) {
+          console.error('Error updating reserved spots:', error)
+          throw error
+        }
+        
+        console.log(`Updated event ${eventId} reserved spots to ${reservedSpots} by ${user.email}`)
+        return new Response(
+          JSON.stringify({ success: true, setting: data }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+
       case 'add_event': {
         const { eventId, eventName, totalSpots } = params
         
