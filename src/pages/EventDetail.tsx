@@ -143,7 +143,6 @@ const EventDetail = () => {
                         <Users className="h-5 w-5 text-primary" />
                         <div>
                           <p className="font-medium">{spotsLeft} spots left</p>
-                          <p className="text-sm text-muted-foreground">of {event.spots} total</p>
                         </div>
                       </div>
                     </div>
