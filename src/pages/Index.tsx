@@ -38,7 +38,7 @@ const Index = () => {
         <div className="relative z-10 container-custom mx-auto px-4 md:px-8 py-20">
           <div className="max-w-3xl">
             {/* Logo - positioned above content with consistent spacing */}
-            <div className="mb-6 -ml-16 md:-ml-24 lg:-ml-32">
+            <div className="mb-6 flex justify-center -mx-4 md:-mx-8">
               <img 
                 src={herFrequencyLogo} 
                 alt="" 
