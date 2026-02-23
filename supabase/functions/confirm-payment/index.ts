@@ -27,6 +27,33 @@ function generateSecureToken(): string {
   return Array.from(array, (byte) => byte.toString(16).padStart(2, "0")).join("");
 }
 
+// Simple in-memory rate limiter (resets on cold start, acceptable for edge functions)
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+
+function checkServerRateLimit(key: string, maxAttempts: number, windowMs: number): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(key);
+  
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(key, { count: 1, resetAt: now + windowMs });
+    return true;
+  }
+  
+  if (entry.count >= maxAttempts) {
+    return false;
+  }
+  
+  entry.count++;
+  return true;
+}
+
+// Extract client IP for rate limiting
+function getClientIp(req: Request): string {
+  return req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("x-real-ip") ||
+    "unknown";
+}
+
 Deno.serve(async (req) => {
   const origin = req.headers.get("origin");
   const corsHeaders = getCorsHeaders(origin);
@@ -57,8 +84,17 @@ Deno.serve(async (req) => {
 
     console.log("Confirm payment request received:", { action, registration_id });
 
+    const clientIp = getClientIp(req);
+
     // ACTION 1: Create registration and generate token
     if (action === "create_registration") {
+      // Server-side rate limit: 5 registrations per IP per hour
+      if (!checkServerRateLimit(`create_${clientIp}`, 5, 3600000)) {
+        return new Response(
+          JSON.stringify({ error: "Too many registration attempts. Please try again later." }),
+          { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
       if (!registration_data) {
         return new Response(
           JSON.stringify({ error: "Missing registration data" }),
@@ -155,6 +191,13 @@ Deno.serve(async (req) => {
 
     // ACTION 2: Confirm payment with token verification
     if (action === "confirm_payment") {
+      // Server-side rate limit: 10 confirmation attempts per IP per hour
+      if (!checkServerRateLimit(`confirm_${clientIp}`, 10, 3600000)) {
+        return new Response(
+          JSON.stringify({ error: "Too many confirmation attempts. Please try again later." }),
+          { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
       // Validate registration_id
       if (!registration_id || typeof registration_id !== "string") {
         console.error("Invalid registration_id provided");

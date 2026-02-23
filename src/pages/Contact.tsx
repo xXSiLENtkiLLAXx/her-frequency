@@ -43,12 +43,12 @@ const Contact = () => {
           "Content-Type": "application/json",
           "Accept": "application/json"
         },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-          _subject: formData.subject
+         body: JSON.stringify({
+          name: formData.name.trim().replace(/[\r\n\t]/g, ' ').slice(0, 200),
+          email: formData.email.trim().toLowerCase().slice(0, 255),
+          subject: formData.subject.trim().replace(/[\r\n\t]/g, ' ').slice(0, 200),
+          message: formData.message.trim().replace(/[\r\n]/g, '\n').slice(0, 2000),
+          _subject: formData.subject.trim().replace(/[\r\n\t]/g, ' ').slice(0, 200)
         })
       });
 
@@ -113,7 +113,7 @@ const Contact = () => {
                     <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
                       Your Name
                     </label>
-                    <Input id="name" type="text" placeholder="Jane Doe" value={formData.name} onChange={e => setFormData({
+                    <Input id="name" type="text" placeholder="Jane Doe" maxLength={200} value={formData.name} onChange={e => setFormData({
                     ...formData,
                     name: e.target.value
                   })} required />
@@ -122,7 +122,7 @@ const Contact = () => {
                     <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
                       Email Address
                     </label>
-                    <Input id="email" type="email" placeholder="jane@example.com" value={formData.email} onChange={e => setFormData({
+                    <Input id="email" type="email" placeholder="jane@example.com" maxLength={255} value={formData.email} onChange={e => setFormData({
                     ...formData,
                     email: e.target.value
                   })} required />
@@ -132,7 +132,7 @@ const Contact = () => {
                   <label htmlFor="subject" className="block text-sm font-medium text-foreground mb-2">
                     Subject
                   </label>
-                  <Input id="subject" type="text" placeholder="How can we help?" value={formData.subject} onChange={e => setFormData({
+                  <Input id="subject" type="text" placeholder="How can we help?" maxLength={200} value={formData.subject} onChange={e => setFormData({
                   ...formData,
                   subject: e.target.value
                 })} required />
