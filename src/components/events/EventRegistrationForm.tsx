@@ -126,7 +126,7 @@ export const EventRegistrationForm = ({
       formSubmitData.append("email", formData.email);
       formSubmitData.append("cellphone", formData.cellphone);
       formSubmitData.append("event", eventTitle);
-      formSubmitData.append("_subject", `Payment Confirmation - ${eventTitle}`);
+      formSubmitData.append("_subject", `Payment Confirmation - ${eventTitle.replace(/[\r\n\t]/g, ' ')}`);
       formSubmitData.append("_template", "box");
       formSubmitData.append("message", `Thank you for your payment for ${eventTitle}! We have received your registration and look forward to seeing you at the event.\n\nDetails:\nName: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}\nCellphone: ${formData.cellphone}`);
 
