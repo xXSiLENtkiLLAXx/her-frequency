@@ -47,8 +47,8 @@ export const EventCard = ({ event }: EventCardProps) => {
                   </div>
                   {event.spots > 0 && (
                     <div className="flex items-center gap-2">
-                      <Users className="h-4 w-4 text-primary" />
-                      <span>
+                      <Users className={`h-4 w-4 ${!isLoading && spotsLeft <= 10 ? "text-destructive" : "text-primary"}`} />
+                      <span className={!isLoading && spotsLeft <= 10 ? "text-destructive font-semibold" : ""}>
                         {isLoading ? "..." : spotsLeft} spots left
                       </span>
                     </div>

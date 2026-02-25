@@ -140,9 +140,9 @@ const EventDetail = () => {
                         </div>
                       </div>
                       <div className="flex items-center gap-3 text-foreground">
-                        <Users className="h-5 w-5 text-primary" />
+                        <Users className={`h-5 w-5 ${spotsLeft <= 10 ? "text-destructive" : "text-primary"}`} />
                         <div>
-                          <p className="font-medium">{spotsLeft} spots left</p>
+                          <p className={`font-medium ${spotsLeft <= 10 ? "text-destructive" : ""}`}>{spotsLeft} spots left</p>
                         </div>
                       </div>
                     </div>

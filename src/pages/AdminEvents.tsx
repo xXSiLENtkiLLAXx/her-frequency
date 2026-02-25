@@ -383,7 +383,7 @@ const AdminEvents = () => {
                             <p className="text-sm text-muted-foreground mb-1">
                               Spots Left
                             </p>
-                            <p className={`text-2xl font-semibold ${spotsLeft <= 5 ? "text-destructive" : "text-foreground"}`}>
+                            <p className={`text-2xl font-semibold ${spotsLeft <= 10 ? "text-destructive" : "text-foreground"}`}>
                               {spotsLeft}
                             </p>
                           </div>
