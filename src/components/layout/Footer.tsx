@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Instagram, Facebook, Mail, MapPin, Phone, Heart } from "lucide-react";
+import { Instagram, Facebook, Mail, MapPin, Heart, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 const footerLinks = {
@@ -133,6 +133,10 @@ export function Footer() {
           <p className="text-muted-foreground/60 text-xs mt-2">
             Becoming HER, one day at a time.
           </p>
+          <Link to="/events/admin/login" className="inline-flex items-center gap-1 text-muted-foreground/40 hover:text-muted-foreground text-xs mt-3 transition-colors">
+            <Lock className="h-3 w-3" />
+            Admin
+          </Link>
         </div>
       </div>
     </footer>;

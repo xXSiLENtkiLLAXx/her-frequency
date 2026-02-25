@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Slider } from "@/components/ui/slider";
 import { RefreshCw, Users, Settings, Download, LogOut, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -43,6 +44,7 @@ const AdminEvents = () => {
   const [loading, setLoading] = useState(true);
   const [spotsInput, setSpotsInput] = useState<Record<number, string>>({});
   const [reservedInput, setReservedInput] = useState<Record<number, string>>({});
+  const [spotsLeftInput, setSpotsLeftInput] = useState<Record<number, number>>({});
 
   const fetchData = async () => {
     if (!isAdmin) return;
@@ -73,12 +75,15 @@ const AdminEvents = () => {
       // Initialize spots input values
       const inputValues: Record<number, string> = {};
       const reservedValues: Record<number, string> = {};
+      const spotsLeftValues: Record<number, number> = {};
       settingsResponse.data.settings?.forEach((s: EventSetting) => {
         inputValues[s.event_id] = s.total_spots.toString();
         reservedValues[s.event_id] = (s.reserved_spots || 0).toString();
       });
       setSpotsInput(inputValues);
       setReservedInput(reservedValues);
+      // Spots left will be computed after registrations are available
+      setSpotsLeftInput(spotsLeftValues);
     } catch (error) {
       logger.error("Error fetching admin data:", error);
       toast.error("Failed to load admin data");
@@ -383,6 +388,64 @@ const AdminEvents = () => {
                             </p>
                           </div>
                           <div></div>
+
+                          {/* Spots Left Slider */}
+                          <div className="md:col-span-5 border-t border-border pt-4 mt-2">
+                            <label className="text-sm text-muted-foreground mb-3 block">
+                              Adjust Spots Left: <span className="font-semibold text-foreground">{spotsLeftInput[setting.event_id] ?? spotsLeft}</span>
+                            </label>
+                            <div className="flex items-center gap-4">
+                              <span className="text-xs text-muted-foreground">0</span>
+                              <Slider
+                                value={[spotsLeftInput[setting.event_id] ?? spotsLeft]}
+                                onValueChange={(value) => {
+                                  setSpotsLeftInput({
+                                    ...spotsLeftInput,
+                                    [setting.event_id]: value[0],
+                                  });
+                                }}
+                                min={0}
+                                max={setting.total_spots}
+                                step={1}
+                                className="flex-1"
+                              />
+                              <span className="text-xs text-muted-foreground">{setting.total_spots}</span>
+                            </div>
+                            <div className="flex items-center gap-2 mt-3">
+                              <p className="text-xs text-muted-foreground flex-1">
+                                This adjusts reserved spots to achieve the desired spots left. (Reserved will become {setting.total_spots - confirmedCount - (spotsLeftInput[setting.event_id] ?? spotsLeft)})
+                              </p>
+                              <Button
+                                onClick={async () => {
+                                  const desiredLeft = spotsLeftInput[setting.event_id] ?? spotsLeft;
+                                  const newReserved = setting.total_spots - confirmedCount - desiredLeft;
+                                  if (newReserved < 0) {
+                                    toast.error("Invalid: not enough total spots for this value");
+                                    return;
+                                  }
+                                  try {
+                                    const response = await supabase.functions.invoke("admin-events", {
+                                      body: {
+                                        action: "update_reserved_spots",
+                                        eventId: setting.event_id,
+                                        reservedSpots: newReserved,
+                                      },
+                                    });
+                                    if (response.error) throw response.error;
+                                    toast.success(`Spots left set to ${desiredLeft}!`);
+                                    fetchData();
+                                  } catch (error) {
+                                    logger.error("Error updating spots left:", error);
+                                    toast.error("Failed to update spots left");
+                                  }
+                                }}
+                                size="sm"
+                              >
+                                Apply
+                              </Button>
+                            </div>
+                          </div>
+
                           <div className="flex items-end gap-2">
                             <div className="flex-1">
                               <label className="text-sm text-muted-foreground mb-1 block">
