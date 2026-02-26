@@ -289,6 +289,15 @@ const AdminEvents = () => {
                 <Settings className="h-4 w-4" />
                 Event Settings
               </TabsTrigger>
+              <TabsTrigger value="reviews" className="gap-2">
+                <MessageSquare className="h-4 w-4" />
+                Reviews
+                {testimonials.filter(t => !t.is_approved).length > 0 && (
+                  <Badge variant="destructive" className="ml-1 h-5 min-w-5 text-xs px-1.5">
+                    {testimonials.filter(t => !t.is_approved).length}
+                  </Badge>
+                )}
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="registrations">
