@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { Calendar, MapPin, Users, ArrowLeft, Clock, Tag } from "lucide-react";
+import { Calendar, MapPin, Users, ArrowLeft, Clock, Tag, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
 import { getEventById } from "@/data/events";
