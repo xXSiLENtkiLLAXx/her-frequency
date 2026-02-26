@@ -25,6 +25,7 @@ export const events: Event[] = [
     date: "February 28, 2026",
     time: "12:00PM - 16:00PM",
     location: "Arctt -Table Tennis Centre, Woodstock, Cape Town",
+    mapsLink: "https://maps.app.goo.gl/",
     price: "R350.00",
     spots: 50,
     spotsLeft: 50,
