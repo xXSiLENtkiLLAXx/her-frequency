@@ -23,7 +23,7 @@ export const events: Event[] = [
     title: "LoveHer: Galentine's Brunch",
     date: "February 28, 2026",
     time: "12:00PM - 16:00PM",
-    location: "The Venue at 21 Bill Peters Drive, Greenpoint, Cape Town",
+    location: "Arctt -Table Tennis Centre, Woodstock, Cape Town",
     price: "R350.00",
     spots: 50,
     spotsLeft: 50,
