@@ -56,8 +56,8 @@ const AdminEvents = () => {
   const [spotsInput, setSpotsInput] = useState<Record<number, string>>({});
   const [reservedInput, setReservedInput] = useState<Record<number, string>>({});
   const [spotsLeftInput, setSpotsLeftInput] = useState<Record<number, number>>({});
-
-  const fetchData = async () => {
+  const [testimonials, setTestimonials] = useState<AdminTestimonial[]>([]);
+  const [testimonialFilter, setTestimonialFilter] = useState<"all" | "pending" | "approved">("all");
     if (!isAdmin) return;
     
     setLoading(true);
