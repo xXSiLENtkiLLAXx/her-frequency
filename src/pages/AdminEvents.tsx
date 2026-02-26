@@ -562,6 +562,76 @@ const AdminEvents = () => {
                 })}
               </div>
             </TabsContent>
+
+            <TabsContent value="reviews">
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <CardTitle>Review Management</CardTitle>
+                  <div className="flex gap-2">
+                    <Select value={testimonialFilter} onValueChange={(v) => setTestimonialFilter(v as "all" | "pending" | "approved")}>
+                      <SelectTrigger className="w-[150px]">
+                        <SelectValue placeholder="Filter" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Reviews</SelectItem>
+                        <SelectItem value="pending">Pending</SelectItem>
+                        <SelectItem value="approved">Approved</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  {loading ? (
+                    <div className="text-center py-8 text-muted-foreground">Loading...</div>
+                  ) : filteredTestimonials.length === 0 ? (
+                    <div className="text-center py-8 text-muted-foreground">No reviews found</div>
+                  ) : (
+                    <div className="space-y-4">
+                      {filteredTestimonials.map((t) => (
+                        <div key={t.id} className={`border rounded-xl p-4 ${!t.is_approved ? 'border-primary/40 bg-blush/20' : 'border-border'}`}>
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className="font-semibold text-foreground">{t.name}</span>
+                                {t.role && <span className="text-sm text-muted-foreground">· {t.role}</span>}
+                                {t.location && <span className="text-sm text-muted-foreground">· {t.location}</span>}
+                              </div>
+                              <div className="flex items-center gap-0.5 mb-2">
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                  <Star key={star} className={`h-4 w-4 ${star <= t.rating ? 'text-primary fill-primary' : 'text-muted-foreground/30'}`} />
+                                ))}
+                              </div>
+                              <p className="text-sm text-foreground/80 italic">"{t.quote}"</p>
+                              <p className="text-xs text-muted-foreground mt-2">
+                                Submitted {new Date(t.created_at).toLocaleDateString()} · {t.is_approved ? (
+                                  <Badge className="bg-accent text-accent-foreground text-xs">Approved</Badge>
+                                ) : (
+                                  <Badge variant="secondary" className="text-xs">Pending</Badge>
+                                )}
+                              </p>
+                            </div>
+                            <div className="flex gap-1 flex-shrink-0">
+                              {!t.is_approved ? (
+                                <Button size="sm" variant="outline" onClick={() => handleApproveTestimonial(t.id, true)} className="gap-1 text-accent">
+                                  <Check className="h-4 w-4" /> Approve
+                                </Button>
+                              ) : (
+                                <Button size="sm" variant="outline" onClick={() => handleApproveTestimonial(t.id, false)} className="gap-1">
+                                  <X className="h-4 w-4" /> Unapprove
+                                </Button>
+                              )}
+                              <Button size="sm" variant="ghost" onClick={() => handleDeleteTestimonial(t.id)} className="text-destructive hover:text-destructive">
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
           </Tabs>
         </div>
       </section>
