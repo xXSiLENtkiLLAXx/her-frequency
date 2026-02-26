@@ -183,7 +183,6 @@ Deno.serve(async (req) => {
       case 'add_event': {
         const { eventId, eventName, totalSpots } = params
         
-        // Validate inputs
         if (!eventId || !eventName || typeof totalSpots !== 'number') {
           return new Response(
             JSON.stringify({ error: 'Invalid event data' }),
@@ -209,6 +208,79 @@ Deno.serve(async (req) => {
         console.log(`Added new event: ${eventName} by ${user.email}`)
         return new Response(
           JSON.stringify({ success: true, setting: data }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+
+      case 'get_testimonials': {
+        const { data, error } = await supabaseAdmin
+          .from('testimonials')
+          .select('*')
+          .order('created_at', { ascending: false })
+        
+        if (error) {
+          console.error('Error fetching testimonials:', error)
+          throw error
+        }
+        
+        return new Response(
+          JSON.stringify({ testimonials: data }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+
+      case 'update_testimonial_approval': {
+        const { testimonialId, isApproved } = params
+        
+        if (!testimonialId || typeof isApproved !== 'boolean') {
+          return new Response(
+            JSON.stringify({ error: 'Invalid testimonial data' }),
+            { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          )
+        }
+        
+        const { data, error } = await supabaseAdmin
+          .from('testimonials')
+          .update({ is_approved: isApproved })
+          .eq('id', testimonialId)
+          .select()
+          .single()
+        
+        if (error) {
+          console.error('Error updating testimonial:', error)
+          throw error
+        }
+        
+        console.log(`Testimonial ${testimonialId} ${isApproved ? 'approved' : 'rejected'} by ${user.email}`)
+        return new Response(
+          JSON.stringify({ success: true, testimonial: data }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+
+      case 'delete_testimonial': {
+        const { testimonialId } = params
+        
+        if (!testimonialId) {
+          return new Response(
+            JSON.stringify({ error: 'Invalid testimonial ID' }),
+            { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          )
+        }
+        
+        const { error } = await supabaseAdmin
+          .from('testimonials')
+          .delete()
+          .eq('id', testimonialId)
+        
+        if (error) {
+          console.error('Error deleting testimonial:', error)
+          throw error
+        }
+        
+        console.log(`Testimonial ${testimonialId} deleted by ${user.email}`)
+        return new Response(
+          JSON.stringify({ success: true }),
           { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         )
       }
