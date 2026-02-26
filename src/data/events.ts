@@ -8,6 +8,7 @@ export interface Event {
   date: string;
   time: string;
   location: string;
+  mapsLink?: string;
   price: string;
   spots: number;
   spotsLeft: number;
@@ -24,6 +25,7 @@ export const events: Event[] = [
     date: "February 28, 2026",
     time: "12:00PM - 16:00PM",
     location: "Arctt -Table Tennis Centre, Woodstock, Cape Town",
+    mapsLink: "https://maps.app.goo.gl/",
     price: "R350.00",
     spots: 50,
     spotsLeft: 50,
@@ -38,6 +40,7 @@ export const events: Event[] = [
     date: "March 28, 2026",
     time: "9:00 AM - 4:00 PM",
     location: "Cape Town",
+    mapsLink: "",
     price: "Coming Soon",
     spots: 50,
     spotsLeft: 50,
@@ -52,6 +55,7 @@ export const events: Event[] = [
     date: "April 25, 2026",
     time: "Full Day",
     location: "Drakensberg",
+    mapsLink: "",
     price: "Coming Soon",
     spots: 50,
     spotsLeft: 50,

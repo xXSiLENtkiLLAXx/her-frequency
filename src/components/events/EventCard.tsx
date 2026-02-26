@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Calendar, MapPin, Users } from "lucide-react";
+import { Calendar, MapPin, Users, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useEventSpots } from "@/hooks/useEventSpots";
@@ -41,9 +41,22 @@ export const EventCard = ({ event }: EventCardProps) => {
                     <Calendar className="h-4 w-4 text-primary" />
                     <span>{event.date} • {event.time}</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4 text-primary" />
-                    <span>{event.location}</span>
+                  <div className="flex items-start gap-2">
+                    <MapPin className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                    <div>
+                      <span>{event.location}</span>
+                      {event.mapsLink && (
+                        <a
+                          href={event.mapsLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1 text-primary hover:underline text-xs mt-1"
+                        >
+                          <ExternalLink className="h-3 w-3" />
+                          View on Google Maps
+                        </a>
+                      )}
+                    </div>
                   </div>
                   {event.spots > 0 && (
                     <div className="flex items-center gap-2">
