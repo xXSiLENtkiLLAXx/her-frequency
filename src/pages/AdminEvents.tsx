@@ -204,16 +204,11 @@ const AdminEvents = () => {
   const exportToCSV = () => {
     const headers = ["First Name", "Last Name", "Email", "Cellphone", "Event ID", "Payment Confirmed", "Registered At", "Confirmed At"];
     const rows = registrations.map((r) => [
-      r.first_name,
-      r.last_name,
-      r.email,
-      r.cellphone,
-      r.event_id,
+      r.first_name, r.last_name, r.email, r.cellphone, r.event_id,
       r.payment_confirmed ? "Yes" : "No",
       new Date(r.created_at).toLocaleString(),
       r.confirmed_at ? new Date(r.confirmed_at).toLocaleString() : "N/A",
     ]);
-
     const csvContent = [headers, ...rows].map((row) => row.join(",")).join("\n");
     const blob = new Blob([csvContent], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
@@ -223,6 +218,41 @@ const AdminEvents = () => {
     a.click();
     URL.revokeObjectURL(url);
   };
+
+  const handleApproveTestimonial = async (id: string, approve: boolean) => {
+    try {
+      const response = await supabase.functions.invoke("admin-events", {
+        body: { action: "update_testimonial_approval", testimonialId: id, isApproved: approve },
+      });
+      if (response.error) throw response.error;
+      toast.success(approve ? "Review approved!" : "Review rejected");
+      fetchData();
+    } catch (error) {
+      logger.error("Error updating testimonial:", error);
+      toast.error("Failed to update review");
+    }
+  };
+
+  const handleDeleteTestimonial = async (id: string) => {
+    if (!confirm("Are you sure you want to permanently delete this review?")) return;
+    try {
+      const response = await supabase.functions.invoke("admin-events", {
+        body: { action: "delete_testimonial", testimonialId: id },
+      });
+      if (response.error) throw response.error;
+      toast.success("Review deleted");
+      fetchData();
+    } catch (error) {
+      logger.error("Error deleting testimonial:", error);
+      toast.error("Failed to delete review");
+    }
+  };
+
+  const filteredTestimonials = testimonials.filter((t) => {
+    if (testimonialFilter === "pending") return !t.is_approved;
+    if (testimonialFilter === "approved") return t.is_approved;
+    return true;
+  });
 
   return (
     <Layout>
