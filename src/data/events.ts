@@ -8,6 +8,7 @@ export interface Event {
   date: string;
   time: string;
   location: string;
+  mapsLink?: string;
   price: string;
   spots: number;
   spotsLeft: number;
