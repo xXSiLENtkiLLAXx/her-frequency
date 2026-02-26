@@ -97,6 +97,13 @@ const AdminEvents = () => {
       setReservedInput(reservedValues);
       // Spots left will be computed after registrations are available
       setSpotsLeftInput(spotsLeftValues);
+
+      // Fetch testimonials
+      const testimonialsResponse = await supabase.functions.invoke("admin-events", {
+        body: { action: "get_testimonials" },
+      });
+      if (testimonialsResponse.error) throw testimonialsResponse.error;
+      setTestimonials(testimonialsResponse.data.testimonials || []);
     } catch (error) {
       logger.error("Error fetching admin data:", error);
       toast.error("Failed to load admin data");
