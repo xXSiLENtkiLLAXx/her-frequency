@@ -55,6 +55,7 @@ export const events: Event[] = [
     date: "April 25, 2026",
     time: "Full Day",
     location: "Drakensberg",
+    mapsLink: "",
     price: "Coming Soon",
     spots: 50,
     spotsLeft: 50,

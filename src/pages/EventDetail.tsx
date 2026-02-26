@@ -132,11 +132,22 @@ const EventDetail = () => {
                           <p className="text-sm text-muted-foreground">Time</p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-3 text-foreground">
-                        <MapPin className="h-5 w-5 text-primary" />
+                      <div className="flex items-start gap-3 text-foreground">
+                        <MapPin className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
                         <div>
                           <p className="font-medium">{event.location}</p>
                           <p className="text-sm text-muted-foreground">Venue</p>
+                          {event.mapsLink && (
+                            <a
+                              href={event.mapsLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-1 text-primary hover:underline text-xs mt-1"
+                            >
+                              <ExternalLink className="h-3 w-3" />
+                              View on Google Maps
+                            </a>
+                          )}
                         </div>
                       </div>
                       <div className="flex items-center gap-3 text-foreground">
