@@ -36,6 +36,17 @@ interface EventSetting {
   updated_at: string;
 }
 
+interface AdminTestimonial {
+  id: string;
+  name: string;
+  role: string | null;
+  location: string | null;
+  quote: string;
+  rating: number;
+  is_approved: boolean;
+  created_at: string;
+}
+
 const AdminEvents = () => {
   const { user, isAdmin, loading: authLoading, signOut } = useAdminAuth();
   const [registrations, setRegistrations] = useState<Registration[]>([]);
