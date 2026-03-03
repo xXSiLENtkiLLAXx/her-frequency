@@ -83,6 +83,36 @@ export type Database = {
         }
         Relationships: []
       }
+      gallery_items: {
+        Row: {
+          created_at: string
+          display_order: number
+          file_name: string
+          file_url: string
+          folder: string
+          id: string
+          media_type: string
+        }
+        Insert: {
+          created_at?: string
+          display_order?: number
+          file_name: string
+          file_url: string
+          folder: string
+          id?: string
+          media_type: string
+        }
+        Update: {
+          created_at?: string
+          display_order?: number
+          file_name?: string
+          file_url?: string
+          folder?: string
+          id?: string
+          media_type?: string
+        }
+        Relationships: []
+      }
       testimonials: {
         Row: {
           created_at: string
