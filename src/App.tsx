@@ -18,6 +18,7 @@ import Booking from "./pages/Booking";
 import NotFound from "./pages/NotFound";
 import AdminEvents from "./pages/AdminEvents";
 import AdminAuth from "./pages/AdminAuth";
+import Gallery from "./pages/Gallery";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +39,7 @@ const App = () => (
           <Route path="/services" element={<Services />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/testimonials" element={<Testimonials />} />
           <Route path="/faq" element={<FAQ />} />
