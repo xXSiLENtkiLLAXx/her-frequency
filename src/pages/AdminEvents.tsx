@@ -637,6 +637,10 @@ const AdminEvents = () => {
                 </CardContent>
               </Card>
             </TabsContent>
+
+            <TabsContent value="gallery">
+              <GalleryManager />
+            </TabsContent>
           </Tabs>
         </div>
       </section>

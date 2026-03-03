@@ -285,6 +285,50 @@ Deno.serve(async (req) => {
         )
       }
 
+      case 'get_gallery_items': {
+        const { data, error } = await supabaseAdmin
+          .from('gallery_items')
+          .select('*')
+          .order('display_order', { ascending: true })
+        
+        if (error) throw error
+        return new Response(
+          JSON.stringify({ items: data }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+
+      case 'delete_gallery_item': {
+        const { itemId, fileUrl } = params
+        if (!itemId) {
+          return new Response(
+            JSON.stringify({ error: 'Invalid item ID' }),
+            { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          )
+        }
+
+        // Extract file path from URL to delete from storage
+        if (fileUrl) {
+          const pathMatch = fileUrl.match(/\/gallery\/(.+)$/)
+          if (pathMatch) {
+            await supabaseAdmin.storage.from('gallery').remove([pathMatch[1]])
+          }
+        }
+
+        const { error } = await supabaseAdmin
+          .from('gallery_items')
+          .delete()
+          .eq('id', itemId)
+        
+        if (error) throw error
+        
+        console.log(`Gallery item ${itemId} deleted by ${user.email}`)
+        return new Response(
+          JSON.stringify({ success: true }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+
       default:
         return new Response(
           JSON.stringify({ error: 'Invalid action' }),
