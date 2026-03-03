@@ -299,6 +299,10 @@ const AdminEvents = () => {
                   </Badge>
                 )}
               </TabsTrigger>
+              <TabsTrigger value="gallery" className="gap-2">
+                <ImageIcon className="h-4 w-4" />
+                Gallery
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="registrations">
