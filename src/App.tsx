@@ -18,6 +18,7 @@ import Booking from "./pages/Booking";
 import NotFound from "./pages/NotFound";
 import AdminEvents from "./pages/AdminEvents";
 import AdminAuth from "./pages/AdminAuth";
+import Gallery from "./pages/Gallery";
 
 const queryClient = new QueryClient();
 
