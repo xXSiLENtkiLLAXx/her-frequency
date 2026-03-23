@@ -32,7 +32,7 @@ const EventDetail = () => {
     );
   }
 
-  const showFullDetails = event.id === 1;
+  const showFullDetails = event.id === 1 || event.id === 2;
   const { spotsLeft, refreshSpots } = useEventSpots(event.id, event.spots);
 
   return (
