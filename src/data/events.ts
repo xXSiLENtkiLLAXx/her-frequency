@@ -16,6 +16,7 @@ export interface Event {
   category: string;
   description: string;
   paymentLink: string;
+  whatToExpect?: string[];
 }
 
 export const events: Event[] = [
@@ -33,6 +34,12 @@ export const events: Event[] = [
     category: "Networking/Creative Workshop",
     description: "LoveHer is a welcoming space designed to help women reconnect with themselves. This experience encourages self-awareness, confidence, and compassion through guided reflection, meaningful conversation, and intentional connection. Come as you are, pretty in PINK, bring your girls, and leave feeling empowered, appreciated, supported and inspired as you begin your journey with Her Frequency.",
     paymentLink: "https://pos.snapscan.io/qr/Ak-wyctD",
+    whatToExpect: [
+      "A LoveHer experience in guided reflection, self-awareness, and self-affirmation.",
+      "Meaningful conversations with like-minded women",
+      "Intentional connection and networking opportunities",
+      "Delicious brunch and refreshments",
+    ],
   },
   {
     id: 2,
@@ -48,6 +55,12 @@ export const events: Event[] = [
     category: "Workshop",
     description: "HealHer: A Journey of Transformative Healing is a nurturing space for women to pause, give themselves permission to breathe, and gently reconnect with their emotional well-being. This experience provides a safe and supportive space where you can reflect, reconnect with yourself, and gently embrace the process of transformative healing, emerging with practical tools, renewed clarity, and a deeper sense of balance. Come as you are, adorned in calming Shades of BLUE and leave feeling supported, grounded, and empowered to carry this sense of balance and strength into your everyday life.",
     paymentLink: "https://pos.snapscan.io/qr/Ak-wyctD",
+    whatToExpect: [
+      "A safe and supportive space for emotional reflection and healing",
+      "Guided exercises to help you reconnect with your inner self",
+      "Practical tools for managing stress and building emotional resilience",
+      "Meaningful connections with women on a similar journey",
+    ],
   },
   {
     id: 3,

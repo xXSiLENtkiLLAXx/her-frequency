@@ -85,28 +85,18 @@ const EventDetail = () => {
                 )}
               </div>
 
-              {showFullDetails && (
+              {showFullDetails && event.whatToExpect && event.whatToExpect.length > 0 && (
                 <div className="bg-muted/30 rounded-2xl p-6 md:p-8">
                   <h3 className="font-display text-xl font-semibold text-foreground mb-6">
                     What to Expect
                   </h3>
                   <ul className="space-y-3 text-muted-foreground">
-                    <li className="flex items-start gap-3">
-                      <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                      <span>A LoveHer experience in guided reflection, self-awareness, and self-affirmation.</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                      <span>Meaningful conversations with like-minded women</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                      <span>Intentional connection and networking opportunities</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                      <span>Delicious brunch and refreshments</span>
-                    </li>
+                    {event.whatToExpect.map((item, index) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               )}
