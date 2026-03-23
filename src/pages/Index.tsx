@@ -141,7 +141,7 @@ const Index = () => {
                   <h3 className="font-display text-xl font-semibold text-foreground mb-2">
                     {event.title}
                   </h3>
-                  {event.id === 1 && (
+                  {(event.id === 1 || event.id === 2) && (
                     <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
                       <span className="flex items-center gap-1">
                         <Calendar className="h-4 w-4" />
