@@ -11,7 +11,7 @@ interface EventCardProps {
 
 export const EventCard = ({ event }: EventCardProps) => {
   const { spotsLeft, isLoading } = useEventSpots(event.id, event.spots);
-  const showFullDetails = event.id === 1;
+  const showFullDetails = event.id === 1 || event.id === 2;
 
   return (
     <Card className="overflow-hidden group">
