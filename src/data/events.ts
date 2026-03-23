@@ -46,7 +46,7 @@ export const events: Event[] = [
     spotsLeft: 50,
     image: coachingImage,
     category: "Workshop",
-    description: "A full-day intensive workshop focused on personal transformation, goal setting, and creating actionable plans for the life you desire.",
+    description: "HealHer: A Journey of Transformative Healing is a nurturing space for women to pause, give themselves permission to breathe, and gently reconnect with their emotional well-being. This experience provides a safe and supportive space where you can reflect, reconnect with yourself, and gently embrace the process of transformative healing, emerging with practical tools, renewed clarity, and a deeper sense of balance. Come as you are, adorned in calming Shades of BLUE and leave feeling supported, grounded, and empowered to carry this sense of balance and strength into your everyday life.",
     paymentLink: "https://pos.snapscan.io/qr/Ak-wyctD",
   },
   {
