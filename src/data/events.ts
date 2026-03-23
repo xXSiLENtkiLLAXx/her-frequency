@@ -1,5 +1,5 @@
 import eventImage from "@/assets/Loveher.jpeg";
-import coachingImage from "@/assets/Launching-Soon.jpeg";
+import coachingImage from "@/assets/HealHer-Logo.jpeg";
 import retreatImage from "@/assets/Launching-Soon.jpeg";
 
 export interface Event {
