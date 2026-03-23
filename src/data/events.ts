@@ -16,6 +16,7 @@ export interface Event {
   category: string;
   description: string;
   paymentLink: string;
+  whatToExpect?: string[];
 }
 
 export const events: Event[] = [
