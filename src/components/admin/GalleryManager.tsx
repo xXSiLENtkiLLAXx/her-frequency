@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Loader2, Upload, Trash2, Image as ImageIcon, Film, FolderPlus } from "lucide-react";
+import { Loader2, Upload, Trash2, Image as ImageIcon, Film, FolderPlus, Plus } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import logger from "@/lib/logger";
+import { events } from "@/data/events";
 
 interface GalleryItem {
   id: string;
@@ -20,10 +20,10 @@ interface GalleryItem {
 export function GalleryManager() {
   const [items, setItems] = useState<GalleryItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [uploading, setUploading] = useState(false);
-  const [selectedFolder, setSelectedFolder] = useState<string>("all");
+  const [uploadingFolder, setUploadingFolder] = useState<string | null>(null);
   const [newFolderName, setNewFolderName] = useState("");
   const [showNewFolder, setShowNewFolder] = useState(false);
+  const [customFolders, setCustomFolders] = useState<string[]>([]);
 
   const fetchItems = async () => {
     setLoading(true);
@@ -45,18 +45,22 @@ export function GalleryManager() {
     fetchItems();
   }, []);
 
-  const folders = [...new Set(items.map((i) => i.folder))];
-  const filteredItems = selectedFolder === "all" ? items : items.filter((i) => i.folder === selectedFolder);
+  // Build folder list from events + any extra folders from existing items
+  const eventFolders = events.map((e) => e.title);
+  const existingFolders = [...new Set(items.map((i) => i.folder))];
+  const extraFolders = existingFolders.filter(
+    (f) => !eventFolders.includes(f) && !customFolders.includes(f)
+  );
+  const allFolders = [...eventFolders, ...customFolders, ...extraFolders];
 
-  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const getItemsForFolder = (folder: string) =>
+    items.filter((i) => i.folder === folder);
+
+  const handleUpload = async (folder: string, e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
-    const folder = selectedFolder === "all" || selectedFolder === ""
-      ? (newFolderName.trim() || "General")
-      : selectedFolder;
-
-    setUploading(true);
+    setUploadingFolder(folder);
     try {
       for (const file of Array.from(files)) {
         const isImage = file.type.startsWith("image/");
@@ -66,19 +70,30 @@ export function GalleryManager() {
           continue;
         }
 
-        // Upload to storage via edge function
         const formData = new FormData();
         formData.append("file", file);
         formData.append("folder", folder);
         formData.append("mediaType", isImage ? "image" : "video");
 
-        const response = await supabase.functions.invoke("gallery-upload", {
-          body: formData,
-        });
+        const { data: sessionData } = await supabase.auth.getSession();
+        const token = sessionData?.session?.access_token;
 
-        if (response.error) {
-          toast.error(`Failed to upload ${file.name}`);
-          logger.error("Upload error:", response.error);
+        const response = await fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/gallery-upload`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+            },
+            body: formData,
+          }
+        );
+
+        if (!response.ok) {
+          const err = await response.json().catch(() => ({}));
+          toast.error(`Failed to upload ${file.name}: ${err.error || "Unknown error"}`);
+          logger.error("Upload error:", err);
         }
       }
       toast.success("Upload complete!");
@@ -87,7 +102,7 @@ export function GalleryManager() {
       logger.error("Upload error:", error);
       toast.error("Upload failed");
     } finally {
-      setUploading(false);
+      setUploadingFolder(null);
       e.target.value = "";
     }
   };
@@ -107,105 +122,138 @@ export function GalleryManager() {
     }
   };
 
+  const addCustomFolder = () => {
+    const name = newFolderName.trim();
+    if (!name) return;
+    if (allFolders.includes(name)) {
+      toast.error("Folder already exists");
+      return;
+    }
+    setCustomFolders((prev) => [...prev, name]);
+    setNewFolderName("");
+    setShowNewFolder(false);
+    toast.success(`Folder "${name}" created. Upload files to populate it.`);
+  };
+
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between flex-wrap gap-4">
-        <CardTitle>Gallery Management</CardTitle>
-        <div className="flex gap-2 items-center flex-wrap">
-          <Select value={selectedFolder} onValueChange={setSelectedFolder}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select folder" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Folders</SelectItem>
-              {folders.map((f) => (
-                <SelectItem key={f} value={f}>{f}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+    <div className="space-y-6">
+      <div className="flex items-center justify-between flex-wrap gap-4">
+        <h2 className="font-display text-2xl font-semibold text-foreground">Gallery Management</h2>
+        <Button variant="outline" size="sm" onClick={() => setShowNewFolder(!showNewFolder)}>
+          <FolderPlus className="h-4 w-4 mr-1" /> New Folder
+        </Button>
+      </div>
 
-          <Button variant="outline" size="sm" onClick={() => setShowNewFolder(!showNewFolder)}>
-            <FolderPlus className="h-4 w-4 mr-1" /> New Folder
+      {showNewFolder && (
+        <div className="flex gap-2">
+          <Input
+            placeholder="New folder name (e.g. Retreat 2026)"
+            value={newFolderName}
+            onChange={(e) => setNewFolderName(e.target.value)}
+            className="max-w-xs"
+            onKeyDown={(e) => e.key === "Enter" && addCustomFolder()}
+          />
+          <Button size="sm" onClick={addCustomFolder}>
+            <Plus className="h-4 w-4 mr-1" /> Create
           </Button>
-
-          <div className="relative">
-            <input
-              type="file"
-              multiple
-              accept="image/*,video/*"
-              onChange={handleUpload}
-              className="absolute inset-0 opacity-0 cursor-pointer"
-              disabled={uploading}
-            />
-            <Button size="sm" disabled={uploading}>
-              {uploading ? <Loader2 className="h-4 w-4 mr-1 animate-spin" /> : <Upload className="h-4 w-4 mr-1" />}
-              {uploading ? "Uploading..." : "Upload Files"}
-            </Button>
-          </div>
         </div>
-      </CardHeader>
-      <CardContent>
-        {showNewFolder && (
-          <div className="flex gap-2 mb-4">
-            <Input
-              placeholder="New folder name (e.g. LoveHer 2026)"
-              value={newFolderName}
-              onChange={(e) => setNewFolderName(e.target.value)}
-              className="max-w-xs"
-            />
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() => {
-                if (newFolderName.trim()) {
-                  setSelectedFolder(newFolderName.trim());
-                  setShowNewFolder(false);
-                  toast.success(`Folder "${newFolderName.trim()}" ready. Upload files to create it.`);
-                }
-              }}
-            >
-              Use Folder
-            </Button>
-          </div>
-        )}
+      )}
 
-        {loading ? (
-          <div className="text-center py-8 text-muted-foreground">Loading...</div>
-        ) : filteredItems.length === 0 ? (
-          <div className="text-center py-8 text-muted-foreground">
-            <ImageIcon className="h-10 w-10 mx-auto mb-2 opacity-40" />
-            <p>No gallery items. Upload photos or videos above.</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {filteredItems.map((item) => (
-              <div key={item.id} className="relative group rounded-xl overflow-hidden border border-border">
-                {item.media_type === "image" ? (
-                  <img src={item.file_url} alt={item.file_name} className="w-full aspect-square object-cover" loading="lazy" />
-                ) : (
-                  <div className="w-full aspect-square bg-muted flex items-center justify-center relative">
-                    <video src={item.file_url} className="w-full h-full object-cover" muted preload="metadata" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <Film className="h-8 w-8 text-primary-foreground drop-shadow" />
-                    </div>
+      {loading ? (
+        <div className="text-center py-8 text-muted-foreground">Loading...</div>
+      ) : (
+        <div className="grid grid-cols-1 gap-6">
+          {allFolders.map((folder) => {
+            const folderItems = getItemsForFolder(folder);
+            const isUploading = uploadingFolder === folder;
+            const eventMatch = events.find((e) => e.title === folder);
+
+            return (
+              <Card key={folder}>
+                <CardHeader className="flex flex-row items-center justify-between flex-wrap gap-3 pb-3">
+                  <div>
+                    <CardTitle className="text-lg">{folder}</CardTitle>
+                    {eventMatch && (
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {eventMatch.date} · {eventMatch.location}
+                      </p>
+                    )}
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      {folderItems.length} {folderItems.length === 1 ? "item" : "items"}
+                    </p>
                   </div>
-                )}
-                <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/30 transition-colors flex items-end justify-between p-2 opacity-0 group-hover:opacity-100">
-                  <span className="text-xs text-primary-foreground font-medium truncate mr-2 drop-shadow">{item.folder}</span>
-                  <Button
-                    size="sm"
-                    variant="destructive"
-                    className="h-7 w-7 p-0"
-                    onClick={() => handleDelete(item)}
-                  >
-                    <Trash2 className="h-3.5 w-3.5" />
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </CardContent>
-    </Card>
+                  <div className="relative">
+                    <input
+                      type="file"
+                      multiple
+                      accept="image/*,video/*"
+                      onChange={(e) => handleUpload(folder, e)}
+                      className="absolute inset-0 opacity-0 cursor-pointer"
+                      disabled={isUploading}
+                    />
+                    <Button size="sm" disabled={isUploading}>
+                      {isUploading ? (
+                        <Loader2 className="h-4 w-4 mr-1 animate-spin" />
+                      ) : (
+                        <Upload className="h-4 w-4 mr-1" />
+                      )}
+                      {isUploading ? "Uploading..." : "Upload"}
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  {folderItems.length === 0 ? (
+                    <div className="text-center py-6 text-muted-foreground border border-dashed border-border rounded-lg">
+                      <ImageIcon className="h-8 w-8 mx-auto mb-2 opacity-40" />
+                      <p className="text-sm">No photos yet. Upload files above.</p>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                      {folderItems.map((item) => (
+                        <div
+                          key={item.id}
+                          className="relative group rounded-lg overflow-hidden border border-border"
+                        >
+                          {item.media_type === "image" ? (
+                            <img
+                              src={item.file_url}
+                              alt={item.file_name}
+                              className="w-full aspect-square object-cover"
+                              loading="lazy"
+                            />
+                          ) : (
+                            <div className="w-full aspect-square bg-muted flex items-center justify-center relative">
+                              <video
+                                src={item.file_url}
+                                className="w-full h-full object-cover"
+                                muted
+                                preload="metadata"
+                              />
+                              <div className="absolute inset-0 flex items-center justify-center">
+                                <Film className="h-6 w-6 text-primary-foreground drop-shadow" />
+                              </div>
+                            </div>
+                          )}
+                          <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/30 transition-colors flex items-end justify-end p-1.5 opacity-0 group-hover:opacity-100">
+                            <Button
+                              size="sm"
+                              variant="destructive"
+                              className="h-6 w-6 p-0"
+                              onClick={() => handleDelete(item)}
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      )}
+    </div>
   );
 }
