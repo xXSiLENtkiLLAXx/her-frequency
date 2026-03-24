@@ -35,8 +35,8 @@ export const events: Event[] = [
     category: "Networking/Creative Workshop",
     description: "LoveHer is a welcoming space designed to help women reconnect with themselves. This experience encourages self-awareness, confidence, and compassion through guided reflection, meaningful conversation, and intentional connection. Come as you are, pretty in PINK, bring your girls, and leave feeling empowered, appreciated, supported and inspired as you begin your journey with Her Frequency.",
     paymentLink: "https://pos.snapscan.io/qr/Ak-wyctD",
+    whatToExpectHeader: "A LoveHer experience in guided reflection, self-awareness, and self-affirmation.",
     whatToExpect: [
-      "A LoveHer experience in guided reflection, self-awareness, and self-affirmation.",
       "Meaningful conversations with like-minded women",
       "Intentional connection and networking opportunities",
       "Delicious brunch and refreshments",
