@@ -16,6 +16,7 @@ export interface Event {
   category: string;
   description: string;
   paymentLink: string;
+  whatToExpectHeader?: string;
   whatToExpect?: string[];
 }
 
@@ -34,8 +35,8 @@ export const events: Event[] = [
     category: "Networking/Creative Workshop",
     description: "LoveHer is a welcoming space designed to help women reconnect with themselves. This experience encourages self-awareness, confidence, and compassion through guided reflection, meaningful conversation, and intentional connection. Come as you are, pretty in PINK, bring your girls, and leave feeling empowered, appreciated, supported and inspired as you begin your journey with Her Frequency.",
     paymentLink: "https://pos.snapscan.io/qr/Ak-wyctD",
+    whatToExpectHeader: "A LoveHer experience in guided reflection, self-awareness, and self-affirmation.",
     whatToExpect: [
-      "A LoveHer experience in guided reflection, self-awareness, and self-affirmation.",
       "Meaningful conversations with like-minded women",
       "Intentional connection and networking opportunities",
       "Delicious brunch and refreshments",
@@ -55,8 +56,8 @@ export const events: Event[] = [
     category: "Workshop",
     description: "HealHer: A Journey of Transformative Healing is a nurturing space for women to pause, give themselves permission to breathe, and gently reconnect with their emotional well-being. This experience provides a safe and supportive space where you can reflect, reconnect with yourself, and gently embrace the process of transformative healing, emerging with practical tools, renewed clarity, and a deeper sense of balance. Come as you are, adorned in calming Shades of BLUE and leave feeling supported, grounded, and empowered to carry this sense of balance and strength into your everyday life.",
     paymentLink: "https://pos.snapscan.io/qr/Ak-wyctD",
+    whatToExpectHeader: "A HealHer Experience in Reflection, Reconnection, and Emotional Well-Being where we'll explore:",
     whatToExpect: [
-      "A HealHer Experience in Reflection, Reconnection, and Emotional Well-Being where we'll explore:",
       "How to regulate emotions during stressful everyday situations",
       "Overcoming burnout and reclaiming your strength as a woman",
       "Healing through emotional transitions and life shifts",

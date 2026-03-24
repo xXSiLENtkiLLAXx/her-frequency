@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Loader2, Upload, Trash2, Image as ImageIcon, Film, FolderPlus, Plus } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -24,6 +25,8 @@ export function GalleryManager() {
   const [newFolderName, setNewFolderName] = useState("");
   const [showNewFolder, setShowNewFolder] = useState(false);
   const [customFolders, setCustomFolders] = useState<string[]>([]);
+  const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set());
+  const [bulkDeleting, setBulkDeleting] = useState(false);
 
   const fetchItems = async () => {
     setLoading(true);
@@ -45,7 +48,6 @@ export function GalleryManager() {
     fetchItems();
   }, []);
 
-  // Build folder list from events + any extra folders from existing items
   const eventFolders = events.map((e) => e.title);
   const existingFolders = [...new Set(items.map((i) => i.folder))];
   const extraFolders = existingFolders.filter(
@@ -115,11 +117,62 @@ export function GalleryManager() {
       });
       if (response.error) throw response.error;
       toast.success("Deleted!");
+      setSelectedItems((prev) => {
+        const next = new Set(prev);
+        next.delete(item.id);
+        return next;
+      });
       fetchItems();
     } catch (error) {
       logger.error("Delete error:", error);
       toast.error("Failed to delete");
     }
+  };
+
+  const handleBulkDelete = async () => {
+    if (selectedItems.size === 0) return;
+    if (!confirm(`Delete ${selectedItems.size} selected item(s)?`)) return;
+
+    setBulkDeleting(true);
+    let deleted = 0;
+    for (const id of selectedItems) {
+      const item = items.find((i) => i.id === id);
+      if (!item) continue;
+      try {
+        const response = await supabase.functions.invoke("admin-events", {
+          body: { action: "delete_gallery_item", itemId: item.id, fileUrl: item.file_url },
+        });
+        if (!response.error) deleted++;
+      } catch (error) {
+        logger.error("Bulk delete error:", error);
+      }
+    }
+    toast.success(`Deleted ${deleted} item(s)`);
+    setSelectedItems(new Set());
+    setBulkDeleting(false);
+    fetchItems();
+  };
+
+  const toggleSelect = (id: string) => {
+    setSelectedItems((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const toggleSelectAll = (folder: string) => {
+    const folderItems = getItemsForFolder(folder);
+    const allSelected = folderItems.every((i) => selectedItems.has(i.id));
+    setSelectedItems((prev) => {
+      const next = new Set(prev);
+      folderItems.forEach((i) => {
+        if (allSelected) next.delete(i.id);
+        else next.add(i.id);
+      });
+      return next;
+    });
   };
 
   const addCustomFolder = () => {
@@ -139,9 +192,26 @@ export function GalleryManager() {
     <div className="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-4">
         <h2 className="font-display text-2xl font-semibold text-foreground">Gallery Management</h2>
-        <Button variant="outline" size="sm" onClick={() => setShowNewFolder(!showNewFolder)}>
-          <FolderPlus className="h-4 w-4 mr-1" /> New Folder
-        </Button>
+        <div className="flex gap-2">
+          {selectedItems.size > 0 && (
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={handleBulkDelete}
+              disabled={bulkDeleting}
+            >
+              {bulkDeleting ? (
+                <Loader2 className="h-4 w-4 mr-1 animate-spin" />
+              ) : (
+                <Trash2 className="h-4 w-4 mr-1" />
+              )}
+              Delete {selectedItems.size} selected
+            </Button>
+          )}
+          <Button variant="outline" size="sm" onClick={() => setShowNewFolder(!showNewFolder)}>
+            <FolderPlus className="h-4 w-4 mr-1" /> New Folder
+          </Button>
+        </div>
       </div>
 
       {showNewFolder && (
@@ -167,6 +237,8 @@ export function GalleryManager() {
             const folderItems = getItemsForFolder(folder);
             const isUploading = uploadingFolder === folder;
             const eventMatch = events.find((e) => e.title === folder);
+            const allFolderSelected = folderItems.length > 0 && folderItems.every((i) => selectedItems.has(i.id));
+            const someFolderSelected = folderItems.some((i) => selectedItems.has(i.id));
 
             return (
               <Card key={folder}>
@@ -182,23 +254,35 @@ export function GalleryManager() {
                       {folderItems.length} {folderItems.length === 1 ? "item" : "items"}
                     </p>
                   </div>
-                  <div className="relative">
-                    <input
-                      type="file"
-                      multiple
-                      accept="image/*,video/*"
-                      onChange={(e) => handleUpload(folder, e)}
-                      className="absolute inset-0 opacity-0 cursor-pointer"
-                      disabled={isUploading}
-                    />
-                    <Button size="sm" disabled={isUploading}>
-                      {isUploading ? (
-                        <Loader2 className="h-4 w-4 mr-1 animate-spin" />
-                      ) : (
-                        <Upload className="h-4 w-4 mr-1" />
-                      )}
-                      {isUploading ? "Uploading..." : "Upload"}
-                    </Button>
+                  <div className="flex items-center gap-2">
+                    {folderItems.length > 0 && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => toggleSelectAll(folder)}
+                        className="text-xs"
+                      >
+                        {allFolderSelected ? "Deselect all" : "Select all"}
+                      </Button>
+                    )}
+                    <div className="relative">
+                      <input
+                        type="file"
+                        multiple
+                        accept="image/*,video/*"
+                        onChange={(e) => handleUpload(folder, e)}
+                        className="absolute inset-0 opacity-0 cursor-pointer"
+                        disabled={isUploading}
+                      />
+                      <Button size="sm" disabled={isUploading}>
+                        {isUploading ? (
+                          <Loader2 className="h-4 w-4 mr-1 animate-spin" />
+                        ) : (
+                          <Upload className="h-4 w-4 mr-1" />
+                        )}
+                        {isUploading ? "Uploading..." : "Upload"}
+                      </Button>
+                    </div>
                   </div>
                 </CardHeader>
                 <CardContent>
@@ -209,43 +293,62 @@ export function GalleryManager() {
                     </div>
                   ) : (
                     <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                      {folderItems.map((item) => (
-                        <div
-                          key={item.id}
-                          className="relative group rounded-lg overflow-hidden border border-border"
-                        >
-                          {item.media_type === "image" ? (
-                            <img
-                              src={item.file_url}
-                              alt={item.file_name}
-                              className="w-full aspect-square object-cover"
-                              loading="lazy"
-                            />
-                          ) : (
-                            <div className="w-full aspect-square bg-muted flex items-center justify-center relative">
-                              <video
-                                src={item.file_url}
-                                className="w-full h-full object-cover"
-                                muted
-                                preload="metadata"
+                      {folderItems.map((item) => {
+                        const isSelected = selectedItems.has(item.id);
+                        return (
+                          <div
+                            key={item.id}
+                            className={`relative group rounded-lg overflow-hidden border-2 transition-colors cursor-pointer ${
+                              isSelected ? "border-primary" : "border-border"
+                            }`}
+                            onClick={() => toggleSelect(item.id)}
+                          >
+                            {/* Selection checkbox */}
+                            <div className={`absolute top-1.5 left-1.5 z-10 transition-opacity ${isSelected ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
+                              <Checkbox
+                                checked={isSelected}
+                                onCheckedChange={() => toggleSelect(item.id)}
+                                onClick={(e) => e.stopPropagation()}
+                                className="bg-background/80"
                               />
-                              <div className="absolute inset-0 flex items-center justify-center">
-                                <Film className="h-6 w-6 text-primary-foreground drop-shadow" />
-                              </div>
                             </div>
-                          )}
-                          <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/30 transition-colors flex items-end justify-end p-1.5 opacity-0 group-hover:opacity-100">
-                            <Button
-                              size="sm"
-                              variant="destructive"
-                              className="h-6 w-6 p-0"
-                              onClick={() => handleDelete(item)}
-                            >
-                              <Trash2 className="h-3 w-3" />
-                            </Button>
+
+                            {item.media_type === "image" ? (
+                              <img
+                                src={item.file_url}
+                                alt={item.file_name}
+                                className="w-full aspect-square object-cover"
+                                loading="lazy"
+                              />
+                            ) : (
+                              <div className="w-full aspect-square bg-muted flex items-center justify-center relative">
+                                <video
+                                  src={item.file_url}
+                                  className="w-full h-full object-cover"
+                                  muted
+                                  preload="metadata"
+                                />
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                  <Film className="h-6 w-6 text-primary-foreground drop-shadow" />
+                                </div>
+                              </div>
+                            )}
+                            <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/30 transition-colors flex items-end justify-end p-1.5 opacity-0 group-hover:opacity-100">
+                              <Button
+                                size="sm"
+                                variant="destructive"
+                                className="h-6 w-6 p-0"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleDelete(item);
+                                }}
+                              >
+                                <Trash2 className="h-3 w-3" />
+                              </Button>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   )}
                 </CardContent>
