@@ -85,19 +85,26 @@ const EventDetail = () => {
                 )}
               </div>
 
-              {showFullDetails && event.whatToExpect && event.whatToExpect.length > 0 && (
+              {showFullDetails && (event.whatToExpectHeader || (event.whatToExpect && event.whatToExpect.length > 0)) && (
                 <div className="bg-muted/30 rounded-2xl p-6 md:p-8">
-                  <h3 className="font-display text-xl font-semibold text-foreground mb-6">
+                  <h3 className="font-display text-xl font-semibold text-foreground mb-4">
                     What to Expect
                   </h3>
-                  <ul className="space-y-3 text-muted-foreground">
-                    {event.whatToExpect.map((item, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  {event.whatToExpectHeader && (
+                    <p className="text-muted-foreground leading-relaxed mb-6">
+                      {event.whatToExpectHeader}
+                    </p>
+                  )}
+                  {event.whatToExpect && event.whatToExpect.length > 0 && (
+                    <ul className="space-y-3 text-muted-foreground">
+                      {event.whatToExpect.map((item, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               )}
             </div>
