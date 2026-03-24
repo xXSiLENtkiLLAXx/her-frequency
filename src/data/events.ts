@@ -48,7 +48,7 @@ export const events: Event[] = [
     time: "9:00 AM - 4:00 PM",
     location: "Cape Town",
     mapsLink: "",
-    price: "Coming Soon",
+    price: "Coming",
     spots: 50,
     spotsLeft: 50,
     image: coachingImage,
