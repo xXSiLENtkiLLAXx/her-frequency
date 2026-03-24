@@ -298,18 +298,16 @@ export function GalleryManager() {
                         return (
                           <div
                             key={item.id}
-                            className={`relative group rounded-lg overflow-hidden border-2 transition-colors cursor-pointer ${
-                              isSelected ? "border-primary" : "border-border"
+                            className={`relative group rounded-lg overflow-hidden border-2 transition-colors ${
+                              isSelected ? "border-primary bg-primary/5" : "border-border"
                             }`}
-                            onClick={() => toggleSelect(item.id)}
                           >
-                            {/* Selection checkbox */}
-                            <div className={`absolute top-1.5 left-1.5 z-10 transition-opacity ${isSelected ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
+                            {/* Selection checkbox - always visible */}
+                            <div className="absolute top-1.5 left-1.5 z-10">
                               <Checkbox
                                 checked={isSelected}
                                 onCheckedChange={() => toggleSelect(item.id)}
-                                onClick={(e) => e.stopPropagation()}
-                                className="bg-background/80"
+                                className="bg-background/90 border-muted-foreground"
                               />
                             </div>
 
@@ -317,11 +315,15 @@ export function GalleryManager() {
                               <img
                                 src={item.file_url}
                                 alt={item.file_name}
-                                className="w-full aspect-square object-cover"
+                                className="w-full aspect-square object-cover cursor-pointer"
                                 loading="lazy"
+                                onClick={() => toggleSelect(item.id)}
                               />
                             ) : (
-                              <div className="w-full aspect-square bg-muted flex items-center justify-center relative">
+                              <div
+                                className="w-full aspect-square bg-muted flex items-center justify-center relative cursor-pointer"
+                                onClick={() => toggleSelect(item.id)}
+                              >
                                 <video
                                   src={item.file_url}
                                   className="w-full h-full object-cover"
@@ -333,15 +335,18 @@ export function GalleryManager() {
                                 </div>
                               </div>
                             )}
-                            <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/30 transition-colors flex items-end justify-end p-1.5 opacity-0 group-hover:opacity-100">
+
+                            {/* Always-visible delete button */}
+                            <div className="absolute top-1.5 right-1.5 z-10">
                               <Button
                                 size="sm"
                                 variant="destructive"
-                                className="h-6 w-6 p-0"
+                                className="h-6 w-6 p-0 opacity-70 hover:opacity-100"
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   handleDelete(item);
                                 }}
+                                title="Delete this item"
                               >
                                 <Trash2 className="h-3 w-3" />
                               </Button>
