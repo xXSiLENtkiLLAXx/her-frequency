@@ -38,11 +38,11 @@ const EventDetail = () => {
   return (
     <Layout>
       {/* Hero Section with Event Image */}
-      <section className="relative h-[50vh] md:h-[60vh] overflow-hidden">
+      <section className="relative h-[60vh] md:h-[70vh] overflow-hidden">
         <img
           src={event.image}
           alt={event.title}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
