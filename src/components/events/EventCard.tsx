@@ -15,8 +15,8 @@ export const EventCard = ({ event }: EventCardProps) => {
 
   return (
     <Card className="overflow-hidden group max-w-full">
-      <div className="grid md:grid-cols-[280px_1fr]">
-        <div className="overflow-hidden aspect-[4/3] md:aspect-auto md:min-h-[320px]">
+      <div>
+        <div className="overflow-hidden aspect-[4/3]">
           <img
             src={event.image}
             alt={event.title}
