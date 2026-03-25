@@ -67,7 +67,7 @@ export const events: Event[] = [
   },
   {
     id: 3,
-    title: "AwakenHer: Journey To Self Discovery",
+    title: "TBA",
     date: "April 25, 2026",
     time: "Full Day",
     location: "Drakensberg",
@@ -77,7 +77,7 @@ export const events: Event[] = [
     spotsLeft: 50,
     image: retreatImage,
     category: "Networking/Creative Workshop",
-    description: "Escape to the mountains for a transformative experience of yoga, meditation, journaling, and deep connection with fellow women on a journey of self-discovery.",
+    description: "TBA.",
     paymentLink: "https://pos.snapscan.io/qr/Ak-wyctD",
   },
 ];
