@@ -28,7 +28,7 @@ export const EventCard = ({ event }: EventCardProps) => {
             <span className="inline-block px-3 py-1 bg-blush text-primary text-xs font-medium rounded-full mb-4">
               {event.category}
             </span>
-            <h3 className="font-display text-xl font-semibold text-foreground mb-3">
+            <h3 className="font-display text-lg md:text-xl font-semibold text-foreground mb-3 break-words">
               {event.title}
             </h3>
             {showFullDetails && (
