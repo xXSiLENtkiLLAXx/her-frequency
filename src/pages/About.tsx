@@ -155,8 +155,7 @@ const About = () => {
         Ready to Join Our Sisterhood?
       </h2>
       <p className="text-muted-foreground mb-10">
-        Take the first step in your transformation journey. Explore our upcoming events 
-        or book a coaching session today.
+        Take the first step in your transformation journey. Explore our upcoming events today.
       </p>
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
         <Button variant="hero" size="lg" asChild>
