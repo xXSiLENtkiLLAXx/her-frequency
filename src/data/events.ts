@@ -48,7 +48,7 @@ export const events: Event[] = [
     date: "April 25, 2026",
     time: "13:30 PM - 17:30 PM",
     location: "Cape Town",
-    mapsLink: "",
+    mapsLink: "https://maps.app.goo.gl/9B7fCeB6WAUevRr39",
     price: "R350.00",
     spots: 50,
     spotsLeft: 50,
