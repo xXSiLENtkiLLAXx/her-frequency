@@ -14,21 +14,21 @@ export const EventCard = ({ event }: EventCardProps) => {
   const showFullDetails = event.id === 1 || event.id === 2;
 
   return (
-    <Card className="overflow-hidden group">
-      <div className="grid md:grid-cols-2-[260px_1fr]">
-        <div className="overflow-hidden aspect-[4/5] md:aspect-auto md:min-h-[320px]">
+    <Card className="overflow-hidden group max-w-full">
+      <div className="grid md:grid-cols-[280px_1fr]">
+        <div className="overflow-hidden aspect-[4/3] md:aspect-auto md:min-h-[320px]">
           <img
             src={event.image}
             alt={event.title}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         </div>
-        <CardContent className="p-6 flex flex-col">
+        <CardContent className="p-4 md:p-6 flex flex-col overflow-hidden">
           <div>
             <span className="inline-block px-3 py-1 bg-blush text-primary text-xs font-medium rounded-full mb-4">
               {event.category}
             </span>
-            <h3 className="font-display text-xl font-semibold text-foreground mb-3">
+            <h3 className="font-display text-lg md:text-xl font-semibold text-foreground mb-3 break-words">
               {event.title}
             </h3>
             {showFullDetails && (
