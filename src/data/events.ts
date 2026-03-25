@@ -45,8 +45,8 @@ export const events: Event[] = [
   {
     id: 2,
     title: "HealHer: Transformative Healing",
-    date: "March 28, 2026",
-    time: "9:00 AM - 4:00 PM",
+    date: "April 25, 2026",
+    time: "13:30 PM - 17:30 PM",
     location: "Cape Town",
     mapsLink: "",
     price: "R350.00",
