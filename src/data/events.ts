@@ -47,7 +47,7 @@ export const events: Event[] = [
     title: "HealHer: Transformative Healing",
     date: "April 25, 2026",
     time: "13:30 PM - 17:30 PM",
-    location: "TBA",
+    location: "Intaka Island, 2 Park Lane, Grand Central, Century City",
     mapsLink: "https://maps.app.goo.gl/DxWXmCZeoYPKvCiZ7",
     price: "R350.00",
     spots: 50,
