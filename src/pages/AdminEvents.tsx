@@ -71,49 +71,55 @@ const AdminEvents = () => {
     
     setLoading(true);
     try {
-      // Fetch registrations - no longer needs adminKey, uses JWT auth
-      const regResponse = await supabase.functions.invoke("admin-events", {
-        body: {
-          action: "get_registrations",
-          eventId: selectedEventFilter,
-        },
-      });
+      const [regResponse, settingsResponse, testimonialsResponse] = await Promise.all([
+        supabase.functions.invoke("admin-events", {
+          body: {
+            action: "get_registrations",
+            eventId: selectedEventFilter,
+          },
+        }),
+        supabase.functions.invoke("admin-events", {
+          body: { action: "get_event_settings" },
+        }),
+        supabase.functions.invoke("admin-events", {
+          body: { action: "get_testimonials" },
+        }),
+      ]);
 
-      if (regResponse.error) throw regResponse.error;
-      setRegistrations(regResponse.data.registrations || []);
+      if (regResponse.error) {
+        logger.error("Error fetching registrations:", regResponse.error);
+        toast.error("Registrations could not load, but reviews will still show.");
+      } else {
+        setRegistrations(regResponse.data?.registrations || []);
+      }
 
-      // Fetch event settings
-      const settingsResponse = await supabase.functions.invoke("admin-events", {
-        body: {
-          action: "get_event_settings",
-        },
-      });
+      if (settingsResponse.error) {
+        logger.error("Error fetching event settings:", settingsResponse.error);
+      } else {
+        const settings = settingsResponse.data?.settings || [];
+        setEventSettings(settings);
 
-      if (settingsResponse.error) throw settingsResponse.error;
-      setEventSettings(settingsResponse.data.settings || []);
-      
-      // Initialize spots input values
-      const inputValues: Record<number, string> = {};
-      const reservedValues: Record<number, string> = {};
-      const spotsLeftValues: Record<number, number> = {};
-      settingsResponse.data.settings?.forEach((s: EventSetting) => {
-        inputValues[s.event_id] = s.total_spots.toString();
-        reservedValues[s.event_id] = (s.reserved_spots || 0).toString();
-      });
-      setSpotsInput(inputValues);
-      setReservedInput(reservedValues);
-      // Spots left will be computed after registrations are available
-      setSpotsLeftInput(spotsLeftValues);
+        const inputValues: Record<number, string> = {};
+        const reservedValues: Record<number, string> = {};
+        const spotsLeftValues: Record<number, number> = {};
+        settings.forEach((s: EventSetting) => {
+          inputValues[s.event_id] = s.total_spots.toString();
+          reservedValues[s.event_id] = (s.reserved_spots || 0).toString();
+        });
+        setSpotsInput(inputValues);
+        setReservedInput(reservedValues);
+        setSpotsLeftInput(spotsLeftValues);
+      }
 
-      // Fetch testimonials
-      const testimonialsResponse = await supabase.functions.invoke("admin-events", {
-        body: { action: "get_testimonials" },
-      });
-      if (testimonialsResponse.error) throw testimonialsResponse.error;
-      setTestimonials(testimonialsResponse.data.testimonials || []);
+      if (testimonialsResponse.error) {
+        logger.error("Error fetching testimonials:", testimonialsResponse.error);
+        toast.error("Failed to load reviews");
+      } else {
+        setTestimonials(testimonialsResponse.data?.testimonials || []);
+      }
     } catch (error) {
       logger.error("Error fetching admin data:", error);
-      toast.error("Failed to load admin data");
+      toast.error("Some admin data could not load. Please refresh if needed.");
     } finally {
       setLoading(false);
     }
