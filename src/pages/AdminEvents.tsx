@@ -50,6 +50,12 @@ interface AdminTestimonial {
 
 const AdminEvents = () => {
   const { user, isAdmin, loading: authLoading, signOut } = useAdminAuth();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const validTabs = ["registrations", "settings", "reviews", "gallery"] as const;
+  const tabParam = searchParams.get("tab");
+  const activeTab = (validTabs as readonly string[]).includes(tabParam || "")
+    ? (tabParam as string)
+    : "registrations";
   const [registrations, setRegistrations] = useState<Registration[]>([]);
   const [eventSettings, setEventSettings] = useState<EventSetting[]>([]);
   const [selectedEventFilter, setSelectedEventFilter] = useState("all");
