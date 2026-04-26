@@ -125,6 +125,14 @@ const AdminEvents = () => {
     }
   }, [selectedEventFilter, isAdmin]);
 
+  // Honor ?filter=pending when deep-linking to the reviews tab
+  useEffect(() => {
+    const filterParam = searchParams.get("filter");
+    if (activeTab === "reviews" && (filterParam === "pending" || filterParam === "approved" || filterParam === "all")) {
+      setTestimonialFilter(filterParam as "all" | "pending" | "approved");
+    }
+  }, [activeTab, searchParams]);
+
   // Show loading while checking auth
   if (authLoading) {
     return (
