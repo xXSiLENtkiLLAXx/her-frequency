@@ -16,6 +16,7 @@ interface LeaveReviewCardProps {
 }
 
 export const LeaveReviewCard = ({ compact = false }: LeaveReviewCardProps) => {
+  const { isAdmin } = useAdminAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [rating, setRating] = useState(0);
   const [hoveredRating, setHoveredRating] = useState(0);
