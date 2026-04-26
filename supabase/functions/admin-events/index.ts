@@ -3,6 +3,7 @@ import { createClient } from 'npm:@supabase/supabase-js@2'
 const ALLOWED_ORIGINS = [
   'https://her-frequency.lovable.app',
   'https://id-preview--75508879-0b3f-4010-8e00-d7db1a2bfe1c.lovable.app',
+  'https://75508879-0b3f-4010-8e00-d7db1a2bfe1c.lovableproject.com',
   'http://localhost:8080',
   'http://localhost:5173',
 ]
