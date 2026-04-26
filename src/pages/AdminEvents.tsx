@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -50,6 +50,12 @@ interface AdminTestimonial {
 
 const AdminEvents = () => {
   const { user, isAdmin, loading: authLoading, signOut } = useAdminAuth();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const validTabs = ["registrations", "settings", "reviews", "gallery"] as const;
+  const tabParam = searchParams.get("tab");
+  const activeTab = (validTabs as readonly string[]).includes(tabParam || "")
+    ? (tabParam as string)
+    : "registrations";
   const [registrations, setRegistrations] = useState<Registration[]>([]);
   const [eventSettings, setEventSettings] = useState<EventSetting[]>([]);
   const [selectedEventFilter, setSelectedEventFilter] = useState("all");
@@ -118,6 +124,14 @@ const AdminEvents = () => {
       fetchData();
     }
   }, [selectedEventFilter, isAdmin]);
+
+  // Honor ?filter=pending when deep-linking to the reviews tab
+  useEffect(() => {
+    const filterParam = searchParams.get("filter");
+    if (activeTab === "reviews" && (filterParam === "pending" || filterParam === "approved" || filterParam === "all")) {
+      setTestimonialFilter(filterParam as "all" | "pending" | "approved");
+    }
+  }, [activeTab, searchParams]);
 
   // Show loading while checking auth
   if (authLoading) {
@@ -280,7 +294,16 @@ const AdminEvents = () => {
             </div>
           </div>
 
-          <Tabs defaultValue="registrations" className="space-y-6">
+          <Tabs
+            value={activeTab}
+            onValueChange={(v) => {
+              const next = new URLSearchParams(searchParams);
+              if (v === "registrations") next.delete("tab");
+              else next.set("tab", v);
+              setSearchParams(next, { replace: true });
+            }}
+            className="space-y-6"
+          >
             <TabsList>
               <TabsTrigger value="registrations" className="gap-2">
                 <Users className="h-4 w-4" />

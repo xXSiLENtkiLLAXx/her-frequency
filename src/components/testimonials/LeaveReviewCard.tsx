@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Star } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Star, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -8,12 +9,14 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import logger from "@/lib/logger";
 import { checkRateLimit, recordAttempt, rateLimiters } from "@/lib/rateLimiter";
+import { useAdminAuth } from "@/hooks/useAdminAuth";
 
 interface LeaveReviewCardProps {
   compact?: boolean;
 }
 
 export const LeaveReviewCard = ({ compact = false }: LeaveReviewCardProps) => {
+  const { isAdmin } = useAdminAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [rating, setRating] = useState(0);
   const [hoveredRating, setHoveredRating] = useState(0);
@@ -70,9 +73,24 @@ export const LeaveReviewCard = ({ compact = false }: LeaveReviewCardProps) => {
   return (
     <Card className={`${compact ? "p-6" : "p-8"} bg-gradient-to-br from-blush/50 to-powder-blue/30 border-primary/20`}>
       <CardContent className="pt-0">
-        <h3 className="font-display text-xl font-semibold text-foreground mb-4">
-          Leave a Review ✨
-        </h3>
+        <div className="flex items-start justify-between gap-2 mb-4">
+          <h3 className="font-display text-xl font-semibold text-foreground">
+            Leave a Review ✨
+          </h3>
+          {isAdmin && (
+            <Button
+              asChild
+              variant="outline"
+              size="sm"
+              className="h-8 gap-1.5 text-xs"
+            >
+              <Link to="/events/admin?tab=reviews&filter=pending">
+                <Settings className="h-3.5 w-3.5" />
+                Manage Reviews
+              </Link>
+            </Button>
+          )}
+        </div>
         
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Star Rating */}
