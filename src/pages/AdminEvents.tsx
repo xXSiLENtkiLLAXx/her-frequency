@@ -286,7 +286,20 @@ const AdminEvents = () => {
             </div>
           </div>
 
-          <Tabs defaultValue="registrations" className="space-y-6">
+          <Tabs
+            value={activeTab}
+            onValueChange={(v) => {
+              const next = new URLSearchParams(searchParams);
+              if (v === "registrations") next.delete("tab");
+              else next.set("tab", v);
+              setSearchParams(next, { replace: true });
+            }}
+            className="space-y-6"
+          >
+            {/* If reviews tab opened from a deep link, default the filter to pending */}
+            {activeTab === "reviews" && testimonialFilter === "all" && testimonials.some(t => !t.is_approved) && searchParams.get("filter") === "pending" && (
+              <span className="hidden">{(() => { setTestimonialFilter("pending"); return null; })()}</span>
+            )}
             <TabsList>
               <TabsTrigger value="registrations" className="gap-2">
                 <Users className="h-4 w-4" />
