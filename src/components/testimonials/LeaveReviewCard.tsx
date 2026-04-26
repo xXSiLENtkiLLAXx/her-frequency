@@ -134,16 +134,23 @@ export const LeaveReviewCard = ({ compact = false }: LeaveReviewCardProps) => {
           </div>
 
           {/* Review */}
-          <Textarea
-            placeholder="Share your experience... *"
-            value={formData.quote}
-            onChange={(e) =>
-              setFormData((prev) => ({ ...prev, quote: e.target.value }))
-            }
-            rows={3}
-            maxLength={500}
-            className="resize-none bg-background/80"
-          />
+          <div>
+            <Textarea
+              placeholder="Share your experience... *"
+              value={formData.quote}
+              onChange={(e) => {
+                const words = e.target.value.trim() === "" ? [] : e.target.value.trim().split(/\s+/);
+                if (words.length <= 300) {
+                  setFormData((prev) => ({ ...prev, quote: e.target.value }));
+                }
+              }}
+              rows={4}
+              className="resize-none bg-background/80"
+            />
+            <p className="text-xs text-muted-foreground mt-1 text-right">
+              {formData.quote.trim() === "" ? 0 : formData.quote.trim().split(/\s+/).length}/300 words
+            </p>
+          </div>
 
           <Button
             type="submit"
