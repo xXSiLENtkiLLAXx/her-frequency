@@ -2,7 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { Calendar, MapPin, Users, ArrowLeft, Clock, Tag, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
-import { getEventById } from "@/data/events";
+import { getEventById, hasFullDetails } from "@/data/events";
 import { EventRegistrationForm } from "@/components/events/EventRegistrationForm";
 import { useEventSpots } from "@/hooks/useEventSpots";
 
@@ -32,7 +32,7 @@ const EventDetail = () => {
     );
   }
 
-  const showFullDetails = event.id === 1 || event.id === 2;
+  const showFullDetails = hasFullDetails(event);
   const { spotsLeft, refreshSpots } = useEventSpots(event.id, event.spots);
 
   return (

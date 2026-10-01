@@ -107,6 +107,9 @@ export const events: Event[] = [
     paymentLink: "https://pos.snapscan.io/qr/Ak-wyctD",
   },
 ];
+export const hasFullDetails = (event: Event): boolean =>
+  event.price.trim().toLowerCase() !== "coming soon";
+
 export const getEventById = (id: number): Event | undefined => {
   return events.find(event => event.id === id);
 };
