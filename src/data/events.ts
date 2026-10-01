@@ -1,6 +1,6 @@
 import eventImage from "@/assets/Loveher.jpeg";
 import coachingImage from "@/assets/HealHer-Logo.jpeg";
-import retreatImage from "@/assets/Launching-Soon.jpeg";
+import retreatImage from "@/assets/InspiHer-Cover-for-website-Final.jpeg";
 
 export interface Event {
   id: number;
