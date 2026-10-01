@@ -82,7 +82,6 @@ export const events: Event[] = [
     paymentLink: "https://pos.snapscan.io/qr/fO1LHB3F",
   },
 ];
-  },
   {
     id: 4,
     title: "TBA",
@@ -97,6 +96,8 @@ export const events: Event[] = [
     category: "Networking/Creative Workshop",
     description: "TBA.",
     paymentLink: "https://pos.snapscan.io/qr/Ak-wyctD",
+  },
+];
 export const getEventById = (id: number): Event | undefined => {
   return events.find(event => event.id === id);
 };
