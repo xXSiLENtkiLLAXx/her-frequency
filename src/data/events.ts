@@ -78,7 +78,7 @@ export const events: Event[] = [
     image: retreatImage,
     category: "Networking/Creative Workshop",
     description: "InspiHer: A Blooming Space for Women in Business is an inspiring and empowering space for women to pause, connect, and intentionally invest in their personal and professional growth. This experience provides a supportive environment where you can explore entrepreneurship, build meaningful connections, exchange ideas, and celebrate the journey of being a woman in business. Come as you are and leave feeling inspired, connected, and empowered to embrace your next chapter with confidence, clarity, and intention.",
-    paymentLink: "https://pos.snapscan.io/qr/Ak-wyctD",
+    paymentLink: "https://pos.snapscan.io/qr/fO1LHB3F",
   },
 ];
 
