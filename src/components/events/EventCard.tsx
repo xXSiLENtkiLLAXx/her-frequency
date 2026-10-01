@@ -3,7 +3,7 @@ import { Calendar, MapPin, Users, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useEventSpots } from "@/hooks/useEventSpots";
-import type { Event } from "@/data/events";
+import { hasFullDetails, type Event } from "@/data/events";
 
 interface EventCardProps {
   event: Event;
@@ -11,7 +11,7 @@ interface EventCardProps {
 
 export const EventCard = ({ event }: EventCardProps) => {
   const { spotsLeft, isLoading } = useEventSpots(event.id, event.spots);
-  const showFullDetails = event.id === 1 || event.id === 2;
+  const showFullDetails = hasFullDetails(event);
 
   return (
     <Card className="overflow-hidden group max-w-full">

@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Layout } from "@/components/layout/Layout";
 import heroBokehBackground from "@/assets/hero-background-no-ladies.jpg";
 import herFrequencyLogo from "@/assets/herfrequency-logo-transparent.jpeg";
-import { events as upcomingEvents } from "@/data/events";
+import { events as upcomingEvents, hasFullDetails } from "@/data/events";
 import { TestimonialCard } from "@/components/testimonials/TestimonialCard";
 import { LeaveReviewCard } from "@/components/testimonials/LeaveReviewCard";
 import { useTestimonials } from "@/hooks/useTestimonials";
@@ -141,7 +141,7 @@ const Index = () => {
                   <h3 className="font-display text-xl font-semibold text-foreground mb-2">
                     {event.title}
                   </h3>
-                  {(event.id === 1 || event.id === 2) && (
+                  {hasFullDetails(event) && (
                     <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
                       <span className="flex items-center gap-1">
                         <Calendar className="h-4 w-4" />
