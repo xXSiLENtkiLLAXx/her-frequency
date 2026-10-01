@@ -31,7 +31,7 @@ INSERT INTO public.event_settings (event_id, event_name, total_spots)
 VALUES 
   (1, 'LoveHer: Galentines Brunch', 50),
   (2, 'HealHer: Wellness Retreat', 30),
-  (3, 'AwakenHer: Spiritual Workshop', 40);
+  (3, 'InspiHer: A blooming space for Women in Business', 50);
 
 -- Create trigger for updated_at
 CREATE TRIGGER update_event_settings_updated_at
