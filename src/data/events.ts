@@ -1,6 +1,7 @@
 import eventImage from "@/assets/Loveher.jpeg";
 import coachingImage from "@/assets/HealHer-Logo.jpeg";
 import retreatImage from "@/assets/InspiHer-Cover-for-website.jpeg.png";
+import comingsoonImage from "@/assets/Launching-Soon.jpeg";
 
 export interface Event {
   id: number;
@@ -81,7 +82,21 @@ export const events: Event[] = [
     paymentLink: "https://pos.snapscan.io/qr/fO1LHB3F",
   },
 ];
-
+  },
+  {
+    id: 4,
+    title: "TBA",
+    date: "April 25, 2026",
+    time: "Full Day",
+    location: "Drakensberg",
+    mapsLink: "",
+    price: "Coming Soon",
+    spots: 50,
+    spotsLeft: 50,
+    image: comingsoonImage,
+    category: "Networking/Creative Workshop",
+    description: "TBA.",
+    paymentLink: "https://pos.snapscan.io/qr/Ak-wyctD",
 export const getEventById = (id: number): Event | undefined => {
   return events.find(event => event.id === id);
 };
