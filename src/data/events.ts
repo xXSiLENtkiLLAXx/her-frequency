@@ -87,6 +87,7 @@ export const events: Event[] = [
       "Healing through emotional transitions and life shifts",
       "Intentional connection and supportive engagement with like-minded women",
       "Curated light lunch and refreshments in a calm, nurturing environment",
+    ],
   },
   {
     id: 4,
