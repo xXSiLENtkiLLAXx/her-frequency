@@ -68,7 +68,7 @@ export const events: Event[] = [
   },
   {
     id: 3,
-    title: "InspiHer: A blooming space for woman in business",
+    title: "InspiHer: A blooming space for Women in Business",
     date: "October 31, 2026",
     time: "13:30 PM - 16:30 PM",
     location: "55 Morningside St, Ndabeni, Cape Town Unit 6, Entrance 2",
