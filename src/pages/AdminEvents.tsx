@@ -14,6 +14,7 @@ import { GalleryManager } from "@/components/admin/GalleryManager";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
+import { getEventById } from "@/data/events";
 import logger from "@/lib/logger";
 
 interface Registration {
@@ -222,6 +223,11 @@ const AdminEvents = () => {
     return total - confirmed - reserved;
   };
 
+  // Always show the current title from the events list; fall back to the
+  // stored name only for events not in the list yet.
+  const getEventDisplayName = (eventId: number, fallback?: string) =>
+    getEventById(eventId)?.title || fallback || `Event ${eventId}`;
+
   const exportToCSV = () => {
     const headers = ["First Name", "Last Name", "Email", "Cellphone", "Event ID", "Payment Confirmed", "Registered At", "Confirmed At"];
     const rows = registrations.map((r) => [
@@ -353,7 +359,7 @@ const AdminEvents = () => {
                             key={setting.event_id}
                             value={setting.event_id.toString()}
                           >
-                            {setting.event_name}
+                            {getEventDisplayName(setting.event_id, setting.event_name)}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -396,9 +402,10 @@ const AdminEvents = () => {
                               <TableCell>{reg.email}</TableCell>
                               <TableCell>{reg.cellphone}</TableCell>
                               <TableCell>
-                                {eventSettings.find(
-                                  (s) => s.event_id === reg.event_id
-                                )?.event_name || `Event ${reg.event_id}`}
+                                {getEventDisplayName(
+                                  reg.event_id,
+                                  eventSettings.find((s) => s.event_id === reg.event_id)?.event_name
+                                )}
                               </TableCell>
                               <TableCell>
                                 {reg.payment_confirmed ? (
@@ -443,7 +450,7 @@ const AdminEvents = () => {
                     <Card key={setting.id}>
                       <CardHeader>
                         <CardTitle className="text-xl">
-                          {setting.event_name}
+                          {getEventDisplayName(setting.event_id, setting.event_name)}
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
