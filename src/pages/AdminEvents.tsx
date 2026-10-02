@@ -359,7 +359,7 @@ const AdminEvents = () => {
                             key={setting.event_id}
                             value={setting.event_id.toString()}
                           >
-                            {setting.event_name}
+                            {getEventDisplayName(setting.event_id, setting.event_name)}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -402,9 +402,10 @@ const AdminEvents = () => {
                               <TableCell>{reg.email}</TableCell>
                               <TableCell>{reg.cellphone}</TableCell>
                               <TableCell>
-                                {eventSettings.find(
-                                  (s) => s.event_id === reg.event_id
-                                )?.event_name || `Event ${reg.event_id}`}
+                                {getEventDisplayName(
+                                  reg.event_id,
+                                  eventSettings.find((s) => s.event_id === reg.event_id)?.event_name
+                                )}
                               </TableCell>
                               <TableCell>
                                 {reg.payment_confirmed ? (
@@ -449,7 +450,7 @@ const AdminEvents = () => {
                     <Card key={setting.id}>
                       <CardHeader>
                         <CardTitle className="text-xl">
-                          {setting.event_name}
+                          {getEventDisplayName(setting.event_id, setting.event_name)}
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
