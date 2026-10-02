@@ -14,6 +14,7 @@ import { GalleryManager } from "@/components/admin/GalleryManager";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
+import { getEventById } from "@/data/events";
 import logger from "@/lib/logger";
 
 interface Registration {
@@ -221,6 +222,11 @@ const AdminEvents = () => {
     const confirmed = getConfirmedCount(eventId);
     return total - confirmed - reserved;
   };
+
+  // Always show the current title from the events list; fall back to the
+  // stored name only for events not in the list yet.
+  const getEventDisplayName = (eventId: number, fallback?: string) =>
+    getEventById(eventId)?.title || fallback || `Event ${eventId}`;
 
   const exportToCSV = () => {
     const headers = ["First Name", "Last Name", "Email", "Cellphone", "Event ID", "Payment Confirmed", "Registered At", "Confirmed At"];
