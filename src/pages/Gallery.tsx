@@ -194,7 +194,7 @@ const Gallery = () => {
             {images.length > 0 && (
               <img
                 src={images[currentIndex]?.file_url}
-                alt={images[currentIndex]?.file_name}
+                alt={images[currentIndex] ? `Photo from ${images[currentIndex].folder}` : ""}
                 className="max-h-[85vh] max-w-full object-contain"
               />
             )}
