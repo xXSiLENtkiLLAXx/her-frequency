@@ -133,7 +133,7 @@ const Gallery = () => {
                       >
                         <img
                           src={img.file_url}
-                          alt={img.file_name}
+                          alt={`Photo from ${img.folder}`}
                           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                           loading="lazy"
                         />
