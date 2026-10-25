@@ -55,6 +55,7 @@ export function Header() {
                 href="https://www.instagram.com/herfrequencyza/"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Her Frequency on Instagram"
                 className="text-muted-foreground hover:text-primary transition-colors"
               >
                 <Instagram className="h-5 w-5" />
@@ -63,6 +64,7 @@ export function Header() {
                 href="https://www.facebook.com/share/1DJAHYRUfm/?mibextid=wwXIfr"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Her Frequency on Facebook"
                 className="text-muted-foreground hover:text-primary transition-colors"
               >
                 <Facebook className="h-5 w-5" />
@@ -76,6 +78,8 @@ export function Header() {
           {/* Mobile menu button */}
           <button
             type="button"
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileMenuOpen}
             className="lg:hidden p-2 text-foreground"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >

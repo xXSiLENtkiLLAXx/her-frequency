@@ -133,7 +133,7 @@ const Gallery = () => {
                       >
                         <img
                           src={img.file_url}
-                          alt={img.file_name}
+                          alt={`Photo from ${img.folder}`}
                           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                           loading="lazy"
                         />
@@ -194,7 +194,7 @@ const Gallery = () => {
             {images.length > 0 && (
               <img
                 src={images[currentIndex]?.file_url}
-                alt={images[currentIndex]?.file_name}
+                alt={images[currentIndex] ? `Photo from ${images[currentIndex].folder}` : ""}
                 className="max-h-[85vh] max-w-full object-contain"
               />
             )}

@@ -203,10 +203,10 @@ Mon-Fri, 9am-5pm SAST<br />
                 <div className="pt-6 border-t border-border">
                   <h3 className="font-display font-semibold text-foreground mb-4">Follow Us</h3>
                   <div className="flex items-center gap-4">
-                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all">
+                    <a href="https://www.instagram.com/herfrequencyza/" target="_blank" rel="noopener noreferrer" aria-label="Her Frequency on Instagram" className="w-12 h-12 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all">
                       <Instagram className="h-5 w-5" />
                     </a>
-                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all">
+                    <a href="https://www.facebook.com/share/1DJAHYRUfm/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Her Frequency on Facebook" className="w-12 h-12 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all">
                       <Facebook className="h-5 w-5" />
                     </a>
                   </div>
