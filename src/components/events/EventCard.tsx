@@ -76,7 +76,7 @@ export const EventCard = ({ event }: EventCardProps) => {
             </span>
             <div className="flex gap-2">
               <Button variant="outline" size="sm" asChild>
-                <Link to={`/events/${event.id}`}>Learn More</Link>
+                <Link to={`/events/${event.id}`}>View {event.title} details</Link>
               </Button>
               <Button variant="default" size="sm" asChild>
                 <Link to={`/events/${event.id}`}>Book Now</Link>

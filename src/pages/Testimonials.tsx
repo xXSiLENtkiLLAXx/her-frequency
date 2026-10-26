@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { TestimonialCard } from "@/components/testimonials/TestimonialCard";
@@ -10,6 +11,11 @@ const Testimonials = () => {
 
   return (
     <Layout>
+      <SEOHead
+        title="Community Stories | Her Frequency"
+        description="Read what South African women say about Her Frequency events and share your own experience with the sisterhood."
+        path="/testimonials"
+      />
       {/* Hero Section */}
       <section className="relative py-24 overflow-hidden bg-gradient-soft">
         <div className="container-custom mx-auto px-4 md:px-8">

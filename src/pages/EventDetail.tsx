@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { Calendar, MapPin, Users, ArrowLeft, Clock, Tag, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
 import { getEventById, hasFullDetails } from "@/data/events";
 import { EventRegistrationForm } from "@/components/events/EventRegistrationForm";
 import { useEventSpots } from "@/hooks/useEventSpots";
@@ -12,6 +13,12 @@ const EventDetail = () => {
   if (!event) {
     return (
       <Layout>
+        <SEOHead
+          title="Event Not Found | Her Frequency"
+          description="The event you're looking for doesn't exist or has been removed. Browse our upcoming events."
+          path="/events"
+          noIndex
+        />
         <div className="min-h-[60vh] flex items-center justify-center">
           <div className="text-center">
             <h1 className="font-display text-3xl font-semibold text-foreground mb-4">
@@ -37,6 +44,11 @@ const EventDetail = () => {
 
   return (
     <Layout>
+      <SEOHead
+        title={`${event.title} | Her Frequency`}
+        description={event.description.slice(0, 155)}
+        path={`/events/${event.id}`}
+      />
       {/* Hero Section with Event Image */}
       <section className="relative h-[60vh] md:h-[70vh] overflow-hidden">
         <img

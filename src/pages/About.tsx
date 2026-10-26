@@ -3,6 +3,7 @@ import { Heart, Sparkles, Users, Flower2, Target, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Layout } from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
 import heroImage from "@/assets/hero-sisterhood.jpg";
 import coachingImage from "@/assets/herfrequency-logo-transparent.jpeg";
 const values = [{
@@ -32,6 +33,11 @@ const values = [{
 }];
 const About = () => {
   return <Layout>
+      <SEOHead
+        title="About Her Frequency | Women's Empowerment Community South Africa"
+        description="Learn about Her Frequency's mission, vision, and values — creating safe, uplifting spaces for South African women to grow, connect, and thrive."
+        path="/about"
+      />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0 z-0">

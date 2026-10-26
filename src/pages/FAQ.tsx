@@ -1,5 +1,6 @@
 import { ChevronDown } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import {
@@ -104,6 +105,11 @@ const faqs = [
 const FAQ = () => {
   return (
     <Layout>
+      <SEOHead
+        title="FAQ | Her Frequency"
+        description="Answers to common questions about Her Frequency events, bookings, payments, and what to expect on the day."
+        path="/faq"
+      />
       {/* Hero Section */}
       <section className="relative py-24 overflow-hidden bg-gradient-soft">
         <div className="container-custom mx-auto px-4 md:px-8">
