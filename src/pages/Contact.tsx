@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Layout } from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
 import { useToast } from "@/hooks/use-toast";
 import { checkRateLimit, recordAttempt, rateLimiters } from "@/lib/rateLimiter";
 
@@ -80,6 +81,11 @@ const Contact = () => {
     }
   };
   return <Layout>
+      <SEOHead
+        title="Contact Us | Her Frequency"
+        description="Get in touch with Her Frequency — questions about events, bookings, or partnerships. We'd love to hear from you."
+        path="/contact"
+      />
       {/* Hero Section */}
       <section className="relative py-24 overflow-hidden bg-gradient-soft">
         <div className="container-custom mx-auto px-4 md:px-8">

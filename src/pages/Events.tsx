@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
 import { events } from "@/data/events";
 import { EventCard } from "@/components/events/EventCard";
 
@@ -17,6 +18,11 @@ const Events = () => {
 
   return (
     <Layout>
+      <SEOHead
+        title="Upcoming Events & Workshops | Her Frequency"
+        description="Browse upcoming Her Frequency events and workshops in Cape Town, South Africa — brunches, healing circles, and networking experiences for women."
+        path="/events"
+      />
       {/* Hero Section */}
       <section className="relative py-24 overflow-hidden bg-gradient-soft">
         <div className="container-custom mx-auto px-4 md:px-8">

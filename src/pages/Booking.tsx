@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Layout } from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
 import { useToast } from "@/hooks/use-toast";
 
 const services = [
@@ -51,6 +52,11 @@ const Booking = () => {
 
   return (
     <Layout>
+      <SEOHead
+        title="Book Your Spot | Her Frequency"
+        description="Reserve your spot at an upcoming Her Frequency event. Simple booking with secure payment."
+        path="/booking"
+      />
       {/* Hero Section */}
       <section className="relative py-24 overflow-hidden bg-gradient-soft">
         <div className="container-custom mx-auto px-4 md:px-8">
