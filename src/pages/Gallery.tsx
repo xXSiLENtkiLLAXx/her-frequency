@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Layout } from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -75,6 +76,11 @@ const Gallery = () => {
 
   return (
     <Layout>
+      <SEOHead
+        title="Gallery | Her Frequency"
+        description="Browse photos and videos from Her Frequency events — moments of connection, empowerment, and sisterhood."
+        path="/gallery"
+      />
       <section className="section-padding bg-gradient-soft min-h-screen">
         <div className="container-custom mx-auto">
           <div className="text-center mb-12">
@@ -187,6 +193,7 @@ const Gallery = () => {
           <div className="relative flex items-center justify-center min-h-[60vh] max-h-[90vh]">
             <button
               onClick={() => setSlideshowOpen(false)}
+              aria-label="Close slideshow"
               className="absolute top-4 right-4 z-10 text-primary-foreground/80 hover:text-primary-foreground"
             >
               <X className="h-6 w-6" />
@@ -202,12 +209,14 @@ const Gallery = () => {
               <>
                 <button
                   onClick={prevSlide}
+                  aria-label="Previous photo"
                   className="absolute left-4 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/20 hover:bg-background/40 flex items-center justify-center text-primary-foreground"
                 >
                   <ChevronLeft className="h-6 w-6" />
                 </button>
                 <button
                   onClick={nextSlide}
+                  aria-label="Next photo"
                   className="absolute right-4 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/20 hover:bg-background/40 flex items-center justify-center text-primary-foreground"
                 >
                   <ChevronRight className="h-6 w-6" />
@@ -217,6 +226,7 @@ const Gallery = () => {
                     <button
                       key={i}
                       onClick={() => setCurrentIndex(i)}
+                      aria-label={`Go to photo ${i + 1} of ${images.length}`}
                       className={cn(
                         "h-2 rounded-full transition-all",
                         i === currentIndex ? "w-6 bg-primary" : "w-2 bg-primary-foreground/40"
@@ -236,6 +246,7 @@ const Gallery = () => {
           <div className="relative">
             <button
               onClick={() => setVideoOpen(null)}
+              aria-label="Close video"
               className="absolute -top-10 right-0 text-primary-foreground/80 hover:text-primary-foreground"
             >
               <X className="h-6 w-6" />
