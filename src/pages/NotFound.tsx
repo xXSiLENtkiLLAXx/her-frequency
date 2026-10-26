@@ -26,7 +26,8 @@ const NotFound = () => {
           Return to Home
         </a>
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 
