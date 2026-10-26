@@ -3,6 +3,7 @@ import { ArrowRight, Sparkles, Heart, Users, Calendar, Instagram } from "lucide-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Layout } from "@/components/layout/Layout";
+import { SEOHead } from "@/components/seo/SEOHead";
 import heroBokehBackground from "@/assets/hero-background-no-ladies.jpg";
 import herFrequencyLogo from "@/assets/herfrequency-logo-transparent.jpeg";
 import { events as upcomingEvents, hasFullDetails } from "@/data/events";
@@ -26,6 +27,11 @@ const values = [{
 const Index = () => {
   const { data: testimonials = [], isLoading: testimonialsLoading } = useTestimonials(2);
   return <Layout>
+      <SEOHead
+        title="Her Frequency | Women's Empowerment & Wellness Events | South Africa"
+        description="Join Her Frequency — South Africa's women's empowerment and wellness community. Events, workshops, and genuine sisterhood. Becoming HER one day at a time."
+        path="/"
+      />
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
         {/* Bokeh Background */}
@@ -154,7 +160,7 @@ const Index = () => {
                       {event.price}
                     </span>
                     <Button variant="soft" size="sm" asChild>
-                      <Link to={`/events/${event.id}`}>Learn More</Link>
+                      <Link to={`/events/${event.id}`}>View {event.title} details</Link>
                     </Button>
                   </div>
                 </CardContent>
