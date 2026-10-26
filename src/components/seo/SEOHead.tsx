@@ -16,7 +16,7 @@ interface SEOHeadProps {
 export const SEOHead = ({ title, description, path, noIndex = false }: SEOHeadProps) => {
   const url = `${SITE_URL}${path}`;
   return (
-    <Helmet>
+    <Helmet prioritizeSeoTags>
       <title>{title}</title>
       <meta name="description" content={description} />
       <link rel="canonical" href={url} />
