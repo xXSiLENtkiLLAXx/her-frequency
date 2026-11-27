@@ -10,6 +10,7 @@ import { events as upcomingEvents, hasFullDetails } from "@/data/events";
 import { TestimonialCard } from "@/components/testimonials/TestimonialCard";
 import { LeaveReviewCard } from "@/components/testimonials/LeaveReviewCard";
 import { useTestimonials } from "@/hooks/useTestimonials";
+import { HomeGalleryCarousel } from "@/components/gallery/HomeGalleryCarousel";
 
 const values = [{
   icon: Heart,
@@ -119,6 +120,8 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      <HomeGalleryCarousel />
 
       {/* Upcoming Events */}
       <section className="section-padding">
